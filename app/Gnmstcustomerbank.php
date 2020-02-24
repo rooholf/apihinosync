@@ -1,10 +1,14 @@
 <?php
-
-namespace App;
-
-use Illuminate\Database\Eloquent\Model;
-
-class Gnmstcustomerbank extends Model
-{
-    //
-}
+	namespace App;
+	use Illuminate\Database\Eloquent\Model;
+	class Gnmstcustomerbank extends Model
+	{
+		protected $table = 'gnMstCustomerBank';
+		protected $primaryKey = 'CustomerCode';
+		public $incrementing = false;
+		
+		protected $fillable = [
+        'CompanyCode', 'CustomerCode', 'BankCode', 'BankName', 'AccountName', 'AccountBank', 'CreatedBy', 'CreatedDate', 'LastUpdateBy', 'LastUpdateDate', 'isLocked', 'LockingBy', 'LockingDate',
+		];
+		
+	}
