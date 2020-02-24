@@ -11,22 +11,22 @@ class Gnmstsupplierprofitcenter extends Model
 		public $incrementing = false;
 		
 		protected $fillable = [
-        'CompanyCode', 
-		'BranchCode', 
-		'SupplierCode', 
-		'ProfitCenterCode', 
-		'ContactPerson', 
-		'SupplierClass', 
-		'SupplierGrade', 
-		'DiscPct', 
-		'TOPCode', 
-		'TaxCode', 
-		'isBlackList', 
-		'Status', 
-		'CreatedBy',
-		'CreatedDate',
-		'LastUpdateBy',
-		'LastUpdateDate',
+	        'CompanyCode', 
+			'BranchCode', 
+			'SupplierCode', 
+			'ProfitCenterCode', 
+			'ContactPerson', 
+			'SupplierClass', 
+			'SupplierGrade', 
+			'DiscPct', 
+			'TOPCode', 
+			'TaxCode', 
+			'isBlackList', 
+			'Status', 
+			'CreatedBy',
+			'CreatedDate',
+			'LastUpdateBy',
+			'LastUpdateDate',
 		];
 		
 	}

@@ -11,19 +11,19 @@ class Gnmstsupplierbank extends Model
 		public $incrementing = false;
 		
 		protected $fillable = [
-        'CompanyCode', 
-		'SupplierCode', 
-		'BankCode', 
-		'BankName', 
-		'AccountName', 
-		'AccountBank', 
-		'CreatedBy', 
-		'CreatedDate', 
-		'LastUpdateBy', 
-		'LastUpdateDate', 
-		'isLocked', 
-		'LockingBy', 
-		'LockingDate',
+	        'CompanyCode', 
+			'SupplierCode', 
+			'BankCode', 
+			'BankName', 
+			'AccountName', 
+			'AccountBank', 
+			'CreatedBy', 
+			'CreatedDate', 
+			'LastUpdateBy', 
+			'LastUpdateDate', 
+			'isLocked', 
+			'LockingBy', 
+			'LockingDate',
 		];
 		
 	}
