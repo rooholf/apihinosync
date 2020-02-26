@@ -11,7 +11,7 @@
 		public $incrementing = false;
 		
 		protected $fillable = [
-        'CompanyCode', 'CustomerCode', 'BankCode', 'BankName', 'AccountName', 'AccountBank', 'CreatedBy', 'CreatedDate', 'LastUpdateBy', 'LastUpdateDate', 'isLocked', 'LockingBy', 'LockingDate',
+        	'CompanyCode', 'CustomerCode', 'BankCode', 'BankName', 'AccountName', 'AccountBank', 'CreatedBy', 'CreatedDate', 'LastUpdateBy', 'LastUpdateDate', 'isLocked', 'LockingBy', 'LockingDate',
 		];
 		
 	}

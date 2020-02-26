@@ -14,6 +14,11 @@ class Handler extends ExceptionHandler
      */
     protected $dontReport = [
         //
+        \Illuminate\Auth\AuthenticationException::class,
+        \Illuminate\Auth\Access\AuthorizationException::class,
+        \Symfony\Component\HttpKernel\Exception\HttpException::class,
+        \Illuminate\Database\Eloquent\ModelNotFoundException::class,
+        \Illuminate\Validation\ValidationException::class,
     ];
 
     /**
@@ -50,6 +55,41 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($request->expectsJson()) {
+            if($exception instanceof \Illuminate\Auth\Access\AuthorizationException) {
+                return response()->json([
+                    'code' => 401, 
+                    'message' => 'Unauthorized',
+                    'error' => 'Unauthorized'
+                ], 401);
+            }
+
+            //yang ini jika di perlukan
+            // if ($exception instanceof \Symfony\Component\Debug\Exception\FatalThrowableError) {
+            //     return response()->json([
+            //         'error' => 'Not Found'
+            //     ], 404);
+            // }
+            // batasnya
+
+            if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+                return response()->json([
+                    'code' => 404, 
+                    'message' => 'Not Found',
+                    'error' => 'Not Found',
+                ], 404);
+            }
+
+            if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+                $modelClass = explode('\\', $exception->getModel());
+                return response()->json([
+                    'code' => 404, 
+                    'message' => end($modelClass) . 'Not Found',
+                    'error' => end($modelClass) . ' Not Found',
+                ], 404);
+            }
+
+        }
         return parent::render($request, $exception);
     }
 }
