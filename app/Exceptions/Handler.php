@@ -65,11 +65,11 @@ class Handler extends ExceptionHandler
             }
 
             //yang ini jika di perlukan
-            // if ($exception instanceof \Symfony\Component\Debug\Exception\FatalThrowableError) {
-            //     return response()->json([
-            //         'error' => 'Not Found'
-            //     ], 404);
-            // }
+            if ($exception instanceof \Symfony\Component\Debug\Exception\FatalThrowableError) {
+                return response()->json([
+                    'data' => 0
+                ], 200);
+            }
             // batasnya
 
             if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
