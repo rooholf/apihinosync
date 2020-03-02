@@ -67,8 +67,8 @@ class Handler extends ExceptionHandler
             //yang ini jika di perlukan
             if ($exception instanceof \Symfony\Component\Debug\Exception\FatalThrowableError) {
                 return response()->json([
-                    'data' => 0
-                ], 200);
+                    'data' => 1
+                ], 400);
             }
             // batasnya
 

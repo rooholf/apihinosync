@@ -11,21 +11,32 @@
 	use App\Gnmstcustomerprofitcenter;
 	use App\Transformers\GnmstcustomerTransformer; //transformer
 	use Auth;
+
+	use Carbon\Carbon;
 	
 	
 	class GnmstcustomerController extends Controller
 	{
-		public function show(Gnmstcustomer $gnmstcustomer, $id)
+		public function show(Request $request, Gnmstcustomer $gnmstcustomer)
 		{
-			$customer = $gnmstcustomer->find($id);
+			$customer = $gnmstcustomer->find($request->CustomerCode);
+
+			if ($customer) {
+				return fractal()
+					->item($customer)
+					->transformWith(new GnmstcustomerTransformer)
+					->toArray();
+			} else {
+
+				return response()->json([
+                    'data' => 0
+                ], 200);
+			}
 			// dd($customer);
-			return fractal()
-			->item($customer)
-			->transformWith(new GnmstcustomerTransformer)
-			->toArray();
+				
 		}
 		
-		public function add(Request $request, Gnmstcustomer $gnmstcustomer, Gnmstcustomerbank $gnmstcustomerbank)
+		public function add(Request $request, Gnmstcustomer $gnmstcustomer)
 		{
 			$this->validate($request, [
 				'CustomerCode' => 'required', 
@@ -49,23 +60,26 @@
 				'FaxNo' => $request->FaxNo, 
 				'isPKP' => $request->isPKP, 
 				'NPWPNo' => $request->NPWPNo, 
-				'NPWPDate' => $request->NPWPDate, 
+				// 'NPWPDate' => Carbon::create($request->NPWPDate, 'Asia/Jakarta'),
+				'NPWPDate' => Carbon::now(), 
 				'SKPNo' => $request->SKPNo, 
-				'SKPDate' => $request->SKPDate, 
-				'ProvinceCode' => $request->ProvinceCode, 
-				'AreaCode' => $request->AreaCode, 
-				'CityCode' => $request->CityCode, 
+				// 'SKPDate' => Carbon::create($request->SKPDate, 'Asia/Jakarta'), 
+				'SKPDate' => Carbon::now(), 
+				'ProvinceCode' => 'NULL', 
+				'AreaCode' => 'NULL', 
+				'CityCode' => 'NULL', 
 				'ZipNo' => $request->ZipNo, 
 				'Status' => $request->Status, 
 				'CreatedBy' => $request->CreatedBy, 
-				'CreatedDate' => $request->CreatedDate, 
+				'CreatedDate' => Carbon::now(), 
 				'LastUpdateBy' => $request->LastUpdateBy, 
-				'LastUpdateDate' => $request->LastUpdateDate, 
+				'LastUpdateDate' => Carbon::now(), 
 				'isLocked' => $request->isLocked, 
 				'LockingBy' => $request->LockingBy, 
-				'LockingDate' => $request->LockingDate, 
+				// 'LockingDate' => Carbon::create($request->LockingDate, 'Asia/Jakarta'), 
+				'LockingDate' => Carbon::now(), 
 				'Email' => $request->Email, 
-				'BirthDate' => $request->BirthDate, 
+				'BirthDate' => Carbon::now(), 
 				'Spare01' => $request->Spare01, 
 				'Spare02' => $request->Spare02, 
 				'Spare03' => $request->Spare03, 
@@ -80,59 +94,59 @@
 				'CustomerStatus' => $request->CustomerStatus,
 			]);
 			
-			$gnmstcustomerbank = $gnmstcustomerbank->create([
-				'CompanyCode' => $request->CompanyCode, 
-				'CustomerCode' => $request->CustomerCode,
-				'BankCode' => $request->BankCode,
-				'BankName' => $request->BankName,
-				'AccountName' => $request->AccountName,
-				'AccountBank' => $request->AccountBank,
-				'CreatedBy' => $request->CreatedBy,
-				'CreatedDate' => $request->CreatedDate,
-				'LastUpdateBy' => $request->LastUpdateBy,
-				'LastUpdateDate' => $request->LastUpdateDate,
-				'isLocked' => $request->isLocked,
-				'LockingBy' => $request->LockingBy,
-				'LockingDate' => $request->LockingDate,
-			]);
+			// $gnmstcustomerbank = $gnmstcustomerbank->create([
+			// 	'CompanyCode' => $request->CompanyCode, 
+			// 	'CustomerCode' => $request->CustomerCode,
+			// 	'BankCode' => $request->BankCode,
+			// 	'BankName' => $request->BankName,
+			// 	'AccountName' => $request->AccountName,
+			// 	'AccountBank' => $request->AccountBank,
+			// 	'CreatedBy' => $request->CreatedBy,
+			// 	'CreatedDate' => Carbon::now(),
+			// 	'LastUpdateBy' => $request->LastUpdateBy,
+			// 	'LastUpdateDate' => $request->LastUpdateDate,
+			// 	'isLocked' => $request->isLocked,
+			// 	'LockingBy' => $request->LockingBy,
+			// 	'LockingDate' => Carbon::now(),
+			// ]);
 
-			$gnmstcustomerprofitcenter = $gnmstcustomerprofitcenter->create([
-				'CompanyCode' => $request->CompanyCode,
-				'BranchCode' => $request->BranchCode,
-				'CustomerCode' => $request->CustomerCode,
-				'ProfitCenterCode' => $request->ProfitCenterCode,
-				'CreditLimit' => $request->CreditLimit,
-				'PaymentCode' => $request->PaymentCode,
-				'CustomerClass' => $request->CustomerClass, 
-				'TaxCode' => $request->TaxCode,
-				'TaxTransCode' => $request->TaxTransCode, 
-				'DiscPct' => $request->DiscPct,
-				'LaborDiscPct' => $request->LaborDiscPct,
-				'PartDiscPct' => $request->PartDiscPct,
-				'MaterialDiscPct' => $request->MaterialDiscPct,
-				'TOPCode' => $request->TOPCode,
-				'CustomerGrade' => $request->CustomerGrade,
-				'ContactPerson' => $request->ContactPerson,
-				'CollectorCode' => $request->CollectorCode,
-				'GroupPriceCode' => $request->GroupPriceCode,
-				'isOverDueAllowed' => $request->isOverDueAllowed,
-				'SalesCode' => $request->SalesCode,
-				'SalesType' => $request->SalesType,
-				'Salesman' => $request->Salesman,
-				'isBlackList' => $request->isBlackList,
-				'CreatedBy' => $request->CreatedBy,
-				'CreatedDate' => $request->CreatedDate,
-				'LastUpdateBy' => $request->LastUpdateBy,
-				'LastUpdateDate' => $request->LastUpdateDate,
-				'isLocked' => $request->isLocked,
-				'LockingBy' => $request->LockingBy,
-				'LockingDate' => $request->LockingDate,
-			]);
+			// $gnmstcustomerprofitcenter = $gnmstcustomerprofitcenter->create([
+			// 	'CompanyCode' => $request->CompanyCode,
+			// 	'BranchCode' => $request->BranchCode,
+			// 	'CustomerCode' => $request->CustomerCode,
+			// 	'ProfitCenterCode' => $request->ProfitCenterCode,
+			// 	'CreditLimit' => $request->CreditLimit,
+			// 	'PaymentCode' => $request->PaymentCode,
+			// 	'CustomerClass' => $request->CustomerClass, 
+			// 	'TaxCode' => $request->TaxCode,
+			// 	'TaxTransCode' => $request->TaxTransCode, 
+			// 	'DiscPct' => $request->DiscPct,
+			// 	'LaborDiscPct' => $request->LaborDiscPct,
+			// 	'PartDiscPct' => $request->PartDiscPct,
+			// 	'MaterialDiscPct' => $request->MaterialDiscPct,
+			// 	'TOPCode' => $request->TOPCode,
+			// 	'CustomerGrade' => $request->CustomerGrade,
+			// 	'ContactPerson' => $request->ContactPerson,
+			// 	'CollectorCode' => $request->CollectorCode,
+			// 	'GroupPriceCode' => $request->GroupPriceCode,
+			// 	'isOverDueAllowed' => $request->isOverDueAllowed,
+			// 	'SalesCode' => $request->SalesCode,
+			// 	'SalesType' => $request->SalesType,
+			// 	'Salesman' => $request->Salesman,
+			// 	'isBlackList' => $request->isBlackList,
+			// 	'CreatedBy' => $request->CreatedBy,
+			// 	'CreatedDate' => $request->CreatedDate,
+			// 	'LastUpdateBy' => $request->LastUpdateBy,
+			// 	'LastUpdateDate' => $request->LastUpdateDate,
+			// 	'isLocked' => $request->isLocked,
+			// 	'LockingBy' => $request->LockingBy,
+			// 	'LockingDate' => $request->LockingDate,
+			// ]);
 
 			return fractal()
-            ->item($gnmstcustomer)
-            ->transformWith(new SupplierTransformer)
-            ->toArray();
+	            ->item($gnmstcustomer)
+	            ->transformWith(new GnmstcustomerTransformer)
+	            ->toArray();
 			
 		}
 		
