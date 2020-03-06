@@ -110,38 +110,44 @@
 				'LockingDate' => Carbon::now(),
 			]);
 
-			$gnmstcustomerprofitcenter = $gnmstcustomerprofitcenter->create([
-				'CompanyCode' => $request->CompanyCode,
-				'BranchCode' => $request->BranchCode,
-				'CustomerCode' => $request->CustomerCode,
-				'ProfitCenterCode' => $request->ProfitCenterCode,
-				'CreditLimit' => $request->CreditLimit,
-				'PaymentCode' => $request->PaymentCode,
-				'CustomerClass' => $request->CustomerClass, 
-				'TaxCode' => $request->TaxCode,
-				'TaxTransCode' => $request->TaxTransCode, 
-				'DiscPct' => $request->DiscPct,
-				'LaborDiscPct' => $request->LaborDiscPct,
-				'PartDiscPct' => $request->PartDiscPct,
-				'MaterialDiscPct' => $request->MaterialDiscPct,
-				'TOPCode' => $request->TOPCode,
-				'CustomerGrade' => $request->CustomerGrade,
-				'ContactPerson' => $request->ContactPerson,
-				'CollectorCode' => $request->CollectorCode,
-				'GroupPriceCode' => $request->GroupPriceCode,
-				'isOverDueAllowed' => $request->isOverDueAllowed,
-				'SalesCode' => $request->SalesCode,
-				'SalesType' => $request->SalesType,
-				'Salesman' => $request->Salesman,
-				'isBlackList' => $request->isBlackList,
-				'CreatedBy' => $request->CreatedBy,
-				'CreatedDate' => Carbon::now(),
-				'LastUpdateBy' => $request->LastUpdateBy,
-				'LastUpdateDate' => Carbon::now(),
-				'isLocked' => $request->isLocked,
-				'LockingBy' => $request->LockingBy,
-				'LockingDate' => Carbon::now(),
-			]);
+			// for ($i=0; $i < 4 ; $i++) { 
+			// 	$BranchCode = '000';
+			// 	if ($i > 2) {
+			// 		$BranchCode = '002';
+			// 	} 
+			// 	$gnmstcustomerprofitcenter = $gnmstcustomerprofitcenter->create([
+			// 		'CompanyCode' => $request->CompanyCode,
+			// 		'BranchCode' => $BranchCode,
+			// 		'CustomerCode' => $request->CustomerCode,
+			// 		'ProfitCenterCode' => '200',
+			// 		'CreditLimit' => $request->CreditLimit,
+			// 		'PaymentCode' => $request->PaymentCode,
+			// 		'CustomerClass' => $request->CustomerClass, 
+			// 		'TaxCode' => $request->TaxCode,
+			// 		'TaxTransCode' => $request->TaxTransCode, 
+			// 		'DiscPct' => $request->DiscPct,
+			// 		'LaborDiscPct' => $request->LaborDiscPct,
+			// 		'PartDiscPct' => $request->PartDiscPct,
+			// 		'MaterialDiscPct' => $request->MaterialDiscPct,
+			// 		'TOPCode' => $request->TOPCode,
+			// 		'CustomerGrade' => $request->CustomerGrade,
+			// 		'ContactPerson' => $request->ContactPerson,
+			// 		'CollectorCode' => $request->CollectorCode,
+			// 		'GroupPriceCode' => $request->GroupPriceCode,
+			// 		'isOverDueAllowed' => $request->isOverDueAllowed,
+			// 		'SalesCode' => $request->SalesCode,
+			// 		'SalesType' => $request->SalesType,
+			// 		'Salesman' => $request->Salesman,
+			// 		'isBlackList' => $request->isBlackList,
+			// 		'CreatedBy' => $request->CreatedBy,
+			// 		'CreatedDate' => Carbon::now(),
+			// 		'LastUpdateBy' => $request->LastUpdateBy,
+			// 		'LastUpdateDate' => Carbon::now(),
+			// 		'isLocked' => $request->isLocked,
+			// 		'LockingBy' => $request->LockingBy,
+			// 		'LockingDate' => Carbon::now(),
+			// 	]);
+			// }
 
 			return fractal()
 	            ->item($gnmstcustomer)
