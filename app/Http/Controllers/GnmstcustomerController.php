@@ -36,7 +36,7 @@
 				
 		}
 		
-		public function add(Request $request, Gnmstcustomer $gnmstcustomer)
+		public function add(Request $request, Gnmstcustomer $gnmstcustomer, Gnmstcustomerbank $gnmstcustomerbank)
 		{
 			$this->validate($request, [
 				'CustomerCode' => 'required', 
@@ -94,7 +94,7 @@
 				'CustomerStatus' => $request->CustomerStatus,
 			]);
 			
-			$gnmstcustomerbank = $gnmstcustomerbank->create([
+			$gnmstcustomerbank = $gnmstcustomerbank->firstOrCreate([
 				'CompanyCode' => $request->CompanyCode, 
 				'CustomerCode' => $request->CustomerCode,
 				'BankCode' => $request->BankCode,
