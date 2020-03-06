@@ -9,6 +9,7 @@ class Gnmstcustomerprofitcenter extends Model
 		protected $table = 'gnMstCustomerProfitCenter';
 		protected $primaryKey = 'CustomerCode';
 		public $incrementing = false;
+		public $timestamps = false;
 		
 		protected $fillable = [
 	        'CompanyCode', 
