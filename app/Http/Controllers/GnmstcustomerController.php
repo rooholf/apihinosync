@@ -42,7 +42,7 @@
 				'CustomerCode' => 'required', 
 			]);
 			
-			$gnmstcustomer = $gnmstcustomer->create([
+			$gnmstcustomer = $gnmstcustomer->firstOrCreate([
 				'CompanyCode' => $request->CompanyCode, 
 				'CustomerCode' => $request->CustomerCode, 
 				'StandardCode' => $request->StandardCode, 
@@ -94,21 +94,21 @@
 				'CustomerStatus' => $request->CustomerStatus,
 			]);
 			
-			// $gnmstcustomerbank = $gnmstcustomerbank->create([
-			// 	'CompanyCode' => $request->CompanyCode, 
-			// 	'CustomerCode' => $request->CustomerCode,
-			// 	'BankCode' => $request->BankCode,
-			// 	'BankName' => $request->BankName,
-			// 	'AccountName' => $request->AccountName,
-			// 	'AccountBank' => $request->AccountBank,
-			// 	'CreatedBy' => $request->CreatedBy,
-			// 	'CreatedDate' => Carbon::now(),
-			// 	'LastUpdateBy' => $request->LastUpdateBy,
-			// 	'LastUpdateDate' => $request->LastUpdateDate,
-			// 	'isLocked' => $request->isLocked,
-			// 	'LockingBy' => $request->LockingBy,
-			// 	'LockingDate' => Carbon::now(),
-			// ]);
+			$gnmstcustomerbank = $gnmstcustomerbank->create([
+				'CompanyCode' => $request->CompanyCode, 
+				'CustomerCode' => $request->CustomerCode,
+				'BankCode' => $request->BankCode,
+				'BankName' => $request->BankName,
+				'AccountName' => $request->AccountName,
+				'AccountBank' => $request->AccountBank,
+				'CreatedBy' => $request->CreatedBy,
+				'CreatedDate' => Carbon::now(),
+				'LastUpdateBy' => $request->LastUpdateBy,
+				'LastUpdateDate' => Carbon::now(),
+				'isLocked' => $request->isLocked,
+				'LockingBy' => $request->LockingBy,
+				'LockingDate' => Carbon::now(),
+			]);
 
 			// $gnmstcustomerprofitcenter = $gnmstcustomerprofitcenter->create([
 			// 	'CompanyCode' => $request->CompanyCode,
