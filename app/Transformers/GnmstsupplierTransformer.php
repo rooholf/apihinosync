@@ -11,8 +11,8 @@ class GnmstsupplierTransformer extends TransformerAbstract
     public function transform(Gnmstsupplier $gnmstsupplier)
     {
         return [
-            'SupplierCode' => $gnmstcustomer->CompanyCode,
-            'SupplierName' => $gnmstcustomer->SupplierName,
+            'SupplierCode' => $gnmstsupplier->CompanyCode,
+            'SupplierName' => $gnmstsupplier->SupplierName,
         ];
     }
 }
