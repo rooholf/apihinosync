@@ -20,6 +20,8 @@
 		{
 			$supplier = $gnmstsupplier->find($request->SupplierCode);
 
+			// dd($supplier);
+
 			if ($supplier) {
 				return fractal()
 					->item($supplier)
@@ -31,14 +33,14 @@
                     'data' => 0
                 ], 200);
 			}
-			// dd($customer);
+			
 				
 		}
 
-		public function add(Request $request, Gnmstsupplier $gnmstsupplier)
+		public function add(Request $request, Gnmstsupplier $gnmstsupplier, Gnmstsupplierbank $gnmstsupplierbank)
 		{
 			$this->validate($request, [
-            'CustomerCode' => 'required', 
+            	'SupplierCode' => 'required', 
 			]);
 			
 			$gnmstsupplier = $gnmstsupplier->create([
@@ -46,7 +48,7 @@
 				'SupplierCode' => $request->SupplierCode,
 				'StandardCode' => $request->StandardCode,
 				'SupplierName' => $request->SupplierName,
-				'SupplierGovName' => $request->SupplierGovName,,
+				'SupplierGovName' => $request->SupplierGovName,
 				'Address1' => $request->Address1,
 				'Address2' => $request->Address2,
 				'Address3' => $request->Address3,
@@ -107,9 +109,9 @@
 			// ]);
 			
 			return fractal()
-            ->item($gnmstcustomer)
-            ->transformWith(new SupplierTransformer)
-            ->toArray();
+	            ->item($gnmstsupplier)
+	            ->transformWith(new GnmstsupplierTransformer)
+	            ->toArray();
 			
 		}
 		

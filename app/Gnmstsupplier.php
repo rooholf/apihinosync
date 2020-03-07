@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Gnmstsupplier extends Model
 	{
 		protected $table = 'gnMstSupplier';
-		protected $primaryKey = 'CustomerCode';
+		protected $primaryKey = 'SupplierCode';
 		public $incrementing = false;
+		public $timestamps = false;
 		
 		protected $fillable = [
 	        'CompanyCode', 

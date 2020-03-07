@@ -9,6 +9,7 @@ class Gnmstsupplierbank extends Model
 		protected $table = 'gnMstSupplierBank';
 		protected $primaryKey = 'CustomerCode';
 		public $incrementing = false;
+		public $timestamps = false;
 		
 		protected $fillable = [
 	        'CompanyCode', 
