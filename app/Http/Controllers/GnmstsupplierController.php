@@ -3,13 +3,38 @@
 	namespace App\Http\Controllers;
 	
 	use Illuminate\Http\Request;
+	use Illuminate\Support\Facades\DB; // DB
+	use Illuminate\Support\Str; //
 	
 	use App\Gnmstsupplier; 
 	use App\Gnmstsupplierbank; 
 	use App\Gnmstsupplierprofitcenter;
+	use App\Transformers\GnmstsupplierTransformer; //transformer
+	use Auth;
+
+	use Carbon\Carbon;
 	
 	class GnmstsupplierController extends Controller
 	{
+		public function show(Request $request, Gnmstsupplier $gnmstsupplier)
+		{
+			$supplier = $gnmstsupplier->find($request->SupplierCode);
+
+			if ($supplier) {
+				return fractal()
+					->item($supplier)
+					->transformWith(new GnmstsupplierTransformer)
+					->toArray();
+			} else {
+
+				return response()->json([
+                    'data' => 0
+                ], 200);
+			}
+			// dd($customer);
+				
+		}
+
 		public function add(Request $request, Gnmstsupplier $gnmstsupplier)
 		{
 			$this->validate($request, [
@@ -35,15 +60,15 @@
 				'ZipNo' => $request->ZipNo,
 				'isPKP' => $request->isPKP,
 				'NPWPNo' => $request->NPWPNo,
-				'NPWPDate' => $request->NPWPDate,
+				'NPWPDate' => Carbon::now(),
 				'Status' => $request->Status,
 				'CreatedBy' => $request->CreatedBy,
-				'CreatedDate' => $request->CreatedDate,
+				'CreatedDate' => Carbon::now(),
 				'LastUpdateBy' => $request->LastUpdateBy,
-				'LastUpdateDate' => $request->LastUpdateDate,
+				'LastUpdateDate' => Carbon::now(),
 				'isLocked' => $request->isLocked,
 				'LockingBy' => $request->LockingBy,
-				'LockingDate' => $request->LockingDate,
+				'LockingDate' => Carbon::now(),
 			]);
 
 			$gnmstsupplierbank = $gnmstsupplierbank->create([
@@ -54,32 +79,32 @@
 				'AccountName' => $request->AccountName,
 				'AccountBank' => $request->AccountBank,
 				'CreatedBy' => $request->CreatedBy,
-				'CreatedDate' => $request->CreatedDate,
+				'CreatedDate' => Carbon::now(),
 				'LastUpdateBy' => $request->LastUpdateBy,
-				'LastUpdateDate' => $request->LastUpdateDate,
+				'LastUpdateDate' => Carbon::now(),
 				'isLocked' => $request->isLocked,
 				'LockingBy' => $request->LockingBy,
-				'LockingDate' => $request->LockingDate,
+				'LockingDate' => Carbon::now(),
 			]);
 
-			$gnmstsupplierprofitcenter = $gnmstsupplierprofitcenter->create([
-				'CompanyCode' => $request->CompanyCode,
-				'BranchCode' => $request->BranchCode,
-				'SupplierCode' => $request->SupplierCode,
-				'ProfitCenterCode' => $request->ProfitCenterCode,
-				'ContactPerson' => $request->ContactPerson,
-				'SupplierClass' => $request->SupplierClass,
-				'SupplierGrade' => $request->SupplierGrade, 
-				'DiscPct' => $request->DiscPct,
-				'TOPCode' => $request->TOPCode,
-				'TaxCode' => $request->TaxCode,
-				'isBlackList' => $request->isBlackList,
-				'Status' => $request->Status,
-				'CreatedBy' => $request->CreatedBy,
-				'CreatedDate' => $request->CreatedDate,
-				'LastUpdateBy' => $request->LastUpdateBy,
-				'LastUpdateDate' => $request->LastUpdateDate,
-			]);
+			// $gnmstsupplierprofitcenter = $gnmstsupplierprofitcenter->create([
+			// 	'CompanyCode' => $request->CompanyCode,
+			// 	'BranchCode' => $request->BranchCode,
+			// 	'SupplierCode' => $request->SupplierCode,
+			// 	'ProfitCenterCode' => $request->ProfitCenterCode,
+			// 	'ContactPerson' => $request->ContactPerson,
+			// 	'SupplierClass' => $request->SupplierClass,
+			// 	'SupplierGrade' => $request->SupplierGrade, 
+			// 	'DiscPct' => $request->DiscPct,
+			// 	'TOPCode' => $request->TOPCode,
+			// 	'TaxCode' => $request->TaxCode,
+			// 	'isBlackList' => $request->isBlackList,
+			// 	'Status' => $request->Status,
+			// 	'CreatedBy' => $request->CreatedBy,
+			// 	'CreatedDate' => $request->CreatedDate,
+			// 	'LastUpdateBy' => $request->LastUpdateBy,
+			// 	'LastUpdateDate' => $request->LastUpdateDate,
+			// ]);
 			
 			return fractal()
             ->item($gnmstcustomer)
