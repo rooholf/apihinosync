@@ -121,7 +121,7 @@
             $iteminfo = $spmstiteminfo->where('CompanyCode', $request->CompanyCode)
             						->where('PartNo', $request->PartNo)
             						->where('SupplierCode', $request->SupplierCode);
-            						
+
             if ($iteminfo->count() < 1) {
             	$spmstiteminfo = $spmstiteminfo->create([
 	                'CompanyCode'=> $request->CompanyCode,
@@ -147,67 +147,79 @@
 	            ]);
             }
 
+            $itemloc = $spmstitemloc->where('CompanyCode', $request->CompanyCode)
+            						->where('PartNo', $request->PartNo)
+            						->where('BranchCode', $request->BranchCode);
+
+           	if ($itemloc->count() < 1) {
+           		$spmstitemloc = $spmstitemloc->create([
+	                'CompanyCode'=> $request->CompanyCode,
+	                'BranchCode'=> $request->BranchCode,
+	                'PartNo'=> $request->PartNo,
+	                'WarehouseCode'=> $request->WarehouseCode,
+	                'LocationCode'=> $request->LocationCode,
+	                'LocationSub1'=> $request->LocationSub1,
+	                'LocationSub2'=> $request->LocationSub2,
+	                'LocationSub3'=> $request->LocationSub3,
+	                'LocationSub4'=> $request->LocationSub4,
+	                'LocationSub5'=> $request->LocationSub5,
+	                'LocationSub6'=> $request->LocationSub6,
+	                'BOMInvAmount'=> $request->BOMInvAmount,
+	                'BOMInvQty'=> $request->BOMInvQty,
+	                'BOMInvCostPrice'=> $request->BOMInvCostPrice,
+	                'OnHand'=> $request->OnHand,
+	                'AllocationSP'=> $request->AllocationSP,
+	                'AllocationSR'=> $request->AllocationSR,
+	                'AllocationSL'=> $request->AllocationSL,
+	                'BackOrderSP'=> $request->BackOrderSP,
+	                'BackOrderSR'=> $request->BackOrderSR,
+	                'BackOrderSL'=> $request->BackOrderSL,
+	                'ReservedSP'=> $request->ReservedSP,
+	                'ReservedSR'=> $request->ReservedSR,
+	                'ReservedSL'=> $request->ReservedSL,
+	                'Status'=> $request->Status,
+	                'CreatedBy'=> $request->CreatedBy,
+	                'CreatedDate'=> Carbon::now(),
+	                'LastUpdateBy'=> $request->LastUpdateBy,
+	                'LastUpdateDate'=> Carbon::now(),
+	                'isLocked'=> $request->isLocked,
+	                'LockingBy'=> $request->LockingBy,
+	                'LockingDate'=> Carbon::now(),
+	            ]);
+           	}
+
 	            
-
-
-            $spmstitemloc = $spmstitemloc->create([
-                'CompanyCode'=> $request->CompanyCode,
-                'BranchCode'=> $request->BranchCode,
-                'PartNo'=> $request->PartNo,
-                'WarehouseCode'=> $request->WarehouseCode,
-                'LocationCode'=> $request->LocationCode,
-                'LocationSub1'=> $request->LocationSub1,
-                'LocationSub2'=> $request->LocationSub2,
-                'LocationSub3'=> $request->LocationSub3,
-                'LocationSub4'=> $request->LocationSub4,
-                'LocationSub5'=> $request->LocationSub5,
-                'LocationSub6'=> $request->LocationSub6,
-                'BOMInvAmount'=> $request->BOMInvAmount,
-                'BOMInvQty'=> $request->BOMInvQty,
-                'BOMInvCostPrice'=> $request->BOMInvCostPrice,
-                'OnHand'=> $request->OnHand,
-                'AllocationSP'=> $request->AllocationSP,
-                'AllocationSR'=> $request->AllocationSR,
-                'AllocationSL'=> $request->AllocationSL,
-                'BackOrderSP'=> $request->BackOrderSP,
-                'BackOrderSR'=> $request->BackOrderSR,
-                'BackOrderSL'=> $request->BackOrderSL,
-                'ReservedSP'=> $request->ReservedSP,
-                'ReservedSR'=> $request->ReservedSR,
-                'ReservedSL'=> $request->ReservedSL,
-                'Status'=> $request->Status,
-                'CreatedBy'=> $request->CreatedBy,
-                'CreatedDate'=> Carbon::now(),
-                'LastUpdateBy'=> $request->LastUpdateBy,
-                'LastUpdateDate'=> Carbon::now(),
-                'isLocked'=> $request->isLocked,
-                'LockingBy'=> $request->LockingBy,
-                'LockingDate'=> Carbon::now(),
-            ]);
 
             $RetailPriceInclTax = $request->RetailPrice * 1.1;
 
-			$spmstitemprice = $spmstitemprice->create([
-		        'CompanyCode' => $request->CompanyCode,
-				'BranchCode' => $request->BranchCode,
-				'PartNo' => $request->PartNo,
-				'RetailPrice' => $request->RetailPrice,
-				'RetailPriceInclTax' => $RetailPriceInclTax,
-				'PurchasePrice' => $request->PurchasePrice,
-				'CostPrice' => $RetailPriceInclTax,
-				'OldRetailPrice' => $request->OldRetailPrice,
-				'OldPurchasePrice' => $request->OldPurchasePrice,
-				'OldCostPrice' => $request->OldCostPrice,
-				'LastPurchaseUpdate' => $request->LastPurchaseUpdate,
-				'LastRetailPriceUpdate' => $request->LastRetailPriceUpdate,
-				'CreatedBy' => $request->CreatedBy,
-				'CreatedDate' => Carbon::now(),
-				'LastUpdateBy' => $request->LastUpdateBy,
-				'LastUpdateDate' => Carbon::now(),
-				'isLocked' => $request->isLocked,
-				'LockingBy' => $request->LockingBy,
-				'LockingDate' => Carbon::now(),
-			]);
+            $itemprice = $spmstitemprice->where('CompanyCode', $request->CompanyCode)
+            						->where('PartNo', $request->PartNo)
+            						->where('BranchCode', $request->BranchCode);
+
+            if ($itemprice->count() < 1) {
+            	$spmstitemprice = $spmstitemprice->create([
+			        'CompanyCode' => $request->CompanyCode,
+					'BranchCode' => $request->BranchCode,
+					'PartNo' => $request->PartNo,
+					'RetailPrice' => $request->RetailPrice,
+					'RetailPriceInclTax' => $RetailPriceInclTax,
+					'PurchasePrice' => $request->PurchasePrice,
+					'CostPrice' => $RetailPriceInclTax,
+					'OldRetailPrice' => $request->OldRetailPrice,
+					'OldPurchasePrice' => $request->OldPurchasePrice,
+					'OldCostPrice' => $request->OldCostPrice,
+					'LastPurchaseUpdate' => $request->LastPurchaseUpdate,
+					'LastRetailPriceUpdate' => $request->LastRetailPriceUpdate,
+					'CreatedBy' => $request->CreatedBy,
+					'CreatedDate' => Carbon::now(),
+					'LastUpdateBy' => $request->LastUpdateBy,
+					'LastUpdateDate' => Carbon::now(),
+					'isLocked' => $request->isLocked,
+					'LockingBy' => $request->LockingBy,
+					'LockingDate' => Carbon::now(),
+				]);
+            }
+				
 
 			return fractal()
                 ->item($spmstitem)
