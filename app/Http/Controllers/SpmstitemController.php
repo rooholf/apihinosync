@@ -299,6 +299,8 @@
             	]
             ];
 
+            Spmstitemloc::insert($spmstitemloc);
+
             // $spmstitemloc = $spmstitemloc->create([
             //     'CompanyCode'=> $request->CompanyCode,
             //     'BranchCode'=> $request->BranchCode,
@@ -380,6 +382,8 @@
 					'LockingDate' => Carbon::now(),
             	]
             ];
+
+            Spmstitemprice::insert($spmstitemprice);
 
 			// $spmstitemprice = $spmstitemprice->create([
 		 //        'CompanyCode' => $request->CompanyCode,
