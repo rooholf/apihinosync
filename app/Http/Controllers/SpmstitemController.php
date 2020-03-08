@@ -1,22 +1,26 @@
 <?php
-	
+
 	namespace App\Http\Controllers;
-	
-	use Illuminate\Http\Request;
-	
-	use App\Spmstitem; 
-	use App\Spmstiteminfo; 
+
+    use Illuminate\Http\Request;
+    use Illuminate\Support\Facades\DB; // DB
+	use Illuminate\Support\Str; //
+
+	use App\Spmstitem;
+	use App\Spmstiteminfo;
 	use App\Spmstitemloc;
-	use App\Spmstitemprice;
-	
+    use App\Spmstitemprice;
+    use App\Transformers\SpmstitemTransformer; //transformer
+	use Auth;
+
 	class SpmstitemController extends Controller
 	{
-		public function add(Request $request, Spmstitem $spmstitem)
+		public function add(Request $request, Spmstitem $spmstitem, Spmstiteminfo $spmstiteminfo, Spmstitemloc $spmstitemloc, Spmstitemprice $spmstitemprice)
 		{
 			$this->validate($request, [
-            	'PartNo' => 'required', 
+            	'PartNo' => 'required',
 			]);
-			
+
 			$spmstitem = $spmstitem->create([
 		        'CompanyCode' => $request->CompanyCode,
 				'BranchCode' => $request->BranchCode,
@@ -68,8 +72,66 @@
 				'LockingBy' => $request->LockingBy,
 				'LockingDate' => $request->LockingDate,
 				'PurcDiscPct' => $request->PurcDiscPct,
-			]);
-			
+            ]);
+
+            $spmstiteminfo = $spmstiteminfo->create([
+                'CompanyCode'=> $request->CompanyCode,
+                'PartNo'=> $request->PartNo,
+                'SupplierCode'=> $request->SupplierCode,
+                'PartName'=> $request->PartName,
+                'IsGenuinePart'=> $request->IsGenuinePart,
+                'DiscPct'=> $request->DiscPct,
+                'SalesUnit'=> $request->SalesUnit,
+                'OrderUnit'=> $request->OrderUnit,
+                'PurchasePrice'=> $request->PurchasePrice,
+                'UOMCode'=> $request->UOMCode,
+                'Status'=> $request->Status,
+                'ProductType'=> $request->ProductType,
+                'PartCategory'=> $request->PartCategory,
+                'CreatedBy'=> $request->CreatedBy,
+                'CreatedDate'=> $request->CreatedDate,
+                'LastUpdateBy'=> $request->LastUpdateBy,
+                'LastUpdateDate'=> $request->LastUpdateDate,
+                'isLocked'=> $request->isLocked,
+                'LockingBy'=> $request->LockingBy,
+                'LockingDate'=> $request->LockingDate,
+            ]);
+
+            $spmstitemloc = $spmstitemloc->create([
+                'CompanyCode'=> $request->CompanyCode,
+                'BranchCode'=> $request->BranchCode,
+                'PartNo'=> $request->PartNo,
+                'WarehouseCode'=> $request->WarehouseCode,
+                'LocationCode'=> $request->LocationCode,
+                'LocationSub1'=> $request->LocationSub1,
+                'LocationSub2'=> $request->LocationSub2,
+                'LocationSub3'=> $request->LocationSub3,
+                'LocationSub4'=> $request->LocationSub4,
+                'LocationSub5'=> $request->LocationSub5,
+                'LocationSub6'=> $request->LocationSub6,
+                'BOMInvAmount'=> $request->BOMInvAmount,
+                'BOMInvQty'=> $request->BOMInvQty,
+                'BOMInvCostPrice'=> $request->BOMInvCostPrice,
+                'OnHand'=> $request->OnHand,
+                'AllocationSP'=> $request->AllocationSP,
+                'AllocationSR'=> $request->AllocationSR,
+                'AllocationSL'=> $request->AllocationSL,
+                'BackOrderSP'=> $request->BackOrderSP,
+                'BackOrderSR'=> $request->BackOrderSR,
+                'BackOrderSL'=> $request->BackOrderSL,
+                'ReservedSP'=> $request->ReservedSP,
+                'ReservedSR'=> $request->ReservedSR,
+                'ReservedSL'=> $request->ReservedSL,
+                'Status'=> $request->Status,
+                'CreatedBy'=> $request->CreatedBy,
+                'CreatedDate'=> $request->CreatedDate,
+                'LastUpdateBy'=> $request->LastUpdateBy,
+                'LastUpdateDate'=> $request->LastUpdateDate,
+                'isLocked'=> $request->isLocked,
+                'LockingBy'=> $request->LockingBy,
+                'LockingDate'=> $request->LockingDate,
+            ]);
+
 			$spmstitemprice = $spmstitemprice->create([
 		        'CompanyCode' => $request->CompanyCode,
 				'BranchCode' => $request->BranchCode,
@@ -91,16 +153,16 @@
 				'LockingBy' => $request->LockingBy,
 				'LockingDate' => $request->LockingDate,
 			]);
-			
+
 			return fractal()
-            ->item($gnmstcustomer)
-            ->transformWith(new SupplierTransformer)
-            ->toArray();
-			
+                ->item($spmstitem)
+                ->transformWith(new SpmstitemTransformer)
+                ->toArray();
+
 		}
-		
+
 		public function update(Request $request, Spmstitem $spmstitem)
-		{	
+		{
 			$spmstitem->CompanyCode = $request->get('CompanyCode', $spmstitem->CompanyCode);
 			$spmstitem->BranchCode = $request->get('BranchCode', $spmstitem->BranchCode);
 			$spmstitem->PartNo = $request->get('PartNo', $spmstitem->PartNo);
@@ -152,8 +214,8 @@
 			$spmstitem->LockingDate = $request->get('LockingDate', $spmstitem->LockingDate);
 			$spmstitem->PurcDiscPct = $request->get('PurcDiscPct', $spmstitem->PurcDiscPct);
 			$spmstitem->save();
-			
-			
+
+
 			$spmstiteminfo->CompanyCode = $request->get('CompanyCode', $spmstiteminfo->CompanyCode);
 			$spmstiteminfo->PartNo = $request->get('PartNo', $spmstiteminfo->PartNo);
 			$spmstiteminfo->SupplierCode = $request->get('SupplierCode', $spmstiteminfo->SupplierCode);
@@ -175,7 +237,7 @@
 			$spmstiteminfo->LockingBy = $request->get('LockingBy', $spmstiteminfo->LockingBy);
 			$spmstiteminfo->LockingDate = $request->get('LockingDate', $spmstiteminfo->LockingDate);
 			$spmstiteminfo->save();
-			
+
 			$spmstitemloc->CompanyCode= $request->get('CompanyCode', $spmstitemloc->CompanyCode);
 			$spmstitemloc->BranchCode= $request->get('BranchCode', $spmstitemloc->BranchCode);
 			$spmstitemloc->PartNo= $request->get('PartNo', $spmstitemloc->PartNo);
@@ -209,7 +271,7 @@
 			$spmstitemloc->LockingBy= $request->get('LockingBy', $spmstitemloc->LockingBy);
 			$spmstitemloc->LockingDate= $request->get('LockingDate', $spmstitemloc->LockingDate);
 			$spmstitemloc->save();
-			
+
 			$spmstitemprice->CompanyCode= $request->get('CompanyCode', $spmstitemprice->CompanyCode);
 			$spmstitemprice->BranchCode= $request->get('BranchCode', $spmstitemprice->BranchCode);
 			$spmstitemprice->PartNo= $request->get('PartNo', $spmstitemprice->PartNo);
@@ -230,10 +292,10 @@
 			$spmstitemprice->LockingBy= $request->get('LockingBy', $spmstitemprice->LockingBy);
 			$spmstitemprice->LockingDate= $request->get('LockingDate', $spmstitemprice->LockingDate);
 			$spmstitemprice->save();
-			
+
 			return fractal()
-            ->item($gnmstcustomer)
-            ->transformWith(new SupplierTransformer)
-            ->toArray();
-		}		
+                ->item($gnmstcustomer)
+                ->transformWith(new SupplierTransformer)
+                ->toArray();
+		}
 	}
