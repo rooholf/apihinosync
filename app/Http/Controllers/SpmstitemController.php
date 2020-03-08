@@ -38,6 +38,27 @@
 				
 		}
 
+		public function showtwo(Request $request, Spmstitem $spmstitem)
+		{
+			$items = $spmstitem->where('PartNo', $request->PartNo)
+								->where('CompanyCode', 'TUA00')
+								->where('BranchCode', '002')->first();
+
+			if ($items) {
+				return fractal()
+					->item($items)
+					->transformWith(new SpmstitemTransformer)
+					->toArray();
+			} else {
+
+				return response()->json([
+                    'data' => 0
+                ], 200);
+			}
+			// dd($customer);
+				
+		}
+
 		public function add(Request $request, Spmstitem $spmstitem, Spmstiteminfo $spmstiteminfo, Spmstitemloc $spmstitemloc, Spmstitemprice $spmstitemprice)
 		{
 			$this->validate($request, [
@@ -157,7 +178,7 @@
             ]);
 
             $RetailPriceInclTax = $request->RetailPrice * 1.1;
-            
+
 			$spmstitemprice = $spmstitemprice->create([
 		        'CompanyCode' => $request->CompanyCode,
 				'BranchCode' => $request->BranchCode,

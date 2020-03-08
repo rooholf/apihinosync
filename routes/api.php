@@ -25,4 +25,5 @@ Route::post('supplier/show', 'GnmstsupplierController@show');
 Route::post('supplier/add', 'GnmstsupplierController@add');
 
 Route::post('item/show', 'SpmstitemController@show');
+Route::post('item/showtwo', 'SpmstitemController@showtwo');
 Route::post('item/add', 'SpmstitemController@add');
