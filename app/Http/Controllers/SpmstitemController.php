@@ -37,7 +37,7 @@
 				
 		}
 
-		public function add(Request $request, Spmstitem $spmstitem, Spmstiteminfo $spmstiteminfo, Spmstitemloc $spmstitemloc, Spmstitemprice $spmstitemprice)
+		public function add(Request $request, Spmstiteminfo $spmstiteminfo)
 		{
 			$this->validate($request, [
             	'PartNo' => 'required',
