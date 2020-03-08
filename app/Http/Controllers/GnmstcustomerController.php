@@ -112,8 +112,7 @@
 
 			$profitcenter = $gnmstcustomerprofitcenter->find($gnmstcustomer->CustomerCode);
 			if (!$profitcenter) {
-				$profit = [
-					[
+				$profit1 = [
 						'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => '000',
 						'CustomerCode' => $request->CustomerCode,
@@ -144,8 +143,8 @@
 						'isLocked' => $request->isLocked,
 						'LockingBy' => $request->LockingBy,
 						'LockingDate' => Carbon::now(),
-					],
-					[
+				];
+				$profit2 = [
 						'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => '000',
 						'CustomerCode' => $request->CustomerCode,
@@ -176,8 +175,8 @@
 						'isLocked' => $request->isLocked,
 						'LockingBy' => $request->LockingBy,
 						'LockingDate' => Carbon::now(),
-					],
-					[
+				];
+				$profit3 = [
 						'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => '002',
 						'CustomerCode' => $request->CustomerCode,
@@ -208,8 +207,8 @@
 						'isLocked' => $request->isLocked,
 						'LockingBy' => $request->LockingBy,
 						'LockingDate' => Carbon::now(),
-					],
-					[
+				];
+				$profit4 = [
 						'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => '002',
 						'CustomerCode' => $request->CustomerCode,
@@ -240,10 +239,15 @@
 						'isLocked' => $request->isLocked,
 						'LockingBy' => $request->LockingBy,
 						'LockingDate' => Carbon::now(),
-					],
+				];
 
 				];
-				$gnmstcustomerprofitcenter = $gnmstcustomerprofitcenter->createMany($profit);
+				$gnmstcustomerprofitcenter = $gnmstcustomerprofitcenter->firstOrCreate(
+					$profit1,
+					$profit2,
+					$profit3,
+					$profit4,
+				);
 			}
 
 			return fractal()
