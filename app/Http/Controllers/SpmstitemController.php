@@ -19,12 +19,13 @@
 	{
 		public function show(Request $request, Spmstitem $spmstitem)
 		{
-			$items = Spmstitem::where('PartNo', $request->PartNo)
-								->where('CompanyCode', 'TUA00');
+			$items = $spmstitem->where('PartNo', $request->PartNo)
+								->where('CompanyCode', 'TUA00')
+								->where('BranchCode', '000')->first();
 
-			if ($items->count() > 0) {
+			if ($items) {
 				return fractal()
-					->collection($items->get())
+					->item($items)
 					->transformWith(new SpmstitemTransformer)
 					->toArray();
 			} else {
@@ -37,120 +38,11 @@
 				
 		}
 
-		public function add(Request $request, Spmstiteminfo $spmstiteminfo)
+		public function add(Request $request, Spmstitem $spmstitem, Spmstiteminfo $spmstiteminfo, Spmstitemloc $spmstitemloc, Spmstitemprice $spmstitemprice)
 		{
 			$this->validate($request, [
             	'PartNo' => 'required',
 			]);
-
-			// $spmstitem = [
-			// 	[
-			// 		'CompanyCode' => $request->CompanyCode,
-			// 		'BranchCode' => '000',
-			// 		'PartNo' => $request->PartNo,
-			// 		'MovingCode' => $request->MovingCode,
-			// 		'DemandAverage' => $request->DemandAverage,
-			// 		'BornDate' => $request->BornDate,
-			// 		'ABCClass' => $request->ABCClass,
-			// 		'LastDemandDate' => $request->LastDemandDate,
-			// 		'LastPurchaseDate' => $request->LastPurchaseDate,
-			// 		'LastSalesDate' => $request->LastSalesDate,
-			// 		'BOMInvAmt' => $request->BOMInvAmt,
-			// 		'BOMInvQty' => $request->BOMInvQty,
-			// 		'BOMInvCostPrice' => $request->BOMInvCostPrice,
-			// 		'OnOrder' => $request->OnOrder,
-			// 		'InTransit' => $request->InTransit,
-			// 		'OnHand' => $request->OnHand,
-			// 		'AllocationSP' => $request->AllocationSP,
-			// 		'AllocationSR' => $request->AllocationSR,
-			// 		'AllocationSL' => $request->AllocationSL,
-			// 		'BackOrderSP' => $request->BackOrderSP,
-			// 		'BackOrderSR' => $request->BackOrderSR,
-			// 		'BackOrderSL' => $request->BackOrderSL,
-			// 		'ReservedSP' => $request->ReservedSP,
-			// 		'ReservedSR' => $request->ReservedSR,
-			// 		'ReservedSL' => $request->ReservedSL,
-			// 		'BorrowQty' => $request->BorrowQty,
-			// 		'BorrowedQty' => $request->BorrowedQty,
-			// 		'SalesUnit' => $request->SalesUnit,
-			// 		'OrderUnit' => $request->OrderUnit,
-			// 		'OrderPointQty' => $request->OrderPointQty,
-			// 		'SafetyStockQty' => $request->SafetyStockQty,
-			// 		'LeadTime' => $request->LeadTime,
-			// 		'OrderCycle' => $request->OrderCycle,
-			// 		'SafetyStock' => $request->SafetyStock,
-			// 		'Utility1' => $request->Utility1,
-			// 		'Utility2' => $request->Utility2,
-			// 		'Utility3' => $request->Utility3,
-			// 		'Utility4' => $request->Utility4,
-			// 		'TypeOfGoods' => $request->TypeOfGoods,
-			// 		'Status' => $request->Status,
-			// 		'ProductType' => $request->ProductType,
-			// 		'PartCategory' => $request->PartCategory,
-			// 		'CreatedBy' => $request->CreatedBy,
-			// 		'CreatedDate' => Carbon::now(),
-			// 		'LastUpdateBy' => $request->LastUpdateBy,
-			// 		'LastUpdateDate' => Carbon::now(),
-			// 		'isLocked' => $request->isLocked,
-			// 		'LockingBy' => $request->LockingBy,
-			// 		'LockingDate' => Carbon::now(),
-			// 		'PurcDiscPct' => $request->PurcDiscPct,
-			// 	],
-			// 	[
-			// 		'CompanyCode' => $request->CompanyCode,
-			// 		'BranchCode' => '002',
-			// 		'PartNo' => $request->PartNo,
-			// 		'MovingCode' => $request->MovingCode,
-			// 		'DemandAverage' => $request->DemandAverage,
-			// 		'BornDate' => $request->BornDate,
-			// 		'ABCClass' => $request->ABCClass,
-			// 		'LastDemandDate' => $request->LastDemandDate,
-			// 		'LastPurchaseDate' => $request->LastPurchaseDate,
-			// 		'LastSalesDate' => $request->LastSalesDate,
-			// 		'BOMInvAmt' => $request->BOMInvAmt,
-			// 		'BOMInvQty' => $request->BOMInvQty,
-			// 		'BOMInvCostPrice' => $request->BOMInvCostPrice,
-			// 		'OnOrder' => $request->OnOrder,
-			// 		'InTransit' => $request->InTransit,
-			// 		'OnHand' => $request->OnHand,
-			// 		'AllocationSP' => $request->AllocationSP,
-			// 		'AllocationSR' => $request->AllocationSR,
-			// 		'AllocationSL' => $request->AllocationSL,
-			// 		'BackOrderSP' => $request->BackOrderSP,
-			// 		'BackOrderSR' => $request->BackOrderSR,
-			// 		'BackOrderSL' => $request->BackOrderSL,
-			// 		'ReservedSP' => $request->ReservedSP,
-			// 		'ReservedSR' => $request->ReservedSR,
-			// 		'ReservedSL' => $request->ReservedSL,
-			// 		'BorrowQty' => $request->BorrowQty,
-			// 		'BorrowedQty' => $request->BorrowedQty,
-			// 		'SalesUnit' => $request->SalesUnit,
-			// 		'OrderUnit' => $request->OrderUnit,
-			// 		'OrderPointQty' => $request->OrderPointQty,
-			// 		'SafetyStockQty' => $request->SafetyStockQty,
-			// 		'LeadTime' => $request->LeadTime,
-			// 		'OrderCycle' => $request->OrderCycle,
-			// 		'SafetyStock' => $request->SafetyStock,
-			// 		'Utility1' => $request->Utility1,
-			// 		'Utility2' => $request->Utility2,
-			// 		'Utility3' => $request->Utility3,
-			// 		'Utility4' => $request->Utility4,
-			// 		'TypeOfGoods' => $request->TypeOfGoods,
-			// 		'Status' => $request->Status,
-			// 		'ProductType' => $request->ProductType,
-			// 		'PartCategory' => $request->PartCategory,
-			// 		'CreatedBy' => $request->CreatedBy,
-			// 		'CreatedDate' => Carbon::now(),
-			// 		'LastUpdateBy' => $request->LastUpdateBy,
-			// 		'LastUpdateDate' => Carbon::now(),
-			// 		'isLocked' => $request->isLocked,
-			// 		'LockingBy' => $request->LockingBy,
-			// 		'LockingDate' => Carbon::now(),
-			// 		'PurcDiscPct' => $request->PurcDiscPct,
-			// 	]
-			// ];
-
-			// Spmstitem::insert($spmstitem);
 
 			$spmstitem = $spmstitem->create([
 		        'CompanyCode' => $request->CompanyCode,
@@ -228,78 +120,6 @@
                 'LockingDate'=> Carbon::now(),
             ]);
 
-            // $spmstitemloc = [
-            // 	[
-            // 		'CompanyCode'=> $request->CompanyCode,
-	           //      'BranchCode'=> '000',
-	           //      'PartNo'=> $request->PartNo,
-	           //      'WarehouseCode'=> $request->WarehouseCode,
-	           //      'LocationCode'=> $request->LocationCode,
-	           //      'LocationSub1'=> $request->LocationSub1,
-	           //      'LocationSub2'=> $request->LocationSub2,
-	           //      'LocationSub3'=> $request->LocationSub3,
-	           //      'LocationSub4'=> $request->LocationSub4,
-	           //      'LocationSub5'=> $request->LocationSub5,
-	           //      'LocationSub6'=> $request->LocationSub6,
-	           //      'BOMInvAmount'=> $request->BOMInvAmount,
-	           //      'BOMInvQty'=> $request->BOMInvQty,
-	           //      'BOMInvCostPrice'=> $request->BOMInvCostPrice,
-	           //      'OnHand'=> $request->OnHand,
-	           //      'AllocationSP'=> $request->AllocationSP,
-	           //      'AllocationSR'=> $request->AllocationSR,
-	           //      'AllocationSL'=> $request->AllocationSL,
-	           //      'BackOrderSP'=> $request->BackOrderSP,
-	           //      'BackOrderSR'=> $request->BackOrderSR,
-	           //      'BackOrderSL'=> $request->BackOrderSL,
-	           //      'ReservedSP'=> $request->ReservedSP,
-	           //      'ReservedSR'=> $request->ReservedSR,
-	           //      'ReservedSL'=> $request->ReservedSL,
-	           //      'Status'=> $request->Status,
-	           //      'CreatedBy'=> $request->CreatedBy,
-	           //      'CreatedDate'=> Carbon::now(),
-	           //      'LastUpdateBy'=> $request->LastUpdateBy,
-	           //      'LastUpdateDate'=> Carbon::now(),
-	           //      'isLocked'=> $request->isLocked,
-	           //      'LockingBy'=> $request->LockingBy,
-	           //      'LockingDate'=> Carbon::now(),
-            // 	],
-            // 	[
-            // 		'CompanyCode'=> $request->CompanyCode,
-	           //      'BranchCode'=> '002',
-	           //      'PartNo'=> $request->PartNo,
-	           //      'WarehouseCode'=> $request->WarehouseCode,
-	           //      'LocationCode'=> $request->LocationCode,
-	           //      'LocationSub1'=> $request->LocationSub1,
-	           //      'LocationSub2'=> $request->LocationSub2,
-	           //      'LocationSub3'=> $request->LocationSub3,
-	           //      'LocationSub4'=> $request->LocationSub4,
-	           //      'LocationSub5'=> $request->LocationSub5,
-	           //      'LocationSub6'=> $request->LocationSub6,
-	           //      'BOMInvAmount'=> $request->BOMInvAmount,
-	           //      'BOMInvQty'=> $request->BOMInvQty,
-	           //      'BOMInvCostPrice'=> $request->BOMInvCostPrice,
-	           //      'OnHand'=> $request->OnHand,
-	           //      'AllocationSP'=> $request->AllocationSP,
-	           //      'AllocationSR'=> $request->AllocationSR,
-	           //      'AllocationSL'=> $request->AllocationSL,
-	           //      'BackOrderSP'=> $request->BackOrderSP,
-	           //      'BackOrderSR'=> $request->BackOrderSR,
-	           //      'BackOrderSL'=> $request->BackOrderSL,
-	           //      'ReservedSP'=> $request->ReservedSP,
-	           //      'ReservedSR'=> $request->ReservedSR,
-	           //      'ReservedSL'=> $request->ReservedSL,
-	           //      'Status'=> $request->Status,
-	           //      'CreatedBy'=> $request->CreatedBy,
-	           //      'CreatedDate'=> Carbon::now(),
-	           //      'LastUpdateBy'=> $request->LastUpdateBy,
-	           //      'LastUpdateDate'=> Carbon::now(),
-	           //      'isLocked'=> $request->isLocked,
-	           //      'LockingBy'=> $request->LockingBy,
-	           //      'LockingDate'=> Carbon::now(),
-            // 	]
-            // ];
-
-            // Spmstitemloc::insert($spmstitemloc);
 
             $spmstitemloc = $spmstitemloc->create([
                 'CompanyCode'=> $request->CompanyCode,
@@ -337,54 +157,7 @@
             ]);
 
             $RetailPriceInclTax = $request->RetailPrice * 1.1;
-
-     //        $spmstitemprice = [
-     //        	[
-     //        		'CompanyCode' => $request->CompanyCode,
-					// 'BranchCode' => '000',
-					// 'PartNo' => $request->PartNo,
-					// 'RetailPrice' => $request->RetailPrice,
-					// 'RetailPriceInclTax' => $RetailPriceInclTax,
-					// 'PurchasePrice' => $request->PurchasePrice,
-					// 'CostPrice' => $RetailPriceInclTax,
-					// 'OldRetailPrice' => $request->OldRetailPrice,
-					// 'OldPurchasePrice' => $request->OldPurchasePrice,
-					// 'OldCostPrice' => $request->OldCostPrice,
-					// 'LastPurchaseUpdate' => $request->LastPurchaseUpdate,
-					// 'LastRetailPriceUpdate' => $request->LastRetailPriceUpdate,
-					// 'CreatedBy' => $request->CreatedBy,
-					// 'CreatedDate' => Carbon::now(),
-					// 'LastUpdateBy' => $request->LastUpdateBy,
-					// 'LastUpdateDate' => Carbon::now(),
-					// 'isLocked' => $request->isLocked,
-					// 'LockingBy' => $request->LockingBy,
-					// 'LockingDate' => Carbon::now(),
-     //        	],
-     //        	[
-     //        		'CompanyCode' => $request->CompanyCode,
-					// 'BranchCode' => '002',
-					// 'PartNo' => $request->PartNo,
-					// 'RetailPrice' => $request->RetailPrice,
-					// 'RetailPriceInclTax' => $RetailPriceInclTax,
-					// 'PurchasePrice' => $request->PurchasePrice,
-					// 'CostPrice' => $RetailPriceInclTax,
-					// 'OldRetailPrice' => $request->OldRetailPrice,
-					// 'OldPurchasePrice' => $request->OldPurchasePrice,
-					// 'OldCostPrice' => $request->OldCostPrice,
-					// 'LastPurchaseUpdate' => $request->LastPurchaseUpdate,
-					// 'LastRetailPriceUpdate' => $request->LastRetailPriceUpdate,
-					// 'CreatedBy' => $request->CreatedBy,
-					// 'CreatedDate' => Carbon::now(),
-					// 'LastUpdateBy' => $request->LastUpdateBy,
-					// 'LastUpdateDate' => Carbon::now(),
-					// 'isLocked' => $request->isLocked,
-					// 'LockingBy' => $request->LockingBy,
-					// 'LockingDate' => Carbon::now(),
-     //        	]
-     //        ];
-
-     //        Spmstitemprice::insert($spmstitemprice);
-
+            
 			$spmstitemprice = $spmstitemprice->create([
 		        'CompanyCode' => $request->CompanyCode,
 				'BranchCode' => $request->BranchCode,
