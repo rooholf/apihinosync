@@ -43,7 +43,7 @@
             	'PartNo' => 'required',
 			]);
 
-			$spmstiem = [
+			$spmstitem = [
 				[
 					'CompanyCode' => $request->CompanyCode,
 					'BranchCode' => '000',
