@@ -20,11 +20,11 @@
 		public function show(Request $request, Spmstitem $spmstitem)
 		{
 			$items = Spmstitem::where('PartNo', $request->PartNo)
-								->where('CompanyCode', 'TUA00')->get();
+								->where('CompanyCode', 'TUA00');
 
-			if ($items) {
+			if ($items->count() > 0) {
 				return fractal()
-					->collection($items)
+					->collection($items->get())
 					->transformWith(new SpmstitemTransformer)
 					->toArray();
 			} else {
