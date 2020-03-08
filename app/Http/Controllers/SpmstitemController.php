@@ -19,7 +19,9 @@
 	{
 		public function show(Request $request, Spmstitem $spmstitem)
 		{
-			$items = $spmstitem->find($request->PartNo);
+			$items = Spmstitem::where('PartNo',$request->PartNo)
+								->where('CompanyCode', $request->CompanyCode)
+								->where('BranchCode', $request->BranchCode)->first();
 
 			if ($items) {
 				return fractal()
