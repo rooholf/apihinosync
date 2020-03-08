@@ -110,7 +110,7 @@
 				'LockingDate' => Carbon::now(),
 			]);
 
-			$profitcenter = $gnmstcustomerprofitcenter->where('CustomerCode', $gnmstcustomer->CustomerCode)->get();
+			$profitcenter = $gnmstcustomerprofitcenter->where('CustomerCode', $request->CustomerCode)->get();
 			if (!$profitcenter) {
 				$profit1 = [
 						'CompanyCode' => $request->CompanyCode,
@@ -240,7 +240,7 @@
 						'LockingBy' => $request->LockingBy,
 						'LockingDate' => Carbon::now(),
 				];
-				
+
 				$gnmstcustomerprofitcenter = $gnmstcustomerprofitcenter->firstOrCreate(
 					$profit1,
 					$profit2,
