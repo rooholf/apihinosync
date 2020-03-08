@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Spmstitemloc extends Model
 	{
 		protected $table = 'spMstItemLoc';
-		protected $primaryKey = 'CustomerCode';
+		protected $primaryKey = ['CompanyCode', 'BranchCode', 'PartNo', 'WarehouseCode'];
 		public $incrementing = false;
+		public $timestamps = false;
 		
 		protected $fillable = [
 	        'CompanyCode', 

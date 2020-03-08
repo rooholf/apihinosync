@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Spmstitem extends Model
 	{
 		protected $table = 'spMstItems';
-		protected $primaryKey = 'CustomerCode';
+		protected $primaryKey = ['CompanyCode','BranchCode', 'PartNo'];
 		public $incrementing = false;
+		public $timestamps = false;
 		
 		protected $fillable = [
 	        'CompanyCode', 

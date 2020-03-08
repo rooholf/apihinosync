@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Spmstitemprice extends Model
 	{
 		protected $table = 'spMstItemPrice';
-		protected $primaryKey = 'CustomerCode';
+		protected $primaryKey = ['CompanyCode', 'BranchCode', 'PartNo'];
 		public $incrementing = false;
+		public $timestamps = false;
 		
 		protected $fillable = [
 	        'CompanyCode', 

@@ -23,3 +23,6 @@ Route::put('customer/update/{gnmstcustomer}', 'GnmstcustomerController@update');
 
 Route::post('supplier/show', 'GnmstsupplierController@show');
 Route::post('supplier/add', 'GnmstsupplierController@add');
+
+Route::post('item/show', 'SpmstitemController@show');
+Route::post('item/add', 'SpmstitemController@add');

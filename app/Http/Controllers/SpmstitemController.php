@@ -13,6 +13,8 @@
     use App\Transformers\SpmstitemTransformer; //transformer
 	use Auth;
 
+	use Carbon\Carbon;
+
 	class SpmstitemController extends Controller
 	{
 		public function add(Request $request, Spmstitem $spmstitem, Spmstiteminfo $spmstiteminfo, Spmstitemloc $spmstitemloc, Spmstitemprice $spmstitemprice)
@@ -65,12 +67,12 @@
 				'ProductType' => $request->ProductType,
 				'PartCategory' => $request->PartCategory,
 				'CreatedBy' => $request->CreatedBy,
-				'CreatedDate' => $request->CreatedDate,
+				'CreatedDate' => Carbon::now(),
 				'LastUpdateBy' => $request->LastUpdateBy,
-				'LastUpdateDate' => $request->LastUpdateDate,
+				'LastUpdateDate' => Carbon::now(),
 				'isLocked' => $request->isLocked,
 				'LockingBy' => $request->LockingBy,
-				'LockingDate' => $request->LockingDate,
+				'LockingDate' => Carbon::now(),
 				'PurcDiscPct' => $request->PurcDiscPct,
             ]);
 
@@ -89,12 +91,12 @@
                 'ProductType'=> $request->ProductType,
                 'PartCategory'=> $request->PartCategory,
                 'CreatedBy'=> $request->CreatedBy,
-                'CreatedDate'=> $request->CreatedDate,
+                'CreatedDate'=> Carbon::now(),
                 'LastUpdateBy'=> $request->LastUpdateBy,
-                'LastUpdateDate'=> $request->LastUpdateDate,
+                'LastUpdateDate'=> Carbon::now(),
                 'isLocked'=> $request->isLocked,
                 'LockingBy'=> $request->LockingBy,
-                'LockingDate'=> $request->LockingDate,
+                'LockingDate'=> Carbon::now(),
             ]);
 
             $spmstitemloc = $spmstitemloc->create([
@@ -124,34 +126,36 @@
                 'ReservedSL'=> $request->ReservedSL,
                 'Status'=> $request->Status,
                 'CreatedBy'=> $request->CreatedBy,
-                'CreatedDate'=> $request->CreatedDate,
+                'CreatedDate'=> Carbon::now(),
                 'LastUpdateBy'=> $request->LastUpdateBy,
-                'LastUpdateDate'=> $request->LastUpdateDate,
+                'LastUpdateDate'=> Carbon::now(),
                 'isLocked'=> $request->isLocked,
                 'LockingBy'=> $request->LockingBy,
-                'LockingDate'=> $request->LockingDate,
+                'LockingDate'=> Carbon::now(),
             ]);
+
+            $RetailPriceInclTax = $request->RetailPrice * 1.1;
 
 			$spmstitemprice = $spmstitemprice->create([
 		        'CompanyCode' => $request->CompanyCode,
 				'BranchCode' => $request->BranchCode,
 				'PartNo' => $request->PartNo,
 				'RetailPrice' => $request->RetailPrice,
-				'RetailPriceInclTax' => $request->RetailPriceInclTax,
+				'RetailPriceInclTax' => $RetailPriceInclTax,
 				'PurchasePrice' => $request->PurchasePrice,
-				'CostPrice' => $request->CostPrice,
+				'CostPrice' => $RetailPriceInclTax,
 				'OldRetailPrice' => $request->OldRetailPrice,
 				'OldPurchasePrice' => $request->OldPurchasePrice,
 				'OldCostPrice' => $request->OldCostPrice,
 				'LastPurchaseUpdate' => $request->LastPurchaseUpdate,
 				'LastRetailPriceUpdate' => $request->LastRetailPriceUpdate,
 				'CreatedBy' => $request->CreatedBy,
-				'CreatedDate' => $request->CreatedDate,
+				'CreatedDate' => Carbon::now(),
 				'LastUpdateBy' => $request->LastUpdateBy,
-				'LastUpdateDate' => $request->LastUpdateDate,
+				'LastUpdateDate' => Carbon::now(),
 				'isLocked' => $request->isLocked,
 				'LockingBy' => $request->LockingBy,
-				'LockingDate' => $request->LockingDate,
+				'LockingDate' => Carbon::now(),
 			]);
 
 			return fractal()
