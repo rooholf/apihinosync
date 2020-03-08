@@ -89,7 +89,7 @@
 				'LockingDate' => Carbon::now(),
 			]);
 
-			$profitcenter = Gnmstsupplierprofitcenter::where('CustomerCode', $request->CustomerCode);
+			$profitcenter = Gnmstsupplierprofitcenter::where('SupplierCode', $request->CustomerCode);
 			if ($profitcenter->count() < 1) {
 				$profit = [
 					[
