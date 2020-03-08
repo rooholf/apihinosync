@@ -243,7 +243,7 @@
 					],
 
 				];
-				$gnmstcustomerprofitcenter = $gnmstcustomerprofitcenter->create($profit);
+				$gnmstcustomerprofitcenter = $gnmstcustomerprofitcenter->createMany($profit);
 			}
 
 			return fractal()
