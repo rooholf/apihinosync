@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Spmstitem extends Model
 	{
 		protected $table = 'spMstItems';
-		protected $primaryKey = ['CompanyCode','BranchCode', 'PartNo'];
+		protected $primaryKey = 'PartNo';
 		public $incrementing = false;
 		public $timestamps = false;
 		

@@ -17,6 +17,25 @@
 
 	class SpmstitemController extends Controller
 	{
+		public function show(Request $request, Spmstitem $spmstitem)
+		{
+			$items = $spmstitem->find($request->PartNo);
+
+			if ($items) {
+				return fractal()
+					->item($items)
+					->transformWith(new SpmstitemTransformer)
+					->toArray();
+			} else {
+
+				return response()->json([
+                    'data' => 0
+                ], 200);
+			}
+			// dd($customer);
+				
+		}
+
 		public function add(Request $request, Spmstitem $spmstitem, Spmstiteminfo $spmstiteminfo, Spmstitemloc $spmstitemloc, Spmstitemprice $spmstitemprice)
 		{
 			$this->validate($request, [
