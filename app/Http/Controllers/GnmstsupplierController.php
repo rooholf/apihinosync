@@ -89,24 +89,85 @@
 				'LockingDate' => Carbon::now(),
 			]);
 
-			// $gnmstsupplierprofitcenter = $gnmstsupplierprofitcenter->create([
-			// 	'CompanyCode' => $request->CompanyCode,
-			// 	'BranchCode' => $request->BranchCode,
-			// 	'SupplierCode' => $request->SupplierCode,
-			// 	'ProfitCenterCode' => $request->ProfitCenterCode,
-			// 	'ContactPerson' => $request->ContactPerson,
-			// 	'SupplierClass' => $request->SupplierClass,
-			// 	'SupplierGrade' => $request->SupplierGrade, 
-			// 	'DiscPct' => $request->DiscPct,
-			// 	'TOPCode' => $request->TOPCode,
-			// 	'TaxCode' => $request->TaxCode,
-			// 	'isBlackList' => $request->isBlackList,
-			// 	'Status' => $request->Status,
-			// 	'CreatedBy' => $request->CreatedBy,
-			// 	'CreatedDate' => $request->CreatedDate,
-			// 	'LastUpdateBy' => $request->LastUpdateBy,
-			// 	'LastUpdateDate' => $request->LastUpdateDate,
-			// ]);
+			$profitcenter = Gnmstsupplierprofitcenter::where('CustomerCode', $request->CustomerCode);
+			if ($profitcenter->count() < 1) {
+				$profit = [
+					[
+						'CompanyCode' => $request->CompanyCode,
+						'BranchCode' => '000',
+						'SupplierCode' => $request->SupplierCode,
+						'ProfitCenterCode' => '200',
+						'ContactPerson' => $request->HPNo,
+						'SupplierClass' => 'HV2',
+						'SupplierGrade' => 'A', 
+						'DiscPct' => 0,
+						'TOPCode' => 'C30',
+						'TaxCode' => 'PPN',
+						'isBlackList' => 'False',
+						'Status' => 1,
+						'CreatedBy' => $request->CreatedBy,
+						'CreatedDate' => Carbon::now(),
+						'LastUpdateBy' => $request->LastUpdateBy,
+						'LastUpdateDate' => Carbon::now(),
+					],
+					[
+						'CompanyCode' => $request->CompanyCode,
+						'BranchCode' => '000',
+						'SupplierCode' => $request->SupplierCode,
+						'ProfitCenterCode' => '300',
+						'ContactPerson' => $request->HPNo,
+						'SupplierClass' => 'HV2-SP',
+						'SupplierGrade' => 'A', 
+						'DiscPct' => 0,
+						'TOPCode' => 'C30',
+						'TaxCode' => 'PPN',
+						'isBlackList' => 'False',
+						'Status' => 1,
+						'CreatedBy' => $request->CreatedBy,
+						'CreatedDate' => Carbon::now(),
+						'LastUpdateBy' => $request->LastUpdateBy,
+						'LastUpdateDate' => Carbon::now(),
+					],
+					[
+						'CompanyCode' => $request->CompanyCode,
+						'BranchCode' => '002',
+						'SupplierCode' => $request->SupplierCode,
+						'ProfitCenterCode' => '200',
+						'ContactPerson' => $request->HPNo,
+						'SupplierClass' => 'HV2',
+						'SupplierGrade' => 'A', 
+						'DiscPct' => 0,
+						'TOPCode' => 'C30',
+						'TaxCode' => 'PPN',
+						'isBlackList' => 'False',
+						'Status' => 1,
+						'CreatedBy' => $request->CreatedBy,
+						'CreatedDate' => Carbon::now(),
+						'LastUpdateBy' => $request->LastUpdateBy,
+						'LastUpdateDate' => Carbon::now(),
+					],
+					[
+						'CompanyCode' => $request->CompanyCode,
+						'BranchCode' => '002',
+						'SupplierCode' => $request->SupplierCode,
+						'ProfitCenterCode' => '300',
+						'ContactPerson' => $request->HPNo,
+						'SupplierClass' => 'HV2-SP',
+						'SupplierGrade' => 'A', 
+						'DiscPct' => 0,
+						'TOPCode' => 'C30',
+						'TaxCode' => 'PPN',
+						'isBlackList' => 'False',
+						'Status' => 1,
+						'CreatedBy' => $request->CreatedBy,
+						'CreatedDate' => Carbon::now(),
+						'LastUpdateBy' => $request->LastUpdateBy,
+						'LastUpdateDate' => Carbon::now(),
+					]
+				];
+
+				Gnmstsupplierprofitcenter::insert($profit);
+			}
 			
 			return fractal()
 	            ->item($gnmstsupplier)
