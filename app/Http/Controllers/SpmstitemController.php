@@ -118,28 +118,36 @@
 				'PurcDiscPct' => $request->PurcDiscPct,
             ]);
 
-            $spmstiteminfo = $spmstiteminfo->create([
-                'CompanyCode'=> $request->CompanyCode,
-                'PartNo'=> $request->PartNo,
-                'SupplierCode'=> $request->SupplierCode,
-                'PartName'=> $request->PartName,
-                'IsGenuinePart'=> $request->IsGenuinePart,
-                'DiscPct'=> $request->DiscPct,
-                'SalesUnit'=> $request->SalesUnit,
-                'OrderUnit'=> $request->OrderUnit,
-                'PurchasePrice'=> $request->PurchasePrice,
-                'UOMCode'=> $request->UOMCode,
-                'Status'=> $request->Status,
-                'ProductType'=> $request->ProductType,
-                'PartCategory'=> $request->PartCategory,
-                'CreatedBy'=> $request->CreatedBy,
-                'CreatedDate'=> Carbon::now(),
-                'LastUpdateBy'=> $request->LastUpdateBy,
-                'LastUpdateDate'=> Carbon::now(),
-                'isLocked'=> $request->isLocked,
-                'LockingBy'=> $request->LockingBy,
-                'LockingDate'=> Carbon::now(),
-            ]);
+            $iteminfo = $spmstiteminfo->where('CompanyCode', $request->CompanyCode)
+            						->where('PartNo', $request->PartNo)
+            						->where('SupplierCode', $request->SupplierCode);
+            						
+            if ($iteminfo->count() < 1) {
+            	$spmstiteminfo = $spmstiteminfo->create([
+	                'CompanyCode'=> $request->CompanyCode,
+	                'PartNo'=> $request->PartNo,
+	                'SupplierCode'=> $request->SupplierCode,
+	                'PartName'=> $request->PartName,
+	                'IsGenuinePart'=> $request->IsGenuinePart,
+	                'DiscPct'=> $request->DiscPct,
+	                'SalesUnit'=> $request->SalesUnit,
+	                'OrderUnit'=> $request->OrderUnit,
+	                'PurchasePrice'=> $request->PurchasePrice,
+	                'UOMCode'=> $request->UOMCode,
+	                'Status'=> $request->Status,
+	                'ProductType'=> $request->ProductType,
+	                'PartCategory'=> $request->PartCategory,
+	                'CreatedBy'=> $request->CreatedBy,
+	                'CreatedDate'=> Carbon::now(),
+	                'LastUpdateBy'=> $request->LastUpdateBy,
+	                'LastUpdateDate'=> Carbon::now(),
+	                'isLocked'=> $request->isLocked,
+	                'LockingBy'=> $request->LockingBy,
+	                'LockingDate'=> Carbon::now(),
+	            ]);
+            }
+
+	            
 
 
             $spmstitemloc = $spmstitemloc->create([
