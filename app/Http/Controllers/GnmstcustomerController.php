@@ -110,9 +110,11 @@
 				'LockingDate' => Carbon::now(),
 			]);
 
-			$profitcenter = $gnmstcustomerprofitcenter->where('CustomerCode', $request->CustomerCode)->get();
-			if (!$profitcenter) {
-				$profit1 = [
+			$profitcenter = Gnmstcustomerprofitcenter::where('CustomerCode', $request->CustomerCode);
+
+			if ($profitcenter->count() < 1) {
+				$profit = [
+					[
 						'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => '000',
 						'CustomerCode' => $request->CustomerCode,
@@ -143,8 +145,8 @@
 						'isLocked' => $request->isLocked,
 						'LockingBy' => $request->LockingBy,
 						'LockingDate' => Carbon::now(),
-				];
-				$profit2 = [
+					],
+					[
 						'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => '000',
 						'CustomerCode' => $request->CustomerCode,
@@ -175,8 +177,8 @@
 						'isLocked' => $request->isLocked,
 						'LockingBy' => $request->LockingBy,
 						'LockingDate' => Carbon::now(),
-				];
-				$profit3 = [
+					],
+					[
 						'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => '002',
 						'CustomerCode' => $request->CustomerCode,
@@ -207,8 +209,8 @@
 						'isLocked' => $request->isLocked,
 						'LockingBy' => $request->LockingBy,
 						'LockingDate' => Carbon::now(),
-				];
-				$profit4 = [
+					],
+					[
 						'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => '002',
 						'CustomerCode' => $request->CustomerCode,
@@ -239,14 +241,10 @@
 						'isLocked' => $request->isLocked,
 						'LockingBy' => $request->LockingBy,
 						'LockingDate' => Carbon::now(),
+					]
 				];
 
-				$gnmstcustomerprofitcenter = $gnmstcustomerprofitcenter->firstOrCreate(
-					$profit1,
-					$profit2,
-					$profit3,
-					$profit4,
-				);
+				Gnmstcustomerprofitcenter::insert($profit);
 			}
 
 			return fractal()
