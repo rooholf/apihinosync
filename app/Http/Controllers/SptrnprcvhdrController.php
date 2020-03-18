@@ -6,6 +6,7 @@ use Illuminate\Support\Str; //
 
 use Illuminate\Http\Request;
 use App\Sptrnprcvhdr;
+use App\Sptrnprcvhdrdtl;
 use App\Gnmstdocument;
 use App\Transformers\SptrnprcvhdrTransformer; //transformer
 
@@ -30,7 +31,7 @@ class SptrnprcvhdrController extends Controller
         }
     }
 
-    public function add(Request $request, Sptrnprcvhdr $sptrnprcvhdr, Gnmstdocument $gnmstdocument)
+    public function add(Request $request, Sptrnprcvhdr $sptrnprcvhdr, Sptrnprcvhdrdtl $sptrnprcvhdrdtl, Gnmstdocument $gnmstdocument)
     {
         $this->validate($request, [
             'ReferenceNo' => 'required',
@@ -92,6 +93,32 @@ class SptrnprcvhdrController extends Controller
             'LockingDate'=> Carbon::now(),
 
         ]);
+
+        if ($sptrnprcvhdr) {
+            $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->firstOrCreate([
+                'CompanyCode'=> $request->CompanyCode,
+                'BranchCode'=> $request->BranchCode,
+                'WRSNo'=> $wrsno,
+                'PartNo'=> $request->PartNo,
+                'DocNo'=> $request->DocNo,
+                'DocDate'=> Carbon::now(),
+                'WarehouseCode'=> $request->WarehouseCode,
+                'LocationCode'=> $request->LocationCode,
+                'BoxNo'=> $request->BoxNo,
+                'ReceivedQty'=> $request->ReceivedQty,
+                'PurchasePrice'=> $request->PurchasePrice,
+                'CostPrice'=> $request->CostPrice,
+                'DiscPct'=> $request->DiscPct,
+                'ABCClass'=> $request->ABCClass,
+                'MovingCode'=> $request->MovingCode,
+                'ProductType'=> $request->ProductType,
+                'PartCategory'=> $request->PartCategory,
+                'CreatedBy'=> $request->CreatedBy,
+                'CreatedDate'=> Carbon::now(),
+                'LastUpdateBy'=> $request->LastUpdateBy,
+                'LastUpdateDate'=> Carbon::now(),
+            ]);
+        }
 
         return fractal()
 	            ->item($sptrnprcvhdr)
