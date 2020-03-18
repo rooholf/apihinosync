@@ -49,12 +49,12 @@ class SptrnprcvhdrController extends Controller
 			'LastPurchaseUpdate' => $request->LastPurchaseUpdate,
 			'LastRetailPriceUpdate' => $request->LastRetailPriceUpdate,
 			'CreatedBy' => $request->CreatedBy,
-			'CreatedDate' => $request->CreatedDate,
+			'CreatedDate' => Carbon::now(),
 			'LastUpdateBy' => $request->LastUpdateBy,
-			'LastUpdateDate' => $request->LastUpdateDate,
+			'LastUpdateDate' => Carbon::now(),
 			'isLocked' => $request->isLocked,
 			'LockingBy' => $request->LockingBy,
-			'LockingDate' => $request->LockingDate,
+			'LockingDate' => Carbon::now(),
         ]);
 
         return fractal()

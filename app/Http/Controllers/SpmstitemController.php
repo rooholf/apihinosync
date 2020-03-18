@@ -62,6 +62,8 @@
 		public function add(Request $request, Spmstitem $spmstitem, Spmstiteminfo $spmstiteminfo, Spmstitemloc $spmstitemloc, Spmstitemprice $spmstitemprice)
 		{
 			$this->validate($request, [
+            	'CompanyCode' => 'required',
+            	'BranchCode' => 'required',
             	'PartNo' => 'required',
 			]);
 
