@@ -6,6 +6,7 @@ use Illuminate\Support\Str; //
 
 use Illuminate\Http\Request;
 use App\Sptrnprcvhdr;
+use App\Gnmstdocument;
 use App\Transformers\SptrnprcvhdrTransformer; //transformer
 
 use Carbon\Carbon;
@@ -29,18 +30,46 @@ class SptrnprcvhdrController extends Controller
         }
     }
 
-    public function add(Request $request, Sptrnprcvhdr $sptrnprcvhdr)
+    public function add(Request $request, Sptrnprcvhdr $sptrnprcvhdr, Gnmstdocument $gnmstdocument)
     {
         $this->validate($request, [
-            'WRSNo' => 'required',
+            'ReferenceNo' => 'required',
         ]);
+
+        // nomor WRSNo
+        if ($request->WhsCodeDesc == 'WH NORMAL - HINO JAMBI') {
+            $branchcode = '000';
+        } else {
+            $branchcode = '002';
+        }
+
+        $gnmstdocument = $gnmstdocument->where('DocumentType', 'WRL')
+                                    ->where('BranchCode', $branchcode)
+                                    ->first();
+
+        $gnmstdocument2 = $gnmstdocument->where('DocumentType', 'BNL')
+                                    ->where('BranchCode', $branchcode)
+                                    ->first();
+
+        // thn wrl
+        $thnwrl = substr($gnmstdocument->DocumentYear, 2, 2);
+        $nourut = sprintf("%06s", $gnmstdocument->DocumentSequence + 1);
+
+        $thnbnl = substr($gnmstdocument2->DocumentYear, 2, 2);
+        $nourut2 = sprintf("%06s", $gnmstdocument2->DocumentSequence + 1);
+
+        $wrsno = 'WRL/'.$thnwrl.'/'.$nourut;
+        $binningno = 'BNL/'.$thnbnl.'/'.$nourut2;
+
+        // echo $wrsno;die;
+
 
         $sptrnprcvhdr = $sptrnprcvhdr->firstOrCreate([
             'CompanyCode'=> $request->CompanyCode,
             'BranchCode'=> $request->BranchCode,
-            'WRSNo'=> $request->WRSNo,
+            'WRSNo'=> $wrsno,
             'WRSDate'=> $request->WRSDate,
-            'BinningNo'=> $request->BinningNo,
+            'BinningNo'=> $binningno,
             'BinningDate'=> Carbon::now(),
             'ReceivingType'=> $request->ReceivingType,
             'DNSupplierNo'=> $request->DNSupplierNo,
