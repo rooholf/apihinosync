@@ -16,7 +16,7 @@ class SptrnprcvhdrController extends Controller
 {
     public function show(Request $request, Sptrnprcvhdr $sptrnprcvhdr)
     {
-        $sptrnprcvhdr = $sptrnprcvhdr->find($request->WRSNo);
+        $sptrnprcvhdr = $sptrnprcvhdr->where('ReferenceNo', $request->ReferenceNo)->first();
 
         if ($sptrnprcvhdr) {
             return fractal()
