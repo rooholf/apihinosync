@@ -30,3 +30,4 @@ Route::post('item/add', 'SpmstitemController@add');
 
 Route::post('transrcvhdr/show', 'SptrnprcvhdrController@show');
 Route::post('transrcvhdr/add', 'SptrnprcvhdrController@add');
+Route::post('transrcvhdr/detail', 'SptrnprcvhdrController@addDetail');
