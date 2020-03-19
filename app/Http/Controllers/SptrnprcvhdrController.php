@@ -158,13 +158,15 @@ class SptrnprcvhdrController extends Controller
 	            ->toArray();
     }
 
-    public function addDetail(Request $request, Sptrnprcvhdrdtl $sptrnprcvhdrdtl)
+    public function addDetail(Request $request, Sptrnprcvhdrdtl $sptrnprcvhdrdtl, Gnmstdocument $gnmstdocument)
     {
         $this->validate($request, [
             'ReferenceNo' => 'required',
         ]);
 
         $header = Sptrnprcvhdr::where('ReferenceNo', $request->ReferenceNo)->first();
+
+        // dd($header);
 
         if ($request->WhsCodeDesc == 'WH NORMAL - HINO JAMBI') {
             $branchcode = '000';
