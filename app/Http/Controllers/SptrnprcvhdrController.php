@@ -52,24 +52,35 @@ class SptrnprcvhdrController extends Controller
                                     ->where('BranchCode', $branchcode)
                                     ->first();
 
-        // thn wrl
-        $thnwrl = substr($gnmstdocument->DocumentYear, 2, 2);
-        $nourut = sprintf("%06s", $gnmstdocument->DocumentSequence + 1);
+        $gnmstdocument3 = $gnmstdocument->where('DocumentType', 'POS')
+                                    ->where('BranchCode', $branchcode)
+                                    ->first();
 
+        // thn wrl
+        $no1 = $gnmstdocument->DocumentSequence + 1;
+        $thnwrl = substr($gnmstdocument->DocumentYear, 2, 2);
+        $nourut = sprintf("%06s", $no1);
+
+        $no2 = $gnmstdocument2->DocumentSequence + 1;
         $thnbnl = substr($gnmstdocument2->DocumentYear, 2, 2);
-        $nourut2 = sprintf("%06s", $gnmstdocument2->DocumentSequence + 1);
+        $nourut2 = sprintf("%06s", $no2);
+
+        $no3 = $gnmstdocument3->DocumentSequence + 1;
+        $thnpos = substr($gnmstdocument3->DocumentYear, 2, 2);
+        $nourut3 = sprintf("%06s", $no3);
 
         $wrsno = 'WRL/'.$thnwrl.'/'.$nourut;
         $binningno = 'BNL/'.$thnbnl.'/'.$nourut2;
+        $docno = 'POS/'.$thnpos.'/'.$nourut3;
 
         // echo $wrsno;die;
 
 
         $sptrnprcvhdr = $sptrnprcvhdr->firstOrCreate([
             'CompanyCode'=> $request->CompanyCode,
-            'BranchCode'=> $request->BranchCode,
+            'BranchCode'=> $branchcode,
             'WRSNo'=> $wrsno,
-            'WRSDate'=> $request->WRSDate,
+            'WRSDate'=> Carbon::now(),
             'BinningNo'=> $binningno,
             'BinningDate'=> Carbon::now(),
             'ReceivingType'=> $request->ReceivingType,
@@ -97,10 +108,10 @@ class SptrnprcvhdrController extends Controller
         if ($sptrnprcvhdr) {
             $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->firstOrCreate([
                 'CompanyCode'=> $request->CompanyCode,
-                'BranchCode'=> $request->BranchCode,
+                'BranchCode'=> $branchcode,
                 'WRSNo'=> $wrsno,
                 'PartNo'=> $request->PartNo,
-                'DocNo'=> $request->DocNo,
+                'DocNo'=> $docno,
                 'DocDate'=> Carbon::now(),
                 'WarehouseCode'=> $request->WarehouseCode,
                 'LocationCode'=> $request->LocationCode,
@@ -118,11 +129,113 @@ class SptrnprcvhdrController extends Controller
                 'LastUpdateBy'=> $request->LastUpdateBy,
                 'LastUpdateDate'=> Carbon::now(),
             ]);
+
+            $this->updateTotItem($wrsno);
+
+            DB::table('gnMstDocument')
+            ->where('DocumentType', 'WRL')
+            ->where('BranchCode', $branchcode)
+            ->where('CompanyCode', $request->CompanyCode)
+            ->update(['DocumentSequence' => $no1]);
+
+            DB::table('gnMstDocument')
+            ->where('DocumentType', 'BNL')
+            ->where('BranchCode', $branchcode)
+            ->where('CompanyCode', $request->CompanyCode)
+            ->update(['DocumentSequence' => $no2]);
+
+            DB::table('gnMstDocument')
+            ->where('DocumentType', 'POS')
+            ->where('BranchCode', $branchcode)
+            ->where('CompanyCode', $request->CompanyCode)
+            ->update(['DocumentSequence' => $no3]);
+
         }
 
         return fractal()
 	            ->item($sptrnprcvhdr)
 	            ->transformWith(new SptrnprcvhdrTransformer)
 	            ->toArray();
+    }
+
+    public function addDetail(Request $request, Sptrnprcvhdrdtl $sptrnprcvhdrdtl)
+    {
+        $this->validate($request, [
+            'ReferenceNo' => 'required',
+        ]);
+
+        $header = Sptrnprcvhdr::where('ReferenceNo', $request->ReferenceNo)->first();
+
+        if ($request->WhsCodeDesc == 'WH NORMAL - HINO JAMBI') {
+            $branchcode = '000';
+        } else {
+            $branchcode = '002';
+        }
+
+        $gnmstdocument3 = $gnmstdocument->where('DocumentType', 'POS')
+                                    ->where('BranchCode', $branchcode)
+                                    ->first();
+
+        $thnpos = substr($gnmstdocument3->DocumentYear, 2, 2);
+        $nourut3 = sprintf("%06s", $gnmstdocument3->DocumentSequence);
+
+        $docno = 'POS/'.$thnpos.'/'.$nourut3;
+
+        if ($header) {
+            $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->firstOrCreate([
+                'CompanyCode'=> $request->CompanyCode,
+                'BranchCode'=> $branchcode,
+                'WRSNo'=> $header->WRSNo,
+                'PartNo'=> $request->PartNo,
+                'DocNo'=> $docno,
+                'DocDate'=> Carbon::now(),
+                'WarehouseCode'=> $request->WarehouseCode,
+                'LocationCode'=> $request->LocationCode,
+                'BoxNo'=> $request->BoxNo,
+                'ReceivedQty'=> $request->ReceivedQty,
+                'PurchasePrice'=> $request->PurchasePrice,
+                'CostPrice'=> $request->CostPrice,
+                'DiscPct'=> $request->DiscPct,
+                'ABCClass'=> $request->ABCClass,
+                'MovingCode'=> $request->MovingCode,
+                'ProductType'=> $request->ProductType,
+                'PartCategory'=> $request->PartCategory,
+                'CreatedBy'=> $request->CreatedBy,
+                'CreatedDate'=> Carbon::now(),
+                'LastUpdateBy'=> $request->LastUpdateBy,
+                'LastUpdateDate'=> Carbon::now(),
+            ]);
+
+            $this->updateTotItem($wrsno);
+
+        }
+
+        return fractal()
+                ->item($header)
+                ->transformWith(new SptrnprcvhdrTransformer)
+                ->toArray();
+
+    }
+
+    public function updateTotItem($wrsno)
+    {
+        $total = 0;
+        $item = 0;
+        $detail = Sptrnprcvhdrdtl::where('WRSNo', $wrsno)->get();
+
+        foreach ($detail as $row) {
+            $grandtotal = ($row->PurchasePrice * $row->ReceivedQty)-(($row->ReceivedQty * $row->PurchasePrice) * $row->DiscPct/100);
+            $total = $total + $grandtotal;
+
+            $item++;
+        }
+
+        DB::table('spTrnPRcvHdr')
+            ->where('WRSNo', $wrsno)
+            ->update([
+                'TotItem' => $item, 
+                'TotWRSAmt' => $total
+            ]);
+
     }
 }
