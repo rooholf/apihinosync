@@ -92,7 +92,7 @@ class SptrnprcvhdrController extends Controller
                 'BinningNo'=> $binningno,
                 'BinningDate'=> Carbon::now(),
                 'ReceivingType'=> $request->ReceivingType,
-                'DNSupplierNo'=> $request->DNSupplierNo,
+                'DNSupplierNo'=> $docno,
                 'DNSupplierDate'=> Carbon::now(),
                 'TransType'=> $request->TransType,
                 'SupplierCode'=> $request->SupplierCode,
@@ -188,14 +188,14 @@ class SptrnprcvhdrController extends Controller
             $branchcode = '002';
         }
 
-        $gnmstdocument3 = $gnmstdocument->where('DocumentType', 'POS')
-                                    ->where('BranchCode', $branchcode)
-                                    ->first();
+        // $gnmstdocument3 = $gnmstdocument->where('DocumentType', 'POS')
+        //                             ->where('BranchCode', $branchcode)
+        //                             ->first();
 
-        $thnpos = substr($gnmstdocument3->DocumentYear, 2, 2);
-        $nourut3 = sprintf("%06s", $gnmstdocument3->DocumentSequence);
+        // $thnpos = substr($gnmstdocument3->DocumentYear, 2, 2);
+        // $nourut3 = sprintf("%06s", $gnmstdocument3->DocumentSequence);
 
-        $docno = 'POS/'.$thnpos.'/'.$nourut3;
+        // $docno = 'POS/'.$thnpos.'/'.$nourut3;
 
 
         $header2 = Sptrnprcvhdrdtl::where('CompanyCode', $request->CompanyCode)
@@ -210,7 +210,7 @@ class SptrnprcvhdrController extends Controller
                 'BranchCode'=> $branchcode,
                 'WRSNo'=> $header->WRSNo,
                 'PartNo'=> $request->PartNo,
-                'DocNo'=> $docno,
+                'DocNo'=> $header->DNSupplierNo,
                 'DocDate'=> Carbon::now(),
                 'WarehouseCode'=> $request->WarehouseCode,
                 'LocationCode'=> $request->LocationCode,
