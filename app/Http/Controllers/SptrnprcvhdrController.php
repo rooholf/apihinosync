@@ -19,10 +19,14 @@ class SptrnprcvhdrController extends Controller
         $sptrnprcvhdr = $sptrnprcvhdr->where('ReferenceNo', $request->ReferenceNo)->first();
 
         if ($sptrnprcvhdr) {
-            return fractal()
-                ->item($sptrnprcvhdr)
-                ->transformWith(new SptrnprcvhdrTransformer)
-                ->toArray();
+            // return fractal()
+            //     ->item($sptrnprcvhdr)
+            //     ->transformWith(new Sptrnprcvhdrgitransformer)
+            //     ->toArray();
+
+            return response()->json([
+                'data' => 1
+            ], 200);
         } else {
 
             return response()->json([
@@ -208,7 +212,7 @@ class SptrnprcvhdrController extends Controller
                 'LastUpdateDate'=> Carbon::now(),
             ]);
 
-            $this->updateTotItem($wrsno);
+            $this->updateTotItem($header->WRSNo);
 
         }
 
