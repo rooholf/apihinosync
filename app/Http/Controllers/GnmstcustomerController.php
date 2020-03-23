@@ -93,22 +93,27 @@
 				'IbuKota' => $request->IbuKota, 
 				'CustomerStatus' => $request->CustomerStatus,
 			]);
-			
-			$gnmstcustomerbank = $gnmstcustomerbank->firstOrCreate([
-				'CompanyCode' => $request->CompanyCode, 
-				'CustomerCode' => $request->CustomerCode,
-				'BankCode' => $request->BankCode,
-				'BankName' => $request->BankName,
-				'AccountName' => $request->AccountName,
-				'AccountBank' => $request->AccountBank,
-				'CreatedBy' => $request->CreatedBy,
-				'CreatedDate' => Carbon::now(),
-				'LastUpdateBy' => $request->LastUpdateBy,
-				'LastUpdateDate' => Carbon::now(),
-				'isLocked' => $request->isLocked,
-				'LockingBy' => $request->LockingBy,
-				'LockingDate' => Carbon::now(),
-			]);
+
+			$customerbank = Gnmstcustomerbank::where('CustomerCode', $request->CustomerCode);
+
+			if (!$customerbank) {
+				$gnmstcustomerbank = $gnmstcustomerbank->firstOrCreate([
+					'CompanyCode' => $request->CompanyCode, 
+					'CustomerCode' => $request->CustomerCode,
+					'BankCode' => $request->BankCode,
+					'BankName' => $request->BankName,
+					'AccountName' => $request->AccountName,
+					'AccountBank' => $request->AccountBank,
+					'CreatedBy' => $request->CreatedBy,
+					'CreatedDate' => Carbon::now(),
+					'LastUpdateBy' => $request->LastUpdateBy,
+					'LastUpdateDate' => Carbon::now(),
+					'isLocked' => $request->isLocked,
+					'LockingBy' => $request->LockingBy,
+					'LockingDate' => Carbon::now(),
+				]);	
+			}
+						
 
 			$profitcenter = Gnmstcustomerprofitcenter::where('CustomerCode', $request->CustomerCode);
 
