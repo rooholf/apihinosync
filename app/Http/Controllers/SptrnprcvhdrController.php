@@ -19,14 +19,14 @@ class SptrnprcvhdrController extends Controller
         $sptrnprcvhdr = $sptrnprcvhdr->where('ReferenceNo', $request->ReferenceNo)->first();
 
         if ($sptrnprcvhdr) {
-            return fractal()
-                ->item($sptrnprcvhdr)
-                ->transformWith(new Sptrnprcvhdrgitransformer)
-                ->toArray();
+            // return fractal()
+            //     ->item($sptrnprcvhdr)
+            //     ->transformWith(new Sptrnprcvhdrgitransformer)
+            //     ->toArray();
 
-            // return response()->json([
-            //     'data' => 1
-            // ], 200);
+            return response()->json([
+                'data' => 1
+            ], 200);
         } else {
 
             return response()->json([
