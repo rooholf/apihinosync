@@ -197,7 +197,7 @@ class SptrnprcvhdrController extends Controller
 
         // $docno = 'POS/'.$thnpos.'/'.$nourut3;
 
-        if ($header) {
+        if ($header <> null) {
             $header2 = Sptrnprcvhdrdtl::where('CompanyCode', $request->CompanyCode)
                         ->where('BranchCode', $branchcode)
                         ->where('WRSNo', $header->WRSNo)

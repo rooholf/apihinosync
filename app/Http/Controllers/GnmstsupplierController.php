@@ -42,6 +42,12 @@
 			$this->validate($request, [
             	'SupplierCode' => 'required', 
 			]);
+
+			if (strlen($request->PhoneNo) > 0) {
+				$PhoneNo = Str::limit($request->PhoneNo, 15);
+			} else {
+				$PhoneNo = $request->PhoneNo;
+			}
 			
 			$gnmstsupplier = $gnmstsupplier->create([
 				'CompanyCode' => $request->CompanyCode,
@@ -53,7 +59,7 @@
 				'Address2' => $request->Address2,
 				'Address3' => $request->Address3,
 				'Address4' => $request->Address4,
-				'PhoneNo' => $request->PhoneNo,
+				'PhoneNo' => $PhoneNo,
 				'HPNo' => $request->HPNo,
 				'FaxNo' => $request->FaxNo,
 				'ProvinceCode' => $request->ProvinceCode,
