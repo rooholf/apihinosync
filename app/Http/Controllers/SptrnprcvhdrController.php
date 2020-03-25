@@ -82,7 +82,23 @@ class SptrnprcvhdrController extends Controller
 
             // echo $wrsno;die;
 
+            DB::table('gnMstDocument')
+            ->where('DocumentType', 'WRL')
+            ->where('BranchCode', $branchcode)
+            ->where('CompanyCode', $request->CompanyCode)
+            ->update(['DocumentSequence' => $no1]);
 
+            DB::table('gnMstDocument')
+            ->where('DocumentType', 'BNL')
+            ->where('BranchCode', $branchcode)
+            ->where('CompanyCode', $request->CompanyCode)
+            ->update(['DocumentSequence' => $no2]);
+
+            DB::table('gnMstDocument')
+            ->where('DocumentType', 'POS')
+            ->where('BranchCode', $branchcode)
+            ->where('CompanyCode', $request->CompanyCode)
+            ->update(['DocumentSequence' => $no3]);
 
             $sptrnprcvhdr = $sptrnprcvhdr->firstOrCreate([
                 'CompanyCode'=> $request->CompanyCode,
@@ -114,23 +130,7 @@ class SptrnprcvhdrController extends Controller
             ]);
 
             if ($sptrnprcvhdr) {
-                DB::table('gnMstDocument')
-                ->where('DocumentType', 'WRL')
-                ->where('BranchCode', $branchcode)
-                ->where('CompanyCode', $request->CompanyCode)
-                ->update(['DocumentSequence' => $no1]);
-
-                DB::table('gnMstDocument')
-                ->where('DocumentType', 'BNL')
-                ->where('BranchCode', $branchcode)
-                ->where('CompanyCode', $request->CompanyCode)
-                ->update(['DocumentSequence' => $no2]);
-
-                DB::table('gnMstDocument')
-                ->where('DocumentType', 'POS')
-                ->where('BranchCode', $branchcode)
-                ->where('CompanyCode', $request->CompanyCode)
-                ->update(['DocumentSequence' => $no3]);
+                
 
                 $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->firstOrCreate([
                     'CompanyCode'=> $request->CompanyCode,
