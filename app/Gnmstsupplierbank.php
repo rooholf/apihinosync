@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Gnmstsupplierbank extends Model
 	{
 		protected $table = 'gnMstSupplierBank';
-		protected $primaryKey = 'CustomerCode';
+		protected $primaryKey = 'SupplierCode';
 		public $incrementing = false;
 		public $timestamps = false;
 		
