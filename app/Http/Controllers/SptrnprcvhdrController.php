@@ -43,7 +43,7 @@ class SptrnprcvhdrController extends Controller
 
         $header = Sptrnprcvhdr::where('ReferenceNo', $request->ReferenceNo)->first();
 
-        if (!$header) {
+        if ($header == null) {
             // nomor WRSNo
             if ($request->WhsCodeDesc == 'WH NORMAL - HINO JAMBI') {
                 $branchcode = '000';
@@ -208,7 +208,7 @@ class SptrnprcvhdrController extends Controller
 
             // dd($header2);
 
-            if ($header2 <> null) {
+            if ($header2 == null) {
                 $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->firstOrCreate([
                     'CompanyCode'=> $request->CompanyCode,
                     'BranchCode'=> $branchcode,
