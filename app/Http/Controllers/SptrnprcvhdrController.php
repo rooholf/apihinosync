@@ -197,49 +197,53 @@ class SptrnprcvhdrController extends Controller
 
         // $docno = 'POS/'.$thnpos.'/'.$nourut3;
 
+        if ($header) {
+            $header2 = Sptrnprcvhdrdtl::where('CompanyCode', $request->CompanyCode)
+                        ->where('BranchCode', $branchcode)
+                        ->where('WRSNo', $header->WRSNo)
+                        ->where('PartNo', $request->PartNo)
+                        ->first();
 
-        $header2 = Sptrnprcvhdrdtl::where('CompanyCode', $request->CompanyCode)
-                    ->where('BranchCode', $branchcode)
-                    ->where('WRSNo', $header->WRSNo)
-                    ->where('PartNo', $request->PartNo)
-                    ->first();
+            if (!$header2) {
+                $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->firstOrCreate([
+                    'CompanyCode'=> $request->CompanyCode,
+                    'BranchCode'=> $branchcode,
+                    'WRSNo'=> $header->WRSNo,
+                    'PartNo'=> $request->PartNo,
+                    'DocNo'=> $header->DNSupplierNo,
+                    'DocDate'=> Carbon::now(),
+                    'WarehouseCode'=> $request->WarehouseCode,
+                    'LocationCode'=> $request->LocationCode,
+                    'BoxNo'=> $request->BoxNo,
+                    'ReceivedQty'=> $request->ReceivedQty,
+                    'PurchasePrice'=> $request->PurchasePrice,
+                    'CostPrice'=> $request->CostPrice,
+                    'DiscPct'=> $request->DiscPct,
+                    'ABCClass'=> $request->ABCClass,
+                    'MovingCode'=> $request->MovingCode,
+                    'ProductType'=> $request->ProductType,
+                    'PartCategory'=> $request->PartCategory,
+                    'CreatedBy'=> $request->CreatedBy,
+                    'CreatedDate'=> Carbon::now(),
+                    'LastUpdateBy'=> $request->LastUpdateBy,
+                    'LastUpdateDate'=> Carbon::now(),
+                ]);
 
-        if (!$header2) {
-            $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->firstOrCreate([
-                'CompanyCode'=> $request->CompanyCode,
-                'BranchCode'=> $branchcode,
-                'WRSNo'=> $header->WRSNo,
-                'PartNo'=> $request->PartNo,
-                'DocNo'=> $header->DNSupplierNo,
-                'DocDate'=> Carbon::now(),
-                'WarehouseCode'=> $request->WarehouseCode,
-                'LocationCode'=> $request->LocationCode,
-                'BoxNo'=> $request->BoxNo,
-                'ReceivedQty'=> $request->ReceivedQty,
-                'PurchasePrice'=> $request->PurchasePrice,
-                'CostPrice'=> $request->CostPrice,
-                'DiscPct'=> $request->DiscPct,
-                'ABCClass'=> $request->ABCClass,
-                'MovingCode'=> $request->MovingCode,
-                'ProductType'=> $request->ProductType,
-                'PartCategory'=> $request->PartCategory,
-                'CreatedBy'=> $request->CreatedBy,
-                'CreatedDate'=> Carbon::now(),
-                'LastUpdateBy'=> $request->LastUpdateBy,
-                'LastUpdateDate'=> Carbon::now(),
-            ]);
+                $this->updateTotItem($header->WRSNo);
 
-            $this->updateTotItem($header->WRSNo);
+                return response()->json([
+                    'data' => 1
+                ], 200);
 
-            return response()->json([
-                'data' => 1
-            ], 200);
-
-        } else {
-            return response()->json([
-                'data' => 0
-            ], 200);
+            } else {
+                return response()->json([
+                    'data' => 0
+                ], 200);
+            }
         }
+
+
+            
 
         // return fractal()
         //         ->item($header)
