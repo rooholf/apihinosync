@@ -68,8 +68,8 @@
 			]);
 
 			$items = $spmstitem->where('PartNo', $request->PartNo)
-								->where('CompanyCode', 'TUA00')
-								->where('BranchCode', '002')->first();
+								->where('CompanyCode', $request->CompanyCode)
+								->where('BranchCode', $request->BranchCode)->first();
 
 			// dd($items);
 			if ($items == null) {
