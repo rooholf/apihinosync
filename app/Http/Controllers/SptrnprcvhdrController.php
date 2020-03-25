@@ -131,7 +131,7 @@ class SptrnprcvhdrController extends Controller
                 ->where('BranchCode', $branchcode)
                 ->where('CompanyCode', $request->CompanyCode)
                 ->update(['DocumentSequence' => $no3]);
-                
+
                 $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->firstOrCreate([
                     'CompanyCode'=> $request->CompanyCode,
                     'BranchCode'=> $branchcode,
@@ -202,9 +202,13 @@ class SptrnprcvhdrController extends Controller
                         ->where('BranchCode', $branchcode)
                         ->where('WRSNo', $header->WRSNo)
                         ->where('PartNo', $request->PartNo)
+                        ->where('DocNo', $header->DNSupplierNo)
+                        ->where('BoxNo', $request->BoxNo)
                         ->first();
 
-            if (!$header2) {
+            // dd($header2);
+
+            if ($header2 <> null) {
                 $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->firstOrCreate([
                     'CompanyCode'=> $request->CompanyCode,
                     'BranchCode'=> $branchcode,
