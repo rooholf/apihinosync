@@ -128,9 +128,9 @@
 
 	            $iteminfo = $spmstiteminfo->where('CompanyCode', $request->CompanyCode)
 	            						->where('PartNo', $request->PartNo)
-	            						->where('SupplierCode', $request->SupplierCode);
+	            						->where('SupplierCode', $request->SupplierCode)->first();
 
-	            if ($iteminfo->count() < 1) {
+	            if ($iteminfo == null) {
 	            	$spmstiteminfo = $spmstiteminfo->create([
 		                'CompanyCode'=> $request->CompanyCode,
 		                'PartNo'=> $request->PartNo,
@@ -157,9 +157,9 @@
 
 	            $itemloc = $spmstitemloc->where('CompanyCode', $request->CompanyCode)
 	            						->where('PartNo', $request->PartNo)
-	            						->where('BranchCode', $request->BranchCode);
+	            						->where('BranchCode', $request->BranchCode)->first();
 
-	           	if ($itemloc->count() < 1) {
+	           	if ($itemloc == null) {
 	           		$spmstitemloc = $spmstitemloc->create([
 		                'CompanyCode'=> $request->CompanyCode,
 		                'BranchCode'=> $request->BranchCode,
@@ -202,9 +202,9 @@
 
 	            $itemprice = $spmstitemprice->where('CompanyCode', $request->CompanyCode)
 	            						->where('PartNo', $request->PartNo)
-	            						->where('BranchCode', $request->BranchCode);
+	            						->where('BranchCode', $request->BranchCode)->first();
 
-	            if ($itemprice->count() < 1) {
+	            if ($itemprice == null) {
 	            	$spmstitemprice = $spmstitemprice->create([
 				        'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => $request->BranchCode,
