@@ -97,8 +97,8 @@
 			if ($gnmstcustomer) {
 				$customerbank = Gnmstcustomerbank::where('CustomerCode', $request->CustomerCode);
 
-			if (!$customerbank) {
-				$gnmstcustomerbank = $gnmstcustomerbank->firstOrCreate([
+				if ($customerbank == null) {
+					$gnmstcustomerbank = $gnmstcustomerbank->firstOrCreate([
 						'CompanyCode' => $request->CompanyCode, 
 						'CustomerCode' => $request->CustomerCode,
 						'BankCode' => $request->BankCode,
