@@ -235,7 +235,7 @@
 	                ->toArray();
 			} else {
 				return response()->json([
-                    'data' => 0, 
+                    'data' => 1, 
                     'response' => $items,
                     'message'=> 'Created'
                 ], 200);
