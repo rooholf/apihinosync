@@ -166,7 +166,7 @@ class SptrnprcvhdrController extends Controller
                     ->toArray();
         } else {
             return response()->json([
-                'data' => 0
+                'data' => 1
             ], 200);
         }
 
@@ -237,12 +237,12 @@ class SptrnprcvhdrController extends Controller
 
                 return response()->json([
                     'message' => 'Detail Successed',
-                    'data' => 1
+                    'data' => 0
                 ], 200);
 
             } else {
                 return response()->json([
-                    'data' => 0
+                    'data' => 1
                 ], 200);
             }
         }
