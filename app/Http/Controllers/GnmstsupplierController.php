@@ -44,7 +44,7 @@
 			]);
 
 			if (strlen($request->PhoneNo) > 0) {
-				$PhoneNo = Str::limit($request->PhoneNo, 15);
+				$PhoneNo = e(Str::limit($request->PhoneNo, 15));
 			} else {
 				$PhoneNo = $request->PhoneNo;
 			}
