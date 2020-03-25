@@ -232,6 +232,7 @@ class SptrnprcvhdrController extends Controller
                 $this->updateTotItem($header->WRSNo);
 
                 return response()->json([
+                    'message' => 'Detail Successed',
                     'data' => 1
                 ], 200);
 
