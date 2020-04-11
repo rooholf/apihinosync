@@ -229,10 +229,13 @@
 	            }
 					
 
-				return fractal()
-	                ->item($spmstitem)
-	                ->transformWith(new SpmstitemTransformer)
-	                ->toArray();
+				// return fractal()
+	   //              ->item($spmstitem)
+	   //              ->transformWith(new SpmstitemTransformer)
+	   //              ->toArray();
+	            return response()->json([
+                    'data' => 0
+                ], 200);
 			} else {
 				return response()->json([
                     'data' => 1
