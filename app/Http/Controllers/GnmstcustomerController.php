@@ -269,10 +269,10 @@
 				
 
 
-			return fractal()
-	            ->item($gnmstcustomer)
-	            ->transformWith(new GnmstcustomerTransformer)
-	            ->toArray();
+			// return fractal()
+	  //           ->item($gnmstcustomer)
+	  //           ->transformWith(new GnmstcustomerTransformer)
+	  //           ->toArray();
 			
 		}
 		
