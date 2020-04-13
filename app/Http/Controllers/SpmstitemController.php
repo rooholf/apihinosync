@@ -67,9 +67,9 @@
             	'PartNo' => 'required',
 			]);
 
-			$items = $spmstitem->where('PartNo', $request->PartNo)
-								->where('CompanyCode', $request->CompanyCode)
-								->where('BranchCode', $request->BranchCode)->first();
+			$items = $spmstitem->where('CompanyCode', $request->CompanyCode)
+								->where('BranchCode', $request->BranchCode)
+								->where('PartNo', $request->PartNo)->first();
 
 			// dd($items);
 			if (!$items) {
