@@ -72,7 +72,7 @@
 								->where('BranchCode', $request->BranchCode)->first();
 
 			// dd($items);
-			if ($items == null) {
+			if (!$items) {
 				$spmstitem = $spmstitem->create([
 			        'CompanyCode' => $request->CompanyCode,
 					'BranchCode' => $request->BranchCode,
