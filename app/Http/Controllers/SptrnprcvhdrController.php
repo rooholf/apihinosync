@@ -52,9 +52,9 @@ class SptrnprcvhdrController extends Controller
             $branchcode = '002';
         }
 
-        $header = Sptrnprcvhdr::where('GRNo', $request->GRNo)->count();
+        $header = Sptrnprcvhdr::where('GRNo', $request->GRNo)->first();
 
-        if ($header < 1) {
+        if (!$header) {
             
             $gnmstdocument = Gnmstdocument::where('DocumentType', 'WRL')
                                         ->where('BranchCode', $branchcode)
