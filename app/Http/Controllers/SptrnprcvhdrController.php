@@ -114,7 +114,7 @@ class SptrnprcvhdrController extends Controller
                 'DNSupplierDate'=> Carbon::now(),
                 'TransType'=> $request->TransType,
                 'SupplierCode'=> $request->SupplierCode,
-                'ReferenceNo'=> $request->ReferenceNo,
+                'ReferenceNo'=> '-',
                 'ReferenceDate'=> Carbon::now(),
                 'TotItem'=> $request->TotItem,
                 'TotWRSAmt'=> $request->TotWRSAmt,
