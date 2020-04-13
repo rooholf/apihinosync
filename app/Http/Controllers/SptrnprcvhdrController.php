@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 use App\Sptrnprcvhdr;
 use App\Sptrnprcvhdrdtl;
 use App\Gnmstdocument;
+
+use App\Apbeginbalancehdr;
+use App\Apbeginbalancedtl;
+
 use App\Transformers\SptrnprcvhdrTransformer; //transformer
 
 use Carbon\Carbon;
@@ -35,7 +39,7 @@ class SptrnprcvhdrController extends Controller
         }
     }
 
-    public function add(Request $request, Sptrnprcvhdr $sptrnprcvhdr, Sptrnprcvhdrdtl $sptrnprcvhdrdtl, Gnmstdocument $gnmstdocument)
+    public function add(Request $request, Sptrnprcvhdr $sptrnprcvhdr, Sptrnprcvhdrdtl $sptrnprcvhdrdtl, Gnmstdocument $gnmstdocument, Apbeginbalancehdr $apbeginbalancehdr, Apbeginbalancedtl $Apbeginbalancedtl)
     {
         $this->validate($request, [
             'ReferenceNo' => 'required',
@@ -129,9 +133,11 @@ class SptrnprcvhdrController extends Controller
                 'LockingDate'=> Carbon::now(),
             ]);
 
-            if ($sptrnprcvhdr) {
-                
 
+
+
+            if ($sptrnprcvhdr) {
+                // detail header
                 $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->firstOrCreate([
                     'CompanyCode'=> $request->CompanyCode,
                     'BranchCode'=> $branchcode,
@@ -155,6 +161,11 @@ class SptrnprcvhdrController extends Controller
                     'LastUpdateBy'=> $request->LastUpdateBy,
                     'LastUpdateDate'=> Carbon::now(),
                 ]);
+
+                // grno header
+
+
+
 
                 $this->updateTotItem($wrsno);
 

@@ -127,10 +127,9 @@
 	            ]);
 
 	            $iteminfo = $spmstiteminfo->where('CompanyCode', $request->CompanyCode)
-	            						->where('PartNo', $request->PartNo)
-	            						->where('SupplierCode', $request->SupplierCode)->first();
+	            						->where('PartNo', $request->PartNo)->first();
 
-	            if ($iteminfo == null) {
+	            if (!$iteminfo) {
 	            	$spmstiteminfo = $spmstiteminfo->create([
 		                'CompanyCode'=> $request->CompanyCode,
 		                'PartNo'=> $request->PartNo,
@@ -157,7 +156,8 @@
 
 	            $itemloc = $spmstitemloc->where('CompanyCode', $request->CompanyCode)
 	            						->where('PartNo', $request->PartNo)
-	            						->where('BranchCode', $request->BranchCode)->first();
+	            						->where('BranchCode', $request->BranchCode)
+	            						->where('WarehouseCode', $request->WarehouseCode)->first();
 
 	           	if ($itemloc == null) {
 	           		$spmstitemloc = $spmstitemloc->create([
