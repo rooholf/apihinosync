@@ -103,35 +103,43 @@ class SptrnprcvhdrController extends Controller
             ->update(['DocumentSequence' => $no3]);
 
             // echo $wrsno;die;
+
+            $spthdr = Sptrnprcvhdr::where('GRNo','=', $request->GRNo)
+                                    ->where('BranchCode','=',$branchcode)
+                                    ->where('CompanyCode','=', $request->CompanyCode)->first();
+
+            if (!$spthdr) {
+                $sptrnprcvhdr = Sptrnprcvhdr::firstOrCreate([
+                    'CompanyCode'=> $request->CompanyCode,
+                    'BranchCode'=> $branchcode,
+                    'WRSNo'=> $wrsno,
+                    'WRSDate'=> Carbon::now(),
+                    'BinningNo'=> $binningno,
+                    'BinningDate'=> Carbon::now(),
+                    'ReceivingType'=> $request->ReceivingType,
+                    'DNSupplierNo'=> $docno,
+                    'DNSupplierDate'=> Carbon::now(),
+                    'TransType'=> $request->TransType,
+                    'SupplierCode'=> $request->SupplierCode,
+                    'ReferenceNo'=> $request->ReferenceNo,
+                    'ReferenceDate'=> Carbon::now(),
+                    'TotItem'=> $request->TotItem,
+                    'TotWRSAmt'=> $request->TotWRSAmt,
+                    'Status'=> $request->Status,
+                    'PrintSeq'=> $request->PrintSeq,
+                    'TypeOfGoods'=> $request->TypeOfGoods,
+                    'CreatedBy'=> $request->CreatedBy,
+                    'CreatedDate'=> Carbon::now(),
+                    'LastUpdateBy'=> $request->LastUpdateBy,
+                    'LastUpdateDate'=> Carbon::now(),
+                    'isLocked'=> $request->isLocked,
+                    'LockingBy'=> $request->LockingBy,
+                    'LockingDate'=> Carbon::now(),
+                    'GRNo' => $request->GRNo,
+                ]);
+            }
      
-            $sptrnprcvhdr = Sptrnprcvhdr::firstOrCreate([
-                'CompanyCode'=> $request->CompanyCode,
-                'BranchCode'=> $branchcode,
-                'WRSNo'=> $wrsno,
-                'WRSDate'=> Carbon::now(),
-                'BinningNo'=> $binningno,
-                'BinningDate'=> Carbon::now(),
-                'ReceivingType'=> $request->ReceivingType,
-                'DNSupplierNo'=> $docno,
-                'DNSupplierDate'=> Carbon::now(),
-                'TransType'=> $request->TransType,
-                'SupplierCode'=> $request->SupplierCode,
-                'ReferenceNo'=> $request->ReferenceNo,
-                'ReferenceDate'=> Carbon::now(),
-                'TotItem'=> $request->TotItem,
-                'TotWRSAmt'=> $request->TotWRSAmt,
-                'Status'=> $request->Status,
-                'PrintSeq'=> $request->PrintSeq,
-                'TypeOfGoods'=> $request->TypeOfGoods,
-                'CreatedBy'=> $request->CreatedBy,
-                'CreatedDate'=> Carbon::now(),
-                'LastUpdateBy'=> $request->LastUpdateBy,
-                'LastUpdateDate'=> Carbon::now(),
-                'isLocked'=> $request->isLocked,
-                'LockingBy'=> $request->LockingBy,
-                'LockingDate'=> Carbon::now(),
-                'GRNo' => $request->GRNo,
-            ]);
+                
 
             
             // if ($sptrnprcvhdr) {
