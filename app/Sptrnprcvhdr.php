@@ -37,5 +37,6 @@ class Sptrnprcvhdr extends Model
         'isLocked', 
         'LockingBy', 
         'LockingDate',
+        'GRNo',
     ];
 }
