@@ -41,15 +41,17 @@ class SptrnprcvhdrController extends Controller
             'ReferenceNo' => 'required',
         ]);
 
+        // nomor WRSNo
+        if ($request->WhsCodeDesc == 'WH NORMAL - HINO JAMBI') {
+            $branchcode = '000';
+        } else {
+            $branchcode = '002';
+        }
+
         $header = Sptrnprcvhdr::where('ReferenceNo', $request->ReferenceNo)->first();
 
         if ($header == null) {
-            // nomor WRSNo
-            if ($request->WhsCodeDesc == 'WH NORMAL - HINO JAMBI') {
-                $branchcode = '000';
-            } else {
-                $branchcode = '002';
-            }
+            
 
             $gnmstdocument = $gnmstdocument->where('DocumentType', 'WRL')
                                         ->where('BranchCode', $branchcode)
@@ -160,11 +162,41 @@ class SptrnprcvhdrController extends Controller
 
             }
 
-            return fractal()
-                    ->item($sptrnprcvhdr)
-                    ->transformWith(new SptrnprcvhdrTransformer)
-                    ->toArray();
+            return response()->json([
+                'data' => 0
+            ], 200);
+
+            // return fractal()
+            //         ->item($sptrnprcvhdr)
+            //         ->transformWith(new SptrnprcvhdrTransformer)
+            //         ->toArray();
         } else {
+            $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->firstOrCreate([
+                'CompanyCode'=> $request->CompanyCode,
+                'BranchCode'=> $branchcode,
+                'WRSNo'=> $header->WRSNo,
+                'PartNo'=> $request->PartNo,
+                'DocNo'=> $header->DNSupplierNo,
+                'DocDate'=> Carbon::now(),
+                'WarehouseCode'=> $request->WarehouseCode,
+                'LocationCode'=> $request->LocationCode,
+                'BoxNo'=> $request->BoxNo,
+                'ReceivedQty'=> $request->ReceivedQty,
+                'PurchasePrice'=> $request->PurchasePrice,
+                'CostPrice'=> $request->CostPrice,
+                'DiscPct'=> $request->DiscPct,
+                'ABCClass'=> $request->ABCClass,
+                'MovingCode'=> $request->MovingCode,
+                'ProductType'=> $request->ProductType,
+                'PartCategory'=> $request->PartCategory,
+                'CreatedBy'=> $request->CreatedBy,
+                'CreatedDate'=> Carbon::now(),
+                'LastUpdateBy'=> $request->LastUpdateBy,
+                'LastUpdateDate'=> Carbon::now(),
+            ]);
+
+            $this->updateTotItem($header->WRSNo);
+
             return response()->json([
                 'data' => 1
             ], 200);
@@ -236,7 +268,6 @@ class SptrnprcvhdrController extends Controller
                 $this->updateTotItem($header->WRSNo);
 
                 return response()->json([
-                    'message' => 'Detail Successed',
                     'data' => 0
                 ], 200);
 
