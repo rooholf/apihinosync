@@ -51,6 +51,23 @@ class SptrnprcvhdrController extends Controller
         $header = Sptrnprcvhdr::where('ReferenceNo', $request->ReferenceNo)->first();
 
         if ($header == null) {
+            DB::table('gnMstDocument')
+            ->where('DocumentType', 'WRL')
+            ->where('BranchCode', $branchcode)
+            ->where('CompanyCode', $request->CompanyCode)
+            ->update(['DocumentSequence' => $no1]);
+
+            DB::table('gnMstDocument')
+            ->where('DocumentType', 'BNL')
+            ->where('BranchCode', $branchcode)
+            ->where('CompanyCode', $request->CompanyCode)
+            ->update(['DocumentSequence' => $no2]);
+
+            DB::table('gnMstDocument')
+            ->where('DocumentType', 'POS')
+            ->where('BranchCode', $branchcode)
+            ->where('CompanyCode', $request->CompanyCode)
+            ->update(['DocumentSequence' => $no3]);
             
 
             $gnmstdocument = $gnmstdocument->where('DocumentType', 'WRL')
@@ -84,24 +101,6 @@ class SptrnprcvhdrController extends Controller
 
             // echo $wrsno;die;
 
-            DB::table('gnMstDocument')
-            ->where('DocumentType', 'WRL')
-            ->where('BranchCode', $branchcode)
-            ->where('CompanyCode', $request->CompanyCode)
-            ->update(['DocumentSequence' => $no1]);
-
-            DB::table('gnMstDocument')
-            ->where('DocumentType', 'BNL')
-            ->where('BranchCode', $branchcode)
-            ->where('CompanyCode', $request->CompanyCode)
-            ->update(['DocumentSequence' => $no2]);
-
-            DB::table('gnMstDocument')
-            ->where('DocumentType', 'POS')
-            ->where('BranchCode', $branchcode)
-            ->where('CompanyCode', $request->CompanyCode)
-            ->update(['DocumentSequence' => $no3]);
-
             $sptrnprcvhdr = $sptrnprcvhdr->firstOrCreate([
                 'CompanyCode'=> $request->CompanyCode,
                 'BranchCode'=> $branchcode,
@@ -128,7 +127,6 @@ class SptrnprcvhdrController extends Controller
                 'isLocked'=> $request->isLocked,
                 'LockingBy'=> $request->LockingBy,
                 'LockingDate'=> Carbon::now(),
-
             ]);
 
             if ($sptrnprcvhdr) {
