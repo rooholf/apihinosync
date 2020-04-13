@@ -56,15 +56,15 @@ class SptrnprcvhdrController extends Controller
 
         if ($header == null) {
             
-            $gnmstdocument = $gnmstdocument->where('DocumentType', 'WRL')
+            $gnmstdocument = Gnmstdocument::where('DocumentType', 'WRL')
                                         ->where('BranchCode', $branchcode)
                                         ->first();
 
-            $gnmstdocument2 = $gnmstdocument->where('DocumentType', 'BNL')
+            $gnmstdocument2 = Gnmstdocument::where('DocumentType', 'BNL')
                                         ->where('BranchCode', $branchcode)
                                         ->first();
 
-            $gnmstdocument3 = $gnmstdocument->where('DocumentType', 'POS')
+            $gnmstdocument3 = Gnmstdocument::where('DocumentType', 'POS')
                                         ->where('BranchCode', $branchcode)
                                         ->first();
 
@@ -85,20 +85,17 @@ class SptrnprcvhdrController extends Controller
             $binningno = 'BNL/'.$thnbnl.'/'.$nourut2;
             $docno = 'POS/'.$thnpos.'/'.$nourut3;
 
-            DB::table('gnMstDocument')
-            ->where('DocumentType', 'WRL')
+            Gnmstdocument::where('DocumentType', 'WRL')
             ->where('BranchCode', $branchcode)
             ->where('CompanyCode', $request->CompanyCode)
             ->update(['DocumentSequence' => $no1]);
 
-            DB::table('gnMstDocument')
-            ->where('DocumentType', 'BNL')
+            Gnmstdocument::where('DocumentType', 'BNL')
             ->where('BranchCode', $branchcode)
             ->where('CompanyCode', $request->CompanyCode)
             ->update(['DocumentSequence' => $no2]);
 
-            DB::table('gnMstDocument')
-            ->where('DocumentType', 'POS')
+            Gnmstdocument::where('DocumentType', 'POS')
             ->where('BranchCode', $branchcode)
             ->where('CompanyCode', $request->CompanyCode)
             ->update(['DocumentSequence' => $no3]);
@@ -163,6 +160,7 @@ class SptrnprcvhdrController extends Controller
                 ]);
 
                 // grno header
+
 
 
 
@@ -322,8 +320,7 @@ class SptrnprcvhdrController extends Controller
             $item++;
         }
 
-        DB::table('spTrnPRcvHdr')
-            ->where('WRSNo', $wrsno)
+        spTrnPRcvHdr::where('WRSNo', $wrsno)
             ->update([
                 'TotItem' => $item, 
                 'TotWRSAmt' => $total

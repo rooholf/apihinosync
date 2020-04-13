@@ -202,9 +202,9 @@
 
 	            $itemprice = Spmstitemprice::where('CompanyCode', $request->CompanyCode)
 	            						->where('PartNo', $request->PartNo)
-	            						->where('BranchCode', $request->BranchCode)->first();
+	            						->where('BranchCode', $request->BranchCode)->count();
 
-	            if (!$itemprice) {
+	            if ($itemprice < 1) {
 	            	$spmstitemprice = $spmstitemprice->firstOrCreate([
 				        'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => $request->BranchCode,
