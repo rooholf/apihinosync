@@ -179,7 +179,7 @@ class SptrnprcvhdrController extends Controller
                         ->where('BoxNo', $request->BoxNo)
                         ->first();
 
-            // dd($header2);
+            echo $header2; die;
 
             if ($header2 == null) {
                 $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->firstOrCreate([
