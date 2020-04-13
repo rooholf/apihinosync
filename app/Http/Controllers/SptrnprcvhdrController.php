@@ -161,40 +161,40 @@ class SptrnprcvhdrController extends Controller
                 ]);
 
                 // grno header
-                $docEx = explode("/", $request->GRNo);
-                $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+                // $docEx = explode("/", $request->GRNo);
+                // $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
 
-                $apbeginbalancehdr = $apbeginbalancehdr->firstOrCreate([
-                    'CompanyCode'=> $request->CompanyCode,
-                    'BranchCode'=> $branchcode,
-                    'DocNo'=> $docNoApbegin,
-                    'ProfitCenterCode'=> '300',
-                    'DocDate'=> Carbon::now(),
-                    'SupplierCode'=> $request->SupplierCode,
-                    'AccountNo'=> '004.000.000.00000.300000.000.000',
-                    'DueDate'=> Carbon::now(),
-                    'TOPCode'=> 'C30',
-                    'Amount'=> $request->TotWRSAmt,
-                    'Status'=> '0',
-                    'CreatedBy'=> $request->CreatedBy,
-                    'CreatedDate'=> Carbon::now(),
-                    'PrintSeq'=> '1',
-                ]);
+                // $apbeginbalancehdr = $apbeginbalancehdr->firstOrCreate([
+                //     'CompanyCode'=> $request->CompanyCode,
+                //     'BranchCode'=> $branchcode,
+                //     'DocNo'=> $docNoApbegin,
+                //     'ProfitCenterCode'=> '300',
+                //     'DocDate'=> Carbon::now(),
+                //     'SupplierCode'=> $request->SupplierCode,
+                //     'AccountNo'=> '004.000.000.00000.300000.000.000',
+                //     'DueDate'=> Carbon::now(),
+                //     'TOPCode'=> 'C30',
+                //     'Amount'=> $request->TotWRSAmt,
+                //     'Status'=> '0',
+                //     'CreatedBy'=> $request->CreatedBy,
+                //     'CreatedDate'=> Carbon::now(),
+                //     'PrintSeq'=> '1',
+                // ]);
 
                 // apibegin detail
-                $Apbeginbalancedtl = $Apbeginbalancedtl->firstOrCreate([
-                    'CompanyCode'=> $request->CompanyCode,
-                    'BranchCode'=> $branchcode,
-                    'DocNo'=> $docNoApbegin,
-                    'SeqNo'=> '1',
-                    'AccountNo'=> '004.000.000.00000.300000.000.000',
-                    'Description'=> $request->ReferenceNo,
-                    'Amount'=> $request->TotWRSAmt,
-                    'Status'=> '0',
-                    'CreatedBy'=> $request->CreatedBy,
-                    'CreatedDate'=> Carbon::now(),
+                // $Apbeginbalancedtl = $Apbeginbalancedtl->firstOrCreate([
+                //     'CompanyCode'=> $request->CompanyCode,
+                //     'BranchCode'=> $branchcode,
+                //     'DocNo'=> $docNoApbegin,
+                //     'SeqNo'=> '1',
+                //     'AccountNo'=> '004.000.000.00000.300000.000.000',
+                //     'Description'=> $request->ReferenceNo,
+                //     'Amount'=> $request->TotWRSAmt,
+                //     'Status'=> '0',
+                //     'CreatedBy'=> $request->CreatedBy,
+                //     'CreatedDate'=> Carbon::now(),
 
-                ]);
+                // ]);
 
                 $this->updateTotItem($wrsno, $request->GRNo);
 
@@ -361,18 +361,18 @@ class SptrnprcvhdrController extends Controller
 
 
         // 
-        $docEx = explode("/", $grno);
-        $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+        // $docEx = explode("/", $grno);
+        // $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
 
-        Apbeginbalancehdr::where('DocNo', $docNoApbegin)
-            ->update([
-                'Amount' => $total
-            ]);
+        // Apbeginbalancehdr::where('DocNo', $docNoApbegin)
+        //     ->update([
+        //         'Amount' => $total
+        //     ]);
 
-        Apbeginbalancedtl::where('DocNo', $docNoApbegin)
-            ->update([
-                'Amount' => $total
-            ]);
+        // Apbeginbalancedtl::where('DocNo', $docNoApbegin)
+        //     ->update([
+        //         'Amount' => $total
+        //     ]);
 
     }
 }
