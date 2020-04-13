@@ -178,6 +178,9 @@ class SptrnprcvhdrController extends Controller
                         ->where('DocNo', $header->DNSupplierNo)
                         ->where('BoxNo', $request->BoxNo)
                         ->first();
+
+            dd($header2);
+
             if ($header2 == null) {
                 $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->firstOrCreate([
                     'CompanyCode'=> $request->CompanyCode,
