@@ -102,7 +102,7 @@ class SptrnprcvhdrController extends Controller
 
             // echo $wrsno;die;
 
-            $sptrnprcvhdr = $sptrnprcvhdr->firstOrCreate([
+            $sptrnprcvhdr = Sptrnprcvhdr::firstOrCreate([
                 'CompanyCode'=> $request->CompanyCode,
                 'BranchCode'=> $branchcode,
                 'WRSNo'=> $wrsno,
@@ -136,7 +136,7 @@ class SptrnprcvhdrController extends Controller
 
             if ($sptrnprcvhdr) {
                 // detail header
-                $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->firstOrCreate([
+                $sptrnprcvhdrdtl = Sptrnprcvhdrdtl::firstOrCreate([
                     'CompanyCode'=> $request->CompanyCode,
                     'BranchCode'=> $branchcode,
                     'WRSNo'=> $wrsno,
