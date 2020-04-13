@@ -159,7 +159,7 @@
 	            						->where('BranchCode', $request->BranchCode)
 	            						->where('WarehouseCode', $request->WarehouseCode)->first();
 
-	           	if ($itemloc == null) {
+	           	if (!$itemloc) {
 	           		$spmstitemloc = $spmstitemloc->create([
 		                'CompanyCode'=> $request->CompanyCode,
 		                'BranchCode'=> $request->BranchCode,
@@ -204,7 +204,7 @@
 	            						->where('PartNo', $request->PartNo)
 	            						->where('BranchCode', $request->BranchCode)->first();
 
-	            if ($itemprice == null) {
+	            if (!$itemprice) {
 	            	$spmstitemprice = $spmstitemprice->create([
 				        'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => $request->BranchCode,
