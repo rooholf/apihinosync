@@ -56,7 +56,7 @@ class SptrnprcvhdrController extends Controller
 
         dd($header);
 
-        if (!$header) {
+        if ($header === null) {
             
             $gnmstdocument = Gnmstdocument::where('DocumentType', 'WRL')
                                         ->where('BranchCode', $branchcode)
@@ -214,11 +214,11 @@ class SptrnprcvhdrController extends Controller
                         ->where('PartNo','=', $request->PartNo)
                         ->where('DocNo','=', $header->DNSupplierNo)
                         ->where('BoxNo','=', $request->BoxNo)
-                        ->count();
+                        ->first();
 
             // dd($header2);
 
-            if ($header2 < 1) {
+            if ($header2 === null) {
                 $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->firstOrCreate([
                     'CompanyCode'=> $request->CompanyCode,
                     'BranchCode'=> $branchcode,
