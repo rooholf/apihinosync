@@ -51,25 +51,7 @@ class SptrnprcvhdrController extends Controller
         $header = Sptrnprcvhdr::where('ReferenceNo', $request->ReferenceNo)->first();
 
         if ($header == null) {
-            DB::table('gnMstDocument')
-            ->where('DocumentType', 'WRL')
-            ->where('BranchCode', $branchcode)
-            ->where('CompanyCode', $request->CompanyCode)
-            ->update(['DocumentSequence' => $no1]);
-
-            DB::table('gnMstDocument')
-            ->where('DocumentType', 'BNL')
-            ->where('BranchCode', $branchcode)
-            ->where('CompanyCode', $request->CompanyCode)
-            ->update(['DocumentSequence' => $no2]);
-
-            DB::table('gnMstDocument')
-            ->where('DocumentType', 'POS')
-            ->where('BranchCode', $branchcode)
-            ->where('CompanyCode', $request->CompanyCode)
-            ->update(['DocumentSequence' => $no3]);
             
-
             $gnmstdocument = $gnmstdocument->where('DocumentType', 'WRL')
                                         ->where('BranchCode', $branchcode)
                                         ->first();
@@ -98,6 +80,24 @@ class SptrnprcvhdrController extends Controller
             $wrsno = 'WRL/'.$thnwrl.'/'.$nourut;
             $binningno = 'BNL/'.$thnbnl.'/'.$nourut2;
             $docno = 'POS/'.$thnpos.'/'.$nourut3;
+
+            DB::table('gnMstDocument')
+            ->where('DocumentType', 'WRL')
+            ->where('BranchCode', $branchcode)
+            ->where('CompanyCode', $request->CompanyCode)
+            ->update(['DocumentSequence' => $no1]);
+
+            DB::table('gnMstDocument')
+            ->where('DocumentType', 'BNL')
+            ->where('BranchCode', $branchcode)
+            ->where('CompanyCode', $request->CompanyCode)
+            ->update(['DocumentSequence' => $no2]);
+
+            DB::table('gnMstDocument')
+            ->where('DocumentType', 'POS')
+            ->where('BranchCode', $branchcode)
+            ->where('CompanyCode', $request->CompanyCode)
+            ->update(['DocumentSequence' => $no3]);
 
             // echo $wrsno;die;
 
