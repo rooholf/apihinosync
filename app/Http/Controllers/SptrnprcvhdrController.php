@@ -52,7 +52,7 @@ class SptrnprcvhdrController extends Controller
             $branchcode = '002';
         }
 
-        $header = Sptrnprcvhdr::where('ReferenceNo', $request->ReferenceNo)->count();
+        $header = Sptrnprcvhdr::where('GRNo', $request->GRNo)->count();
 
         if ($header < 1) {
             
@@ -128,6 +128,7 @@ class SptrnprcvhdrController extends Controller
                 'isLocked'=> $request->isLocked,
                 'LockingBy'=> $request->LockingBy,
                 'LockingDate'=> Carbon::now(),
+                'GRNo' => $request->GRNo,
             ]);
 
 
