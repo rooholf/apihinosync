@@ -70,6 +70,8 @@ class SptrnprcvhdrController extends Controller
                                         ->where('BranchCode', $branchcode)
                                         ->first();
 
+            dd($gnmstdocument);
+
             // thn wrl
             $no1 = $gnmstdocument->DocumentSequence + 1;
             $thnwrl = substr($gnmstdocument->DocumentYear, 2, 2);
@@ -133,8 +135,7 @@ class SptrnprcvhdrController extends Controller
                 'GRNo' => $request->GRNo,
             ]);
 
-            dd($sptrnprcvhdr);
-
+            
             // if ($sptrnprcvhdr) {
                 // detail header
                 // $sptrnprcvhdrdtl = Sptrnprcvhdrdtl::firstOrCreate([
