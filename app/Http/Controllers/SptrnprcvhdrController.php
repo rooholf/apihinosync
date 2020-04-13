@@ -81,7 +81,7 @@ class SptrnprcvhdrController extends Controller
 
         $header = Sptrnprcvhdr::where('GRNo','=', $request->GRNo)->first();
         // dd($header);
-        if ($header === null) {
+        if ($header == null) {
             // echo $wrsno;die;
             $sptrnprcvhdr = Sptrnprcvhdr::firstOrCreate([
                 'CompanyCode'=> $request->CompanyCode,
