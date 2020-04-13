@@ -73,7 +73,7 @@
 
 			// dd($items);
 			if (!$items) {
-				$spmstitem = $spmstitem->create([
+				$spmstitem = $spmstitem->firstOrCreate([
 			        'CompanyCode' => $request->CompanyCode,
 					'BranchCode' => $request->BranchCode,
 					'PartNo' => $request->PartNo,
@@ -130,7 +130,7 @@
 	            						->where('PartNo', $request->PartNo)->first();
 
 	            if (!$iteminfo) {
-	            	$spmstiteminfo = $spmstiteminfo->create([
+	            	$spmstiteminfo = $spmstiteminfo->firstOrCreate([
 		                'CompanyCode'=> $request->CompanyCode,
 		                'PartNo'=> $request->PartNo,
 		                'SupplierCode'=> $request->SupplierCode,
@@ -160,7 +160,7 @@
 	            						->where('WarehouseCode', $request->WarehouseCode)->first();
 
 	           	if (!$itemloc) {
-	           		$spmstitemloc = $spmstitemloc->create([
+	           		$spmstitemloc = $spmstitemloc->firstOrCreate([
 		                'CompanyCode'=> $request->CompanyCode,
 		                'BranchCode'=> $request->BranchCode,
 		                'PartNo'=> $request->PartNo,
@@ -205,7 +205,7 @@
 	            						->where('BranchCode', $request->BranchCode)->first();
 
 	            if (!$itemprice) {
-	            	$spmstitemprice = $spmstitemprice->create([
+	            	$spmstitemprice = $spmstitemprice->firstOrCreate([
 				        'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => $request->BranchCode,
 						'PartNo' => $request->PartNo,
