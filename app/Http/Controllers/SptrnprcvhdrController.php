@@ -200,7 +200,8 @@ class SptrnprcvhdrController extends Controller
             // }
 
             return response()->json([
-                'data' => 0
+                'data' => 0, 
+                'message' => $sptrnprcvhdr,
             ], 200);
 
             // return fractal()
