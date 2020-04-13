@@ -133,31 +133,31 @@ class SptrnprcvhdrController extends Controller
                 'GRNo' => $request->GRNo,
             ]);
 
-            if ($sptrnprcvhdr) {
+            // if ($sptrnprcvhdr) {
                 // detail header
-                $sptrnprcvhdrdtl = Sptrnprcvhdrdtl::firstOrCreate([
-                    'CompanyCode'=> $request->CompanyCode,
-                    'BranchCode'=> $branchcode,
-                    'WRSNo'=> $wrsno,
-                    'PartNo'=> $request->PartNo,
-                    'DocNo'=> $docno,
-                    'DocDate'=> Carbon::now(),
-                    'WarehouseCode'=> $request->WarehouseCode,
-                    'LocationCode'=> $request->LocationCode,
-                    'BoxNo'=> $request->BoxNo,
-                    'ReceivedQty'=> $request->ReceivedQty,
-                    'PurchasePrice'=> $request->PurchasePrice,
-                    'CostPrice'=> $request->CostPrice,
-                    'DiscPct'=> $request->DiscPct,
-                    'ABCClass'=> $request->ABCClass,
-                    'MovingCode'=> $request->MovingCode,
-                    'ProductType'=> $request->ProductType,
-                    'PartCategory'=> $request->PartCategory,
-                    'CreatedBy'=> $request->CreatedBy,
-                    'CreatedDate'=> Carbon::now(),
-                    'LastUpdateBy'=> $request->LastUpdateBy,
-                    'LastUpdateDate'=> Carbon::now(),
-                ]);
+                // $sptrnprcvhdrdtl = Sptrnprcvhdrdtl::firstOrCreate([
+                //     'CompanyCode'=> $request->CompanyCode,
+                //     'BranchCode'=> $branchcode,
+                //     'WRSNo'=> $wrsno,
+                //     'PartNo'=> $request->PartNo,
+                //     'DocNo'=> $docno,
+                //     'DocDate'=> Carbon::now(),
+                //     'WarehouseCode'=> $request->WarehouseCode,
+                //     'LocationCode'=> $request->LocationCode,
+                //     'BoxNo'=> $request->BoxNo,
+                //     'ReceivedQty'=> $request->ReceivedQty,
+                //     'PurchasePrice'=> $request->PurchasePrice,
+                //     'CostPrice'=> $request->CostPrice,
+                //     'DiscPct'=> $request->DiscPct,
+                //     'ABCClass'=> $request->ABCClass,
+                //     'MovingCode'=> $request->MovingCode,
+                //     'ProductType'=> $request->ProductType,
+                //     'PartCategory'=> $request->PartCategory,
+                //     'CreatedBy'=> $request->CreatedBy,
+                //     'CreatedDate'=> Carbon::now(),
+                //     'LastUpdateBy'=> $request->LastUpdateBy,
+                //     'LastUpdateDate'=> Carbon::now(),
+                // ]);
 
                 // grno header
                 // $docEx = explode("/", $request->GRNo);
@@ -195,9 +195,9 @@ class SptrnprcvhdrController extends Controller
 
                 // ]);
 
-                $this->updateTotItem($wrsno, $request->GRNo);
+                // $this->updateTotItem($wrsno, $request->GRNo);
 
-            }
+            // }
 
             return response()->json([
                 'data' => 0
@@ -208,43 +208,43 @@ class SptrnprcvhdrController extends Controller
             //         ->transformWith(new SptrnprcvhdrTransformer)
             //         ->toArray();
         } else {
-            $header2 = Sptrnprcvhdrdtl::where('CompanyCode', '=', $request->CompanyCode)
-                        ->where('BranchCode','=', $branchcode)
-                        ->where('WRSNo','=', $header->WRSNo)
-                        ->where('PartNo','=', $request->PartNo)
-                        ->where('DocNo','=', $header->DNSupplierNo)
-                        ->where('BoxNo','=', $request->BoxNo)
-                        ->first();
+            // $header2 = Sptrnprcvhdrdtl::where('CompanyCode', '=', $request->CompanyCode)
+            //             ->where('BranchCode','=', $branchcode)
+            //             ->where('WRSNo','=', $header->WRSNo)
+            //             ->where('PartNo','=', $request->PartNo)
+            //             ->where('DocNo','=', $header->DNSupplierNo)
+            //             ->where('BoxNo','=', $request->BoxNo)
+            //             ->first();
 
-            // dd($header2);
+            // // dd($header2);
 
-            if ($header2 === null) {
-                $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->firstOrCreate([
-                    'CompanyCode'=> $request->CompanyCode,
-                    'BranchCode'=> $branchcode,
-                    'WRSNo'=> $header->WRSNo,
-                    'PartNo'=> $request->PartNo,
-                    'DocNo'=> $header->DNSupplierNo,
-                    'DocDate'=> Carbon::now(),
-                    'WarehouseCode'=> $request->WarehouseCode,
-                    'LocationCode'=> $request->LocationCode,
-                    'BoxNo'=> $request->BoxNo,
-                    'ReceivedQty'=> $request->ReceivedQty,
-                    'PurchasePrice'=> $request->PurchasePrice,
-                    'CostPrice'=> $request->CostPrice,
-                    'DiscPct'=> $request->DiscPct,
-                    'ABCClass'=> $request->ABCClass,
-                    'MovingCode'=> $request->MovingCode,
-                    'ProductType'=> $request->ProductType,
-                    'PartCategory'=> $request->PartCategory,
-                    'CreatedBy'=> $request->CreatedBy,
-                    'CreatedDate'=> Carbon::now(),
-                    'LastUpdateBy'=> $request->LastUpdateBy,
-                    'LastUpdateDate'=> Carbon::now(),
-                ]);
+            // if ($header2 === null) {
+            //     $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->firstOrCreate([
+            //         'CompanyCode'=> $request->CompanyCode,
+            //         'BranchCode'=> $branchcode,
+            //         'WRSNo'=> $header->WRSNo,
+            //         'PartNo'=> $request->PartNo,
+            //         'DocNo'=> $header->DNSupplierNo,
+            //         'DocDate'=> Carbon::now(),
+            //         'WarehouseCode'=> $request->WarehouseCode,
+            //         'LocationCode'=> $request->LocationCode,
+            //         'BoxNo'=> $request->BoxNo,
+            //         'ReceivedQty'=> $request->ReceivedQty,
+            //         'PurchasePrice'=> $request->PurchasePrice,
+            //         'CostPrice'=> $request->CostPrice,
+            //         'DiscPct'=> $request->DiscPct,
+            //         'ABCClass'=> $request->ABCClass,
+            //         'MovingCode'=> $request->MovingCode,
+            //         'ProductType'=> $request->ProductType,
+            //         'PartCategory'=> $request->PartCategory,
+            //         'CreatedBy'=> $request->CreatedBy,
+            //         'CreatedDate'=> Carbon::now(),
+            //         'LastUpdateBy'=> $request->LastUpdateBy,
+            //         'LastUpdateDate'=> Carbon::now(),
+            //     ]);
 
-                $this->updateTotItem($header->WRSNo, $request->GRNo);
-            }
+            //     $this->updateTotItem($header->WRSNo, $request->GRNo);
+            // }
 
             return response()->json([
                 'data' => 1
