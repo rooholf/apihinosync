@@ -161,7 +161,6 @@ class SptrnprcvhdrController extends Controller
 
                 // grno header
                 $docEx = explode("/", $request->GRNo);
-
                 $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
 
                 $apbeginbalancehdr = $apbeginbalancehdr->firstOrCreate([
