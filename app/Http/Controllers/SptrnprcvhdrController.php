@@ -60,7 +60,7 @@ class SptrnprcvhdrController extends Controller
         return $newnumb;
     }
 
-    public function add(Request $request, Sptrnprcvhdr $sptrnprcvhdr, Sptrnprcvhdrdtl $sptrnprcvhdrdtl, Gnmstdocument $gnmstdocument, Apbeginbalancehdr $apbeginbalancehdr, Apbeginbalancedtl $Apbeginbalancedtl)
+    public function add(Request $request)
     {
         $this->validate($request, [
             'GRNo' => 'required',
