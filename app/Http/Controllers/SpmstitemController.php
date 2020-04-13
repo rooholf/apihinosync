@@ -126,7 +126,7 @@
 					'PurcDiscPct' => $request->PurcDiscPct,
 	            ]);
 
-	            $iteminfo = $spmstiteminfo->where('CompanyCode', $request->CompanyCode)
+	            $iteminfo = Spmstiteminfo::where('CompanyCode', $request->CompanyCode)
 	            						->where('PartNo', $request->PartNo)->first();
 
 	            if (!$iteminfo) {
@@ -154,7 +154,7 @@
 		            ]);
 	            }
 
-	            $itemloc = $spmstitemloc->where('CompanyCode', $request->CompanyCode)
+	            $itemloc = Spmstitemloc::where('CompanyCode', $request->CompanyCode)
 	            						->where('PartNo', $request->PartNo)
 	            						->where('BranchCode', $request->BranchCode)
 	            						->where('WarehouseCode', $request->WarehouseCode)->first();
@@ -200,7 +200,7 @@
 
 	            $RetailPriceInclTax = $request->RetailPrice * 1.1;
 
-	            $itemprice = $spmstitemprice->where('CompanyCode', $request->CompanyCode)
+	            $itemprice = Spmstitemprice::where('CompanyCode', $request->CompanyCode)
 	            						->where('PartNo', $request->PartNo)
 	            						->where('BranchCode', $request->BranchCode)->first();
 
