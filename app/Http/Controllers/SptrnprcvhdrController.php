@@ -160,10 +160,41 @@ class SptrnprcvhdrController extends Controller
                 ]);
 
                 // grno header
+                $docEx = explode("/", $request->GRNo);
 
+                $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
 
+                $apbeginbalancehdr = $apbeginbalancehdr->firstOrCreate([
+                    'CompanyCode'=> $request->CompanyCode,
+                    'BranchCode'=> $branchcode,
+                    'DocNo'=> $docNoApbegin,
+                    'ProfitCenterCode'=> '300',
+                    'DocDate'=> Carbon::now(),
+                    'SupplierCode'=> $request->SupplierCode,
+                    'AccountNo'=> '004.000.000.00000.300000.000.000',
+                    'DueDate'=> Carbon::now(),
+                    'TOPCode'=> 'C30',
+                    'Amount'=> $request->TotWRSAmt,
+                    'Status'=> '0',
+                    'CreatedBy'=> $request->CreatedBy,
+                    'CreatedDate'=> Carbon::now(),
+                    'PrintSeq'=> '1',
+                ]);
 
+                // apibegin detail
+                $Apbeginbalancedtl = $Apbeginbalancedtl->firstOrCreate([
+                    'CompanyCode'=> $request->CompanyCode,
+                    'BranchCode'=> $branchcode,
+                    'DocNo'=> $docNoApbegin,
+                    'SeqNo'=> '1',
+                    'AccountNo'=> '004.000.000.00000.300000.000.000',
+                    'Description'=> $request->ReferenceNo,
+                    'Amount'=> $request->TotWRSAmt,
+                    'Status'=> '0',
+                    'CreatedBy'=> $request->CreatedBy,
+                    'CreatedDate'=> Carbon::now(),
 
+                ]);
 
                 $this->updateTotItem($wrsno);
 
@@ -307,10 +338,12 @@ class SptrnprcvhdrController extends Controller
 
     }
 
-    public function updateTotItem($wrsno)
+    public function updateTotItem($wrsno, $beginno)
     {
         $total = 0;
         $item = 0;
+
+        // header
         $detail = Sptrnprcvhdrdtl::where('WRSNo', $wrsno)->get();
 
         foreach ($detail as $row) {
@@ -324,6 +357,18 @@ class SptrnprcvhdrController extends Controller
             ->update([
                 'TotItem' => $item, 
                 'TotWRSAmt' => $total
+            ]);
+
+
+        // 
+        Apbeginbalancehdr::where('DocNo', $beginno)
+            ->update([
+                'Amount' => $total
+            ]);
+
+        Apbeginbalancedtl::where('DocNo', $beginno)
+            ->update([
+                'Amount' => $total
             ]);
 
     }
