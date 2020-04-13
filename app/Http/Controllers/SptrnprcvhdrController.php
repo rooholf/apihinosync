@@ -196,7 +196,7 @@ class SptrnprcvhdrController extends Controller
 
                 ]);
 
-                $this->updateTotItem($wrsno);
+                $this->updateTotItem($wrsno, $request->GRNo);
 
             }
 
@@ -244,7 +244,7 @@ class SptrnprcvhdrController extends Controller
                     'LastUpdateDate'=> Carbon::now(),
                 ]);
 
-                $this->updateTotItem($header->WRSNo);
+                $this->updateTotItem($header->WRSNo, $request->GRNo);
             }
 
             return response()->json([
@@ -338,7 +338,7 @@ class SptrnprcvhdrController extends Controller
 
     }
 
-    public function updateTotItem($wrsno, $beginno)
+    public function updateTotItem($wrsno, $grno)
     {
         $total = 0;
         $item = 0;
@@ -361,12 +361,15 @@ class SptrnprcvhdrController extends Controller
 
 
         // 
-        Apbeginbalancehdr::where('DocNo', $beginno)
+        $docEx = explode("/", $grno);
+        $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+
+        Apbeginbalancehdr::where('DocNo', $docNoApbegin)
             ->update([
                 'Amount' => $total
             ]);
 
-        Apbeginbalancedtl::where('DocNo', $beginno)
+        Apbeginbalancedtl::where('DocNo', $docNoApbegin)
             ->update([
                 'Amount' => $total
             ]);
