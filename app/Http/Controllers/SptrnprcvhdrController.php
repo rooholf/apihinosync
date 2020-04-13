@@ -49,7 +49,7 @@ class SptrnprcvhdrController extends Controller
         $thn = substr($gnmstdocument->DocumentYear, 2, 2);
         $nourut = sprintf("%06s", $no);
 
-        $newnumb = $type.'/'.$thn.'/'.$noUrut;
+        $newnumb = $type.'/'.$thn.'/'.$nourut;
 
         Gnmstdocument::where('DocumentType', 'WRL')
             ->where('BranchCode', $branchcode)
