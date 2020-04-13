@@ -74,7 +74,7 @@ class SptrnprcvhdrController extends Controller
         }
 
         // code
-        $wrsno = $this->noUrut('WRS', $branchcode, $request->CompanyCode);
+        $wrsno = $this->noUrut('WRL', $branchcode, $request->CompanyCode);
         $binningno = $this->noUrut('BNL', $branchcode, $request->CompanyCode);
         $docno = $this->noUrut('POS', $branchcode, $request->CompanyCode);
 
