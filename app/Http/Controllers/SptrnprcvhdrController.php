@@ -42,7 +42,7 @@ class SptrnprcvhdrController extends Controller
     public function add(Request $request, Sptrnprcvhdr $sptrnprcvhdr, Sptrnprcvhdrdtl $sptrnprcvhdrdtl, Gnmstdocument $gnmstdocument, Apbeginbalancehdr $apbeginbalancehdr, Apbeginbalancedtl $Apbeginbalancedtl)
     {
         $this->validate($request, [
-            'ReferenceNo' => 'required',
+            'GRNo' => 'required',
         ]);
 
         // nomor WRSNo
