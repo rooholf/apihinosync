@@ -43,6 +43,7 @@ class SptrnprcvhdrController extends Controller
     {
         $gnmstdocument = Gnmstdocument::where('DocumentType', $type)
                                     ->where('BranchCode', $branchcode)
+                                    ->where('CompanyCode', $companycode)
                                     ->first();
 
         $no = $gnmstdocument->DocumentSequence + 1;
@@ -51,7 +52,7 @@ class SptrnprcvhdrController extends Controller
 
         $newnumb = $type.'/'.$thn.'/'.$nourut;
 
-        Gnmstdocument::where('DocumentType', 'WRL')
+        Gnmstdocument::where('DocumentType', $type)
             ->where('BranchCode', $branchcode)
             ->where('CompanyCode', $companycode)
             ->update(['DocumentSequence' => $no]);
