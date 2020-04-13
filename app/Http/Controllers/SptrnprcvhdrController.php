@@ -171,31 +171,40 @@ class SptrnprcvhdrController extends Controller
             //         ->transformWith(new SptrnprcvhdrTransformer)
             //         ->toArray();
         } else {
-            $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->firstOrCreate([
-                'CompanyCode'=> $request->CompanyCode,
-                'BranchCode'=> $branchcode,
-                'WRSNo'=> $header->WRSNo,
-                'PartNo'=> $request->PartNo,
-                'DocNo'=> $header->DNSupplierNo,
-                'DocDate'=> Carbon::now(),
-                'WarehouseCode'=> $request->WarehouseCode,
-                'LocationCode'=> $request->LocationCode,
-                'BoxNo'=> $request->BoxNo,
-                'ReceivedQty'=> $request->ReceivedQty,
-                'PurchasePrice'=> $request->PurchasePrice,
-                'CostPrice'=> $request->CostPrice,
-                'DiscPct'=> $request->DiscPct,
-                'ABCClass'=> $request->ABCClass,
-                'MovingCode'=> $request->MovingCode,
-                'ProductType'=> $request->ProductType,
-                'PartCategory'=> $request->PartCategory,
-                'CreatedBy'=> $request->CreatedBy,
-                'CreatedDate'=> Carbon::now(),
-                'LastUpdateBy'=> $request->LastUpdateBy,
-                'LastUpdateDate'=> Carbon::now(),
-            ]);
+            $header2 = Sptrnprcvhdrdtl::where('CompanyCode', $request->CompanyCode)
+                        ->where('BranchCode', $branchcode)
+                        ->where('WRSNo', $header->WRSNo)
+                        ->where('PartNo', $request->PartNo)
+                        ->where('DocNo', $header->DNSupplierNo)
+                        ->where('BoxNo', $request->BoxNo)
+                        ->first();
+            if ($header2 == null) {
+                $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->firstOrCreate([
+                    'CompanyCode'=> $request->CompanyCode,
+                    'BranchCode'=> $branchcode,
+                    'WRSNo'=> $header->WRSNo,
+                    'PartNo'=> $request->PartNo,
+                    'DocNo'=> $header->DNSupplierNo,
+                    'DocDate'=> Carbon::now(),
+                    'WarehouseCode'=> $request->WarehouseCode,
+                    'LocationCode'=> $request->LocationCode,
+                    'BoxNo'=> $request->BoxNo,
+                    'ReceivedQty'=> $request->ReceivedQty,
+                    'PurchasePrice'=> $request->PurchasePrice,
+                    'CostPrice'=> $request->CostPrice,
+                    'DiscPct'=> $request->DiscPct,
+                    'ABCClass'=> $request->ABCClass,
+                    'MovingCode'=> $request->MovingCode,
+                    'ProductType'=> $request->ProductType,
+                    'PartCategory'=> $request->PartCategory,
+                    'CreatedBy'=> $request->CreatedBy,
+                    'CreatedDate'=> Carbon::now(),
+                    'LastUpdateBy'=> $request->LastUpdateBy,
+                    'LastUpdateDate'=> Carbon::now(),
+                ]);
 
-            $this->updateTotItem($header->WRSNo);
+                $this->updateTotItem($header->WRSNo);
+            }
 
             return response()->json([
                 'data' => 1
