@@ -54,7 +54,7 @@ class SptrnprcvhdrController extends Controller
 
         $header = Sptrnprcvhdr::where('GRNo','=', $request->GRNo)->first();
 
-        // dd($header);
+        dd($header);
 
         if ($header === null) {
             
@@ -69,8 +69,6 @@ class SptrnprcvhdrController extends Controller
             $gnmstdocument3 = Gnmstdocument::where('DocumentType', 'POS')
                                         ->where('BranchCode', $branchcode)
                                         ->first();
-
-            dd($gnmstdocument);
 
             // thn wrl
             $no1 = $gnmstdocument->DocumentSequence + 1;
