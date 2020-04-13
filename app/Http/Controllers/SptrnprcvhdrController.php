@@ -214,11 +214,11 @@ class SptrnprcvhdrController extends Controller
                         ->where('PartNo', $request->PartNo)
                         ->where('DocNo', $header->DNSupplierNo)
                         ->where('BoxNo', $request->BoxNo)
-                        ->first();
+                        ->count();
 
             // dd($header2);
 
-            if (!$header2) {
+            if ($header2 < 1) {
                 $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->firstOrCreate([
                     'CompanyCode'=> $request->CompanyCode,
                     'BranchCode'=> $branchcode,
