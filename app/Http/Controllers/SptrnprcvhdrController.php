@@ -54,7 +54,7 @@ class SptrnprcvhdrController extends Controller
 
         $header = Sptrnprcvhdr::where('GRNo','=', $request->GRNo)->first();
 
-        dd($header);
+        // dd($header);
 
         if ($header === null) {
             
