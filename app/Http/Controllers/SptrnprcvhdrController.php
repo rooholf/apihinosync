@@ -73,15 +73,13 @@ class SptrnprcvhdrController extends Controller
             $branchcode = '002';
         }
 
-        // code
-        $wrsno = $this->noUrut('WRL', $branchcode, $request->CompanyCode);
-        $binningno = $this->noUrut('BNL', $branchcode, $request->CompanyCode);
-        $docno = $this->noUrut('POS', $branchcode, $request->CompanyCode);
-
 
         $header = Sptrnprcvhdr::where('GRNo','=', $request->GRNo)->first();
         // dd($header);
         if ($header == null) {
+            $wrsno = $this->noUrut('WRL', $branchcode, $request->CompanyCode);
+            $binningno = $this->noUrut('BNL', $branchcode, $request->CompanyCode);
+            $docno = $this->noUrut('POS', $branchcode, $request->CompanyCode);
             // echo $wrsno;die;
             $sptrnprcvhdr = Sptrnprcvhdr::firstOrCreate([
                 'CompanyCode'=> $request->CompanyCode,
