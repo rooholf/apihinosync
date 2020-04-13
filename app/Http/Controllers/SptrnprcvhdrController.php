@@ -39,6 +39,26 @@ class SptrnprcvhdrController extends Controller
         }
     }
 
+    public function noUrut($type, $branchcode, $companycode)
+    {
+        $gnmstdocument = Gnmstdocument::where('DocumentType', $type)
+                                    ->where('BranchCode', $branchcode)
+                                    ->first();
+
+        $no = $gnmstdocument->DocumentSequence + 1;
+        $thn = substr($gnmstdocument->DocumentYear, 2, 2);
+        $nourut = sprintf("%06s", $no);
+
+        $newnumb = $type.'/'.$thn.'/'.$noUrut;
+
+        Gnmstdocument::where('DocumentType', 'WRL')
+            ->where('BranchCode', $branchcode)
+            ->where('CompanyCode', $companycode)
+            ->update(['DocumentSequence' => $no]);
+
+        return $newnumb;
+    }
+
     public function add(Request $request, Sptrnprcvhdr $sptrnprcvhdr, Sptrnprcvhdrdtl $sptrnprcvhdrdtl, Gnmstdocument $gnmstdocument, Apbeginbalancehdr $apbeginbalancehdr, Apbeginbalancedtl $Apbeginbalancedtl)
     {
         $this->validate($request, [
@@ -53,54 +73,14 @@ class SptrnprcvhdrController extends Controller
         }
 
         // code
-        $gnmstdocument = Gnmstdocument::where('DocumentType', 'WRL')
-                                    ->where('BranchCode', $branchcode)
-                                    ->first();
-
-        $gnmstdocument2 = Gnmstdocument::where('DocumentType', 'BNL')
-                                    ->where('BranchCode', $branchcode)
-                                    ->first();
-
-        $gnmstdocument3 = Gnmstdocument::where('DocumentType', 'POS')
-                                    ->where('BranchCode', $branchcode)
-                                    ->first();
-
-        // thn wrl
-        $no1 = $gnmstdocument->DocumentSequence + 1;
-        $thnwrl = substr($gnmstdocument->DocumentYear, 2, 2);
-        $nourut = sprintf("%06s", $no1);
-
-        $no2 = $gnmstdocument2->DocumentSequence + 1;
-        $thnbnl = substr($gnmstdocument2->DocumentYear, 2, 2);
-        $nourut2 = sprintf("%06s", $no2);
-
-        $no3 = $gnmstdocument3->DocumentSequence + 1;
-        $thnpos = substr($gnmstdocument3->DocumentYear, 2, 2);
-        $nourut3 = sprintf("%06s", $no3);
-
-        $wrsno = 'WRL/'.$thnwrl.'/'.$nourut;
-        $binningno = 'BNL/'.$thnbnl.'/'.$nourut2;
-        $docno = 'POS/'.$thnpos.'/'.$nourut3;
+        $wrsno = $this->noUrut('WRS', $branchcode, $request->CompanyCode);
+        $binningno = $this->noUrut('BNL', $branchcode, $request->CompanyCode);
+        $docno = $this->noUrut('POS', $branchcode, $request->CompanyCode);
 
 
         $header = Sptrnprcvhdr::where('GRNo','=', $request->GRNo)->first();
         // dd($header);
         if ($header === null) {
-            Gnmstdocument::where('DocumentType', 'WRL')
-            ->where('BranchCode', $branchcode)
-            ->where('CompanyCode', $request->CompanyCode)
-            ->update(['DocumentSequence' => $no1]);
-
-            Gnmstdocument::where('DocumentType', 'BNL')
-            ->where('BranchCode', $branchcode)
-            ->where('CompanyCode', $request->CompanyCode)
-            ->update(['DocumentSequence' => $no2]);
-
-            Gnmstdocument::where('DocumentType', 'POS')
-            ->where('BranchCode', $branchcode)
-            ->where('CompanyCode', $request->CompanyCode)
-            ->update(['DocumentSequence' => $no3]);
-
             // echo $wrsno;die;
             $sptrnprcvhdr = Sptrnprcvhdr::firstOrCreate([
                 'CompanyCode'=> $request->CompanyCode,
