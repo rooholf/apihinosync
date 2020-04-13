@@ -133,6 +133,8 @@ class SptrnprcvhdrController extends Controller
                 'GRNo' => $request->GRNo,
             ]);
 
+            dd($sptrnprcvhdr);
+
             // if ($sptrnprcvhdr) {
                 // detail header
                 // $sptrnprcvhdrdtl = Sptrnprcvhdrdtl::firstOrCreate([
