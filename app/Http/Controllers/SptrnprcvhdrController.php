@@ -113,7 +113,7 @@ class SptrnprcvhdrController extends Controller
 
             
             if ($sptrnprcvhdr) {
-                detail header
+                // detail header
                 $sptrnprcvhdrdtl = Sptrnprcvhdrdtl::firstOrCreate([
                     'CompanyCode'=> $request->CompanyCode,
                     'BranchCode'=> $branchcode,
