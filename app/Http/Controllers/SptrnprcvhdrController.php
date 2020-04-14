@@ -138,7 +138,7 @@ class SptrnprcvhdrController extends Controller
                     'LastUpdateDate'=> Carbon::now(),
                 ]);
 
-                grno header
+                // grno header
                 $docEx = explode("/", $request->GRNo);
                 $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
 
@@ -159,7 +159,7 @@ class SptrnprcvhdrController extends Controller
                     'PrintSeq'=> '1',
                 ]);
 
-                apibegin detail
+                // apibegin detail
                 $Apbeginbalancedtl = $Apbeginbalancedtl->firstOrCreate([
                     'CompanyCode'=> $request->CompanyCode,
                     'BranchCode'=> $branchcode,
