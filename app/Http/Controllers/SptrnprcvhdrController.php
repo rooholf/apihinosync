@@ -81,7 +81,7 @@ class SptrnprcvhdrController extends Controller
             $binningno = $this->noUrut('BNL', $branchcode, $request->CompanyCode);
             $docno = $this->noUrut('POS', $branchcode, $request->CompanyCode);
             // echo $wrsno;die;
-            $sptrnprcvhdr = Sptrnprcvhdr::firstOrCreate([
+            $sptrnprcvhdr = Sptrnprcvhdr::create([
                 'CompanyCode'=> $request->CompanyCode,
                 'BranchCode'=> $branchcode,
                 'WRSNo'=> $wrsno,
@@ -114,7 +114,7 @@ class SptrnprcvhdrController extends Controller
             
             if ($sptrnprcvhdr) {
                 // detail header
-                $sptrnprcvhdrdtl = Sptrnprcvhdrdtl::firstOrCreate([
+                $sptrnprcvhdrdtl = Sptrnprcvhdrdtl::create([
                     'CompanyCode'=> $request->CompanyCode,
                     'BranchCode'=> $branchcode,
                     'WRSNo'=> $wrsno,
@@ -142,7 +142,7 @@ class SptrnprcvhdrController extends Controller
                 $docEx = explode("/", $request->GRNo);
                 $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
 
-                $apbeginbalancehdr = $apbeginbalancehdr->firstOrCreate([
+                $apbeginbalancehdr = $apbeginbalancehdr->create([
                     'CompanyCode'=> $request->CompanyCode,
                     'BranchCode'=> $branchcode,
                     'DocNo'=> $docNoApbegin,
@@ -160,7 +160,7 @@ class SptrnprcvhdrController extends Controller
                 ]);
 
                 // apibegin detail
-                $Apbeginbalancedtl = $Apbeginbalancedtl->firstOrCreate([
+                $Apbeginbalancedtl = $Apbeginbalancedtl->create([
                     'CompanyCode'=> $request->CompanyCode,
                     'BranchCode'=> $branchcode,
                     'DocNo'=> $docNoApbegin,
@@ -198,7 +198,7 @@ class SptrnprcvhdrController extends Controller
             // dd($header2);
 
             if ($header2 === null) {
-                $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->firstOrCreate([
+                $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->create([
                     'CompanyCode'=> $request->CompanyCode,
                     'BranchCode'=> $branchcode,
                     'WRSNo'=> $header->WRSNo,
