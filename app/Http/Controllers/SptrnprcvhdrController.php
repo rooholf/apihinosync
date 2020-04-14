@@ -112,71 +112,71 @@ class SptrnprcvhdrController extends Controller
                 
 
             
-            // if ($sptrnprcvhdr) {
-                // detail header
-                // $sptrnprcvhdrdtl = Sptrnprcvhdrdtl::firstOrCreate([
-                //     'CompanyCode'=> $request->CompanyCode,
-                //     'BranchCode'=> $branchcode,
-                //     'WRSNo'=> $wrsno,
-                //     'PartNo'=> $request->PartNo,
-                //     'DocNo'=> $docno,
-                //     'DocDate'=> Carbon::now(),
-                //     'WarehouseCode'=> $request->WarehouseCode,
-                //     'LocationCode'=> $request->LocationCode,
-                //     'BoxNo'=> $request->BoxNo,
-                //     'ReceivedQty'=> $request->ReceivedQty,
-                //     'PurchasePrice'=> $request->PurchasePrice,
-                //     'CostPrice'=> $request->CostPrice,
-                //     'DiscPct'=> $request->DiscPct,
-                //     'ABCClass'=> $request->ABCClass,
-                //     'MovingCode'=> $request->MovingCode,
-                //     'ProductType'=> $request->ProductType,
-                //     'PartCategory'=> $request->PartCategory,
-                //     'CreatedBy'=> $request->CreatedBy,
-                //     'CreatedDate'=> Carbon::now(),
-                //     'LastUpdateBy'=> $request->LastUpdateBy,
-                //     'LastUpdateDate'=> Carbon::now(),
-                // ]);
+            if ($sptrnprcvhdr) {
+                detail header
+                $sptrnprcvhdrdtl = Sptrnprcvhdrdtl::firstOrCreate([
+                    'CompanyCode'=> $request->CompanyCode,
+                    'BranchCode'=> $branchcode,
+                    'WRSNo'=> $wrsno,
+                    'PartNo'=> $request->PartNo,
+                    'DocNo'=> $docno,
+                    'DocDate'=> Carbon::now(),
+                    'WarehouseCode'=> $request->WarehouseCode,
+                    'LocationCode'=> $request->LocationCode,
+                    'BoxNo'=> $request->BoxNo,
+                    'ReceivedQty'=> $request->ReceivedQty,
+                    'PurchasePrice'=> $request->PurchasePrice,
+                    'CostPrice'=> $request->CostPrice,
+                    'DiscPct'=> $request->DiscPct,
+                    'ABCClass'=> $request->ABCClass,
+                    'MovingCode'=> $request->MovingCode,
+                    'ProductType'=> $request->ProductType,
+                    'PartCategory'=> $request->PartCategory,
+                    'CreatedBy'=> $request->CreatedBy,
+                    'CreatedDate'=> Carbon::now(),
+                    'LastUpdateBy'=> $request->LastUpdateBy,
+                    'LastUpdateDate'=> Carbon::now(),
+                ]);
 
-                // grno header
-                // $docEx = explode("/", $request->GRNo);
-                // $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+                grno header
+                $docEx = explode("/", $request->GRNo);
+                $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
 
-                // $apbeginbalancehdr = $apbeginbalancehdr->firstOrCreate([
-                //     'CompanyCode'=> $request->CompanyCode,
-                //     'BranchCode'=> $branchcode,
-                //     'DocNo'=> $docNoApbegin,
-                //     'ProfitCenterCode'=> '300',
-                //     'DocDate'=> Carbon::now(),
-                //     'SupplierCode'=> $request->SupplierCode,
-                //     'AccountNo'=> '004.000.000.00000.300000.000.000',
-                //     'DueDate'=> Carbon::now(),
-                //     'TOPCode'=> 'C30',
-                //     'Amount'=> $request->TotWRSAmt,
-                //     'Status'=> '0',
-                //     'CreatedBy'=> $request->CreatedBy,
-                //     'CreatedDate'=> Carbon::now(),
-                //     'PrintSeq'=> '1',
-                // ]);
+                $apbeginbalancehdr = $apbeginbalancehdr->firstOrCreate([
+                    'CompanyCode'=> $request->CompanyCode,
+                    'BranchCode'=> $branchcode,
+                    'DocNo'=> $docNoApbegin,
+                    'ProfitCenterCode'=> '300',
+                    'DocDate'=> Carbon::now(),
+                    'SupplierCode'=> $request->SupplierCode,
+                    'AccountNo'=> '004.000.000.00000.300000.000.000',
+                    'DueDate'=> Carbon::now(),
+                    'TOPCode'=> 'C30',
+                    'Amount'=> $request->TotWRSAmt,
+                    'Status'=> '0',
+                    'CreatedBy'=> $request->CreatedBy,
+                    'CreatedDate'=> Carbon::now(),
+                    'PrintSeq'=> '1',
+                ]);
 
-                // apibegin detail
-                // $Apbeginbalancedtl = $Apbeginbalancedtl->firstOrCreate([
-                //     'CompanyCode'=> $request->CompanyCode,
-                //     'BranchCode'=> $branchcode,
-                //     'DocNo'=> $docNoApbegin,
-                //     'SeqNo'=> '1',
-                //     'AccountNo'=> '004.000.000.00000.300000.000.000',
-                //     'Description'=> $request->ReferenceNo,
-                //     'Amount'=> $request->TotWRSAmt,
-                //     'Status'=> '0',
-                //     'CreatedBy'=> $request->CreatedBy,
-                //     'CreatedDate'=> Carbon::now(),
+                apibegin detail
+                $Apbeginbalancedtl = $Apbeginbalancedtl->firstOrCreate([
+                    'CompanyCode'=> $request->CompanyCode,
+                    'BranchCode'=> $branchcode,
+                    'DocNo'=> $docNoApbegin,
+                    'SeqNo'=> '1',
+                    'AccountNo'=> '004.000.000.00000.300000.000.000',
+                    'Description'=> $request->ReferenceNo,
+                    'Amount'=> $request->TotWRSAmt,
+                    'Status'=> '0',
+                    'CreatedBy'=> $request->CreatedBy,
+                    'CreatedDate'=> Carbon::now(),
 
-                // ]);
+                ]);
 
-                // $this->updateTotItem($wrsno, $request->GRNo);
+                $this->updateTotItem($wrsno, $request->GRNo);
 
-            // }
+            }
 
             return response()->json([
                 'data' => 0
@@ -187,43 +187,43 @@ class SptrnprcvhdrController extends Controller
             //         ->transformWith(new SptrnprcvhdrTransformer)
             //         ->toArray();
         } else {
-            // $header2 = Sptrnprcvhdrdtl::where('CompanyCode', '=', $request->CompanyCode)
-            //             ->where('BranchCode','=', $branchcode)
-            //             ->where('WRSNo','=', $header->WRSNo)
-            //             ->where('PartNo','=', $request->PartNo)
-            //             ->where('DocNo','=', $header->DNSupplierNo)
-            //             ->where('BoxNo','=', $request->BoxNo)
-            //             ->first();
+            $header2 = Sptrnprcvhdrdtl::where('CompanyCode', '=', $request->CompanyCode)
+                        ->where('BranchCode','=', $branchcode)
+                        ->where('WRSNo','=', $header->WRSNo)
+                        ->where('PartNo','=', $request->PartNo)
+                        ->where('DocNo','=', $header->DNSupplierNo)
+                        ->where('BoxNo','=', $request->BoxNo)
+                        ->first();
 
-            // // dd($header2);
+            // dd($header2);
 
-            // if ($header2 === null) {
-            //     $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->firstOrCreate([
-            //         'CompanyCode'=> $request->CompanyCode,
-            //         'BranchCode'=> $branchcode,
-            //         'WRSNo'=> $header->WRSNo,
-            //         'PartNo'=> $request->PartNo,
-            //         'DocNo'=> $header->DNSupplierNo,
-            //         'DocDate'=> Carbon::now(),
-            //         'WarehouseCode'=> $request->WarehouseCode,
-            //         'LocationCode'=> $request->LocationCode,
-            //         'BoxNo'=> $request->BoxNo,
-            //         'ReceivedQty'=> $request->ReceivedQty,
-            //         'PurchasePrice'=> $request->PurchasePrice,
-            //         'CostPrice'=> $request->CostPrice,
-            //         'DiscPct'=> $request->DiscPct,
-            //         'ABCClass'=> $request->ABCClass,
-            //         'MovingCode'=> $request->MovingCode,
-            //         'ProductType'=> $request->ProductType,
-            //         'PartCategory'=> $request->PartCategory,
-            //         'CreatedBy'=> $request->CreatedBy,
-            //         'CreatedDate'=> Carbon::now(),
-            //         'LastUpdateBy'=> $request->LastUpdateBy,
-            //         'LastUpdateDate'=> Carbon::now(),
-            //     ]);
+            if ($header2 === null) {
+                $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->firstOrCreate([
+                    'CompanyCode'=> $request->CompanyCode,
+                    'BranchCode'=> $branchcode,
+                    'WRSNo'=> $header->WRSNo,
+                    'PartNo'=> $request->PartNo,
+                    'DocNo'=> $header->DNSupplierNo,
+                    'DocDate'=> Carbon::now(),
+                    'WarehouseCode'=> $request->WarehouseCode,
+                    'LocationCode'=> $request->LocationCode,
+                    'BoxNo'=> $request->BoxNo,
+                    'ReceivedQty'=> $request->ReceivedQty,
+                    'PurchasePrice'=> $request->PurchasePrice,
+                    'CostPrice'=> $request->CostPrice,
+                    'DiscPct'=> $request->DiscPct,
+                    'ABCClass'=> $request->ABCClass,
+                    'MovingCode'=> $request->MovingCode,
+                    'ProductType'=> $request->ProductType,
+                    'PartCategory'=> $request->PartCategory,
+                    'CreatedBy'=> $request->CreatedBy,
+                    'CreatedDate'=> Carbon::now(),
+                    'LastUpdateBy'=> $request->LastUpdateBy,
+                    'LastUpdateDate'=> Carbon::now(),
+                ]);
 
-            //     $this->updateTotItem($header->WRSNo, $request->GRNo);
-            // }
+                $this->updateTotItem($header->WRSNo, $request->GRNo);
+            }
 
             return response()->json([
                 'data' => 1
@@ -339,18 +339,18 @@ class SptrnprcvhdrController extends Controller
 
 
         // 
-        // $docEx = explode("/", $grno);
-        // $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+        $docEx = explode("/", $grno);
+        $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
 
-        // Apbeginbalancehdr::where('DocNo', $docNoApbegin)
-        //     ->update([
-        //         'Amount' => $total
-        //     ]);
+        Apbeginbalancehdr::where('DocNo', $docNoApbegin)
+            ->update([
+                'Amount' => $total
+            ]);
 
-        // Apbeginbalancedtl::where('DocNo', $docNoApbegin)
-        //     ->update([
-        //         'Amount' => $total
-        //     ]);
+        Apbeginbalancedtl::where('DocNo', $docNoApbegin)
+            ->update([
+                'Amount' => $total
+            ]);
 
     }
 }
