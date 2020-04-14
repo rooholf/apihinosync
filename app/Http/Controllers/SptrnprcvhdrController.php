@@ -114,7 +114,7 @@ class SptrnprcvhdrController extends Controller
             
             if ($sptrnprcvhdr) {
                 // detail header
-                $sptrnprcvhdrdtl = Sptrnprcvhdrdtl::create([
+                Sptrnprcvhdrdtl::create([
                     'CompanyCode'=> $request->CompanyCode,
                     'BranchCode'=> $branchcode,
                     'WRSNo'=> $wrsno,
@@ -139,40 +139,40 @@ class SptrnprcvhdrController extends Controller
                 ]);
 
                 // grno header
-                // $docEx = explode("/", $request->GRNo);
-                // $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+                $docEx = explode("/", $request->GRNo);
+                $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
 
-                // $apbeginbalancehdr = $apbeginbalancehdr->create([
-                //     'CompanyCode'=> $request->CompanyCode,
-                //     'BranchCode'=> $branchcode,
-                //     'DocNo'=> $docNoApbegin,
-                //     'ProfitCenterCode'=> '300',
-                //     'DocDate'=> Carbon::now(),
-                //     'SupplierCode'=> $request->SupplierCode,
-                //     'AccountNo'=> '004.000.000.00000.300000.000.000',
-                //     'DueDate'=> Carbon::now(),
-                //     'TOPCode'=> 'C30',
-                //     'Amount'=> $request->TotWRSAmt,
-                //     'Status'=> '0',
-                //     'CreatedBy'=> $request->CreatedBy,
-                //     'CreatedDate'=> Carbon::now(),
-                //     'PrintSeq'=> '1',
-                // ]);
+                Apbeginbalancehdr::create([
+                    'CompanyCode'=> $request->CompanyCode,
+                    'BranchCode'=> $branchcode,
+                    'DocNo'=> $docNoApbegin,
+                    'ProfitCenterCode'=> '300',
+                    'DocDate'=> Carbon::now(),
+                    'SupplierCode'=> $request->SupplierCode,
+                    'AccountNo'=> '004.000.000.00000.300000.000.000',
+                    'DueDate'=> Carbon::now(),
+                    'TOPCode'=> 'C30',
+                    'Amount'=> $request->TotWRSAmt,
+                    'Status'=> '0',
+                    'CreatedBy'=> $request->CreatedBy,
+                    'CreatedDate'=> Carbon::now(),
+                    'PrintSeq'=> '1',
+                ]);
 
                 // apibegin detail
-                // $Apbeginbalancedtl = $Apbeginbalancedtl->create([
-                //     'CompanyCode'=> $request->CompanyCode,
-                //     'BranchCode'=> $branchcode,
-                //     'DocNo'=> $docNoApbegin,
-                //     'SeqNo'=> '1',
-                //     'AccountNo'=> '004.000.000.00000.300000.000.000',
-                //     'Description'=> $request->ReferenceNo,
-                //     'Amount'=> $request->TotWRSAmt,
-                //     'Status'=> '0',
-                //     'CreatedBy'=> $request->CreatedBy,
-                //     'CreatedDate'=> Carbon::now(),
+                Apbeginbalancedtl::create([
+                    'CompanyCode'=> $request->CompanyCode,
+                    'BranchCode'=> $branchcode,
+                    'DocNo'=> $docNoApbegin,
+                    'SeqNo'=> '1',
+                    'AccountNo'=> '004.000.000.00000.300000.000.000',
+                    'Description'=> $request->ReferenceNo,
+                    'Amount'=> $request->TotWRSAmt,
+                    'Status'=> '0',
+                    'CreatedBy'=> $request->CreatedBy,
+                    'CreatedDate'=> Carbon::now(),
 
-                // ]);
+                ]);
 
                 $this->updateTotItem($wrsno, $request->GRNo);
 
@@ -198,7 +198,7 @@ class SptrnprcvhdrController extends Controller
             // dd($header2);
 
             if ($header2 === null) {
-                $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->create([
+                Sptrnprcvhdrdtl::create([
                     'CompanyCode'=> $request->CompanyCode,
                     'BranchCode'=> $branchcode,
                     'WRSNo'=> $header->WRSNo,
