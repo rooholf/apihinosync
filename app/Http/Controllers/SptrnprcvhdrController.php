@@ -64,7 +64,7 @@ class SptrnprcvhdrController extends Controller
     public function add(Request $request)
     {
         $this->validate($request, [
-            'GRNo' => 'required|unique:Sptrnprcvhdr',
+            'GRNo' => 'required',
         ]);
 
         // nomor WRSNo
