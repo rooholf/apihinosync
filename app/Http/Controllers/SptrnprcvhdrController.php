@@ -75,9 +75,9 @@ class SptrnprcvhdrController extends Controller
         }
 
 
-        $header = Sptrnprcvhdr::where('GRNo','=', $request->GRNo)->first();
+        $header = Sptrnprcvhdr::where('GRNo', $request->GRNo)->first();
         // dd($header);
-        if ($header == null) {
+        if (!$header) {
             $wrsno = $this->noUrut('WRL', $branchcode, $request->CompanyCode);
             $binningno = $this->noUrut('BNL', $branchcode, $request->CompanyCode);
             $docno = $this->noUrut('POS', $branchcode, $request->CompanyCode);
@@ -254,7 +254,7 @@ class SptrnprcvhdrController extends Controller
 
             // dd($header2);
 
-            if ($header2 === null) {
+            if ($header2 == null) {
                 Sptrnprcvhdrdtl::create([
                     'CompanyCode'=> $request->CompanyCode,
                     'BranchCode'=> $branchcode,
