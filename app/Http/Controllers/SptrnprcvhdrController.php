@@ -83,7 +83,7 @@ class SptrnprcvhdrController extends Controller
             $docno = $this->noUrut('POS', $branchcode, $request->CompanyCode);
             $hppno = $this->noUrut('HPP', $branchcode, $request->CompanyCode);
             // echo $wrsno;die;
-            $sptrnprcvhdr = Sptrnprcvhdr::create([
+            $sptrnprcvhdr = Sptrnprcvhdr::firstOrNew([
                 'CompanyCode'=> $request->CompanyCode,
                 'BranchCode'=> $branchcode,
                 'WRSNo'=> $wrsno,
