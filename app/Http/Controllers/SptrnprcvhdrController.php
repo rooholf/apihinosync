@@ -116,7 +116,7 @@ class SptrnprcvhdrController extends Controller
             
             if ($sptrnprcvhdr) {
                 // detail header
-                $detail = spTrnPRcvHdr::where('CompanyCode', $request->CompanyCode)
+                $detail = Sptrnprcvhdrdtl::where('CompanyCode', $request->CompanyCode)
                                         ->where('BranchCode', $branchcode)
                                         ->where('WRSNo', $wrsno)
                                         ->where('PartNo', $request->PartNo)
