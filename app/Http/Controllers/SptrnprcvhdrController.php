@@ -417,7 +417,7 @@ class SptrnprcvhdrController extends Controller
         spTrnPRcvHdr::where('WRSNo', $wrsno)
             ->update([
                 'TotItem' => $item, 
-                'TotWRSAmt' => $totAmt
+                'TotWRSAmt' => $total
             ]);
 
 
