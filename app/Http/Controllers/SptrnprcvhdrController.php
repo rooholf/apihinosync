@@ -419,12 +419,12 @@ class SptrnprcvhdrController extends Controller
 
         Apbeginbalancehdr::where('DocNo', $docNoApbegin)
             ->update([
-                'Amount' => $total
+                'Amount' => $totAmt
             ]);
 
         Apbeginbalancedtl::where('DocNo', $docNoApbegin)
             ->update([
-                'Amount' => $total
+                'Amount' => $totAmt
             ]);
 
     }
