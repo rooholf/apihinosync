@@ -76,8 +76,12 @@ class SptrnprcvhdrController extends Controller
 
         // grno header
         $docEx = explode("/", $request->GRNo);
-        $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
-
+        if ($docEx[0] == 'SPRS') {
+            $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+        } elseif ($docEx[0] == 'WSRS') {
+            $docNoApbegin = 'WSR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+        }
+    
 
         $header = Sptrnprcvhdr::where('ReferenceNo', $docNoApbegin)->first();
         // dd($header);
@@ -401,7 +405,12 @@ class SptrnprcvhdrController extends Controller
 
         // 
         $docEx = explode("/", $grno);
-        $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+        if ($docEx[0] == 'SPRS') {
+            $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+        } elseif ($docEx[0] == 'WSRS') {
+            $docNoApbegin = 'WSR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+        }
+        // $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
 
         Apbeginbalancehdr::where('DocNo', $docNoApbegin)
             ->update([
