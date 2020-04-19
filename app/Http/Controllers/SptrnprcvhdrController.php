@@ -83,9 +83,14 @@ class SptrnprcvhdrController extends Controller
         }
 
         $grdateEx = explode("T", $request->GRDate);
+        $grdateExDate = explode("-", $grdateEx[0]);
         $grdate = $grdateEx[0].' '.$grdateEx[1];
+
         $duedateOdd = date("Y-m-d", strtotime("+1 month", strtotime($grdate)));
         $duedate = $duedateOdd.' '.$grdateEx[1];
+
+        $monthTax = $grdateExDate[1];
+        $yearTax = $grdateExDate[0];
     
 
         $header = Sptrnprcvhdr::where('ReferenceNo', $docNoApbegin)->first();
@@ -160,38 +165,45 @@ class SptrnprcvhdrController extends Controller
                         'LastUpdateDate'=> Carbon::now(),
                     ]);
                 }
+
+                $hpp = Sptrnphpp::where('CompanyCode', $request->CompanyCode)
+                                        ->where('BranchCode', $branchcode)
+                                        ->where('WRSNo', $wrsno)
+                                        ->where('ReferenceNo', $docNoApbegin)
+                                        ->first();
                     
-
-                // Sptrnphpp::create([
-                //     'CompanyCode'=> $request->CompanyCode,  
-                //     'BranchCode'=> $branchcode, 
-                //     'HPPNo'=> $hppno, 
-                //     'HPPDate'=> Carbon::now(), 
-                //     'WRSNo'=> $wrsno, 
-                //     'WRSDate'=> Carbon::now(),
-                //     'ReferenceNo'=> $request->ReferenceNo, 
-                //     'ReferenceDate'=> Carbon::now(), 
-                //     'TotPurchAmt'=> $request->TotWRSAmt, 
-                //     'TotNetPurchAmt'=> $request->TotWRSAmt, 
-                //     'TotTaxAmt'=> $request->TotTaxAmt, 
-                //     'TaxNo'=> $request->TaxNo, 
-                //     'TaxDate'=> Carbon::now(), 
-                //     'MonthTax'=> $request->MonthTax, 
-                //     'YearTax'=> $request->YearTax, 
-                //     'DueDate'=> Carbon::now(),  
-                //     'DiffNetPurchAmt'=> $request->DiffNetPurchAmt, 
-                //     'DiffTaxAmt'=> $request->DiffTaxAmt, 
-                //     'TotHPPAmt'=> $request->TotHPPAmt, 
-                //     'CostPrice'=> 0,  
-                //     'PrintSeq'=> $request->PrintSeq,  
-                //     'TypeOfGoods'=> $request->TypeOfGoods, 
-                //     'Status'=> 2, 
-                //     'CreatedBy'=> $request->CreatedBy, 
-                //     'CreatedDate'=> Carbon::now(), 
-                //     'LastUpdateBy'=> $request->LastUpdateBy, 
-                //     'LastUpdateDate'=> Carbon::now(), 
-
-                // ]);
+                if (!$hpp) {
+                    Sptrnphpp::create([
+                        'CompanyCode'=> $request->CompanyCode,  
+                        'BranchCode'=> $branchcode, 
+                        'HPPNo'=> $hppno, 
+                        'HPPDate'=> $grdate, 
+                        'WRSNo'=> $wrsno, 
+                        'WRSDate'=> $grdate,
+                        'ReferenceNo'=> $docNoApbegin, 
+                        'ReferenceDate'=> $grdate, 
+                        'TotPurchAmt'=> 0, 
+                        'TotNetPurchAmt'=> 0, 
+                        'TotTaxAmt'=> 0, 
+                        'TaxNo'=> '000.000-00.00000000', 
+                        'TaxDate'=> $grdate, 
+                        'MonthTax'=> $monthTax, 
+                        'YearTax'=> $yearTax, 
+                        'DueDate'=> $duedate,  
+                        'DiffNetPurchAmt'=> 0, 
+                        'DiffTaxAmt'=> 0, 
+                        'TotHPPAmt'=> 0, 
+                        'CostPrice'=> 0,  
+                        'PrintSeq'=> $request->PrintSeq,  
+                        'TypeOfGoods'=> $request->TypeOfGoods, 
+                        'Status'=> 2, 
+                        'CreatedBy'=> $request->CreatedBy, 
+                        'CreatedDate'=> Carbon::now(), 
+                        'LastUpdateBy'=> $request->LastUpdateBy, 
+                        'LastUpdateDate'=> Carbon::now(), 
+                    ]);
+                }
+                    
 
                 $apbeginbalancehdr = Apbeginbalancehdr::where('CompanyCode', $request->CompanyCode)
                                                     ->where('BranchCode', $branchcode)
@@ -400,6 +412,7 @@ class SptrnprcvhdrController extends Controller
         }
 
         $totAmt = $total * 1.1;
+        $totTax = $total * 0.1;
 
         spTrnPRcvHdr::where('WRSNo', $wrsno)
             ->update([
@@ -425,6 +438,13 @@ class SptrnprcvhdrController extends Controller
         Apbeginbalancedtl::where('DocNo', $docNoApbegin)
             ->update([
                 'Amount' => $totAmt
+            ]);
+
+        Sptrnphpp::where('WRSNo', $wrsno)
+            ->update([
+                'TotPurchAmt' => $totAmt,
+                'TotNetPurchAmt' => $total,
+                'TotTaxAmt' => $totTax,
             ]);
 
     }
