@@ -82,6 +82,11 @@ class SptrnprcvhdrController extends Controller
             $binningno = $this->noUrut('BNL', $branchcode, $request->CompanyCode);
             $docno = $this->noUrut('POS', $branchcode, $request->CompanyCode);
             $hppno = $this->noUrut('HPP', $branchcode, $request->CompanyCode);
+
+            // grno header
+            $docEx = explode("/", $request->GRNo);
+            $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+
             // echo $wrsno;die;
             $sptrnprcvhdr = Sptrnprcvhdr::firstOrCreate([
                 'CompanyCode'=> $request->CompanyCode,
@@ -95,7 +100,7 @@ class SptrnprcvhdrController extends Controller
                 'DNSupplierDate'=> Carbon::now(),
                 'TransType'=> $request->TransType,
                 'SupplierCode'=> $request->SupplierCode,
-                'ReferenceNo'=> '-',
+                'ReferenceNo'=> $docNoApbegin,
                 'ReferenceDate'=> Carbon::now(),
                 'TotItem'=> $request->TotItem,
                 'TotWRSAmt'=> $request->TotWRSAmt,
@@ -178,10 +183,6 @@ class SptrnprcvhdrController extends Controller
                 //     'LastUpdateDate'=> Carbon::now(), 
 
                 // ]);
-
-                // grno header
-                $docEx = explode("/", $request->GRNo);
-                $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
 
                 $apbeginbalancehdr = Apbeginbalancehdr::where('CompanyCode', $request->CompanyCode)
                                                     ->where('BranchCode', $branchcode)
@@ -382,7 +383,7 @@ class SptrnprcvhdrController extends Controller
         $detail = Sptrnprcvhdrdtl::where('WRSNo', $wrsno)->get();
 
         foreach ($detail as $row) {
-            $grandtotal = ($row->PurchasePrice * $row->ReceivedQty)-(($row->ReceivedQty * $row->PurchasePrice) * $row->DiscPct/100);
+            $grandtotal = ($row->PurchasePrice * $row->ReceivedQty)-(($row->PurchasePrice * $row->ReceivedQty) * $row->DiscPct/100);
             $total = $total + $grandtotal;
 
             $item++;
