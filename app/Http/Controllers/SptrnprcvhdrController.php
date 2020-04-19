@@ -74,8 +74,12 @@ class SptrnprcvhdrController extends Controller
             $branchcode = '002';
         }
 
+        // grno header
+        $docEx = explode("/", $request->GRNo);
+        $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
 
-        $header = Sptrnprcvhdr::where('GRNo', $request->GRNo)
+
+        $header = Sptrnprcvhdr::where('ReferenceNo', $docNoApbegin)
                             ->where('CompanyCode', $request->CompanyCode)
                             ->where('BranchCode', $branchcode)
                             ->first();
@@ -86,9 +90,7 @@ class SptrnprcvhdrController extends Controller
             $docno = $this->noUrut('POS', $branchcode, $request->CompanyCode);
             $hppno = $this->noUrut('HPP', $branchcode, $request->CompanyCode);
 
-            // grno header
-            $docEx = explode("/", $request->GRNo);
-            $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+            
 
             // echo $wrsno;die;
             $sptrnprcvhdr = Sptrnprcvhdr::firstOrCreate([
