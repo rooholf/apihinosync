@@ -386,10 +386,10 @@ class SptrnprcvhdrController extends Controller
         $detail = Sptrnprcvhdrdtl::where('WRSNo', $wrsno)->get();
 
         foreach ($detail as $row) {
-            $grandtotal = ($row->PurchasePrice)-(($row->PurchasePrice) * $row->DiscPct/100);
+            $grandtotal = ($row->PurchasePrice * $row->ReceivedQty)-(($row->PurchasePrice * $row->ReceivedQty) * $row->DiscPct/100);
             $total = $total + $grandtotal;
 
-            $item++;
+            $item = $item + 1;
         }
 
         spTrnPRcvHdr::where('WRSNo', $wrsno)
