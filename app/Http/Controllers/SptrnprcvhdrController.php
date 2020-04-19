@@ -75,7 +75,10 @@ class SptrnprcvhdrController extends Controller
         }
 
 
-        $header = Sptrnprcvhdr::where('GRNo', $request->GRNo)->first();
+        $header = Sptrnprcvhdr::where('GRNo', $request->GRNo)
+                            ->where('CompanyCode', $request->CompanyCode)
+                            ->where('BranchCode', $branchcode)
+                            ->first();
         // dd($header);
         if ($header == null) {
             $wrsno = $this->noUrut('WRL', $branchcode, $request->CompanyCode);
