@@ -68,10 +68,10 @@ class SptrnprcvhdrController extends Controller
         ]);
 
         // nomor WRSNo
-        if ($request->WhsCodeDesc == 'WH NORMAL - HINO JAMBI') {
-            $branchcode = '000';
-        } else {
+        if ($request->WhsCodeDesc == 'WH NORMAL - MUARA BUNGO') {
             $branchcode = '002';
+        } else {
+            $branchcode = '000';
         }
 
         // grno header
@@ -127,7 +127,6 @@ class SptrnprcvhdrController extends Controller
                                         ->where('PartNo', $request->PartNo)
                                         ->first();
                 if (!$detail) {
-                    $price = $request->PurchasePrice / $request->ReceivedQty;
                     Sptrnprcvhdrdtl::create([
                         'CompanyCode'=> $request->CompanyCode,
                         'BranchCode'=> $branchcode,
@@ -139,7 +138,7 @@ class SptrnprcvhdrController extends Controller
                         'LocationCode'=> $request->LocationCode,
                         'BoxNo'=> $request->BoxNo,
                         'ReceivedQty'=> $request->ReceivedQty,
-                        'PurchasePrice'=> $price,
+                        'PurchasePrice'=> $request->PurchasePrice,
                         'CostPrice'=> $request->CostPrice,
                         'DiscPct'=> $request->DiscPct,
                         'ABCClass'=> $request->ABCClass,
@@ -258,8 +257,6 @@ class SptrnprcvhdrController extends Controller
             // dd($header2);
 
             if ($header2 == null) {
-                $price = $request->PurchasePrice / $request->ReceivedQty;
-
                 Sptrnprcvhdrdtl::create([
                     'CompanyCode'=> $request->CompanyCode,
                     'BranchCode'=> $branchcode,
@@ -271,7 +268,7 @@ class SptrnprcvhdrController extends Controller
                     'LocationCode'=> $request->LocationCode,
                     'BoxNo'=> $request->BoxNo,
                     'ReceivedQty'=> $request->ReceivedQty,
-                    'PurchasePrice'=> $price,
+                    'PurchasePrice'=> $request->PurchasePrice,
                     'CostPrice'=> $request->CostPrice,
                     'DiscPct'=> $request->DiscPct,
                     'ABCClass'=> $request->ABCClass,
@@ -304,10 +301,10 @@ class SptrnprcvhdrController extends Controller
         // dd($header);
         $header = Sptrnprcvhdr::where('ReferenceNo', $request->ReferenceNo)->first();
 
-        if ($request->WhsCodeDesc == 'WH NORMAL - HINO JAMBI') {
-            $branchcode = '000';
-        } else {
+        if ($request->WhsCodeDesc == 'WH NORMAL - MUARA BUNGO') {
             $branchcode = '002';
+        } else {
+            $branchcode = '000';
         }
 
         // $gnmstdocument3 = $gnmstdocument->where('DocumentType', 'POS')
