@@ -392,10 +392,12 @@ class SptrnprcvhdrController extends Controller
             $item = $item + 1;
         }
 
+        $totAmt = $total * 1.1;
+
         spTrnPRcvHdr::where('WRSNo', $wrsno)
             ->update([
                 'TotItem' => $item, 
-                'TotWRSAmt' => $total
+                'TotWRSAmt' => $totAmt
             ]);
 
 
