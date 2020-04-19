@@ -80,7 +80,7 @@ class SptrnprcvhdrController extends Controller
 
 
         $header = Sptrnprcvhdr::where('ReferenceNo', $docNoApbegin)->first();
-        dd($header);
+        // dd($header);
         if ($header == null) {
             $wrsno = $this->noUrut('WRL', $branchcode, $request->CompanyCode);
             $binningno = $this->noUrut('BNL', $branchcode, $request->CompanyCode);
