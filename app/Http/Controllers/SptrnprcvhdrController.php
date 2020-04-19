@@ -127,6 +127,7 @@ class SptrnprcvhdrController extends Controller
                                         ->where('PartNo', $request->PartNo)
                                         ->first();
                 if (!$detail) {
+                    $price = $request->PurchasePrice / $request->ReceivedQty;
                     Sptrnprcvhdrdtl::create([
                         'CompanyCode'=> $request->CompanyCode,
                         'BranchCode'=> $branchcode,
@@ -138,7 +139,7 @@ class SptrnprcvhdrController extends Controller
                         'LocationCode'=> $request->LocationCode,
                         'BoxNo'=> $request->BoxNo,
                         'ReceivedQty'=> $request->ReceivedQty,
-                        'PurchasePrice'=> $request->PurchasePrice,
+                        'PurchasePrice'=> $price,
                         'CostPrice'=> $request->CostPrice,
                         'DiscPct'=> $request->DiscPct,
                         'ABCClass'=> $request->ABCClass,
@@ -256,6 +257,8 @@ class SptrnprcvhdrController extends Controller
             // dd($header2);
 
             if ($header2 == null) {
+                $price = $request->PurchasePrice / $request->ReceivedQty;
+
                 Sptrnprcvhdrdtl::create([
                     'CompanyCode'=> $request->CompanyCode,
                     'BranchCode'=> $branchcode,
@@ -267,7 +270,7 @@ class SptrnprcvhdrController extends Controller
                     'LocationCode'=> $request->LocationCode,
                     'BoxNo'=> $request->BoxNo,
                     'ReceivedQty'=> $request->ReceivedQty,
-                    'PurchasePrice'=> $request->PurchasePrice,
+                    'PurchasePrice'=> $price,
                     'CostPrice'=> $request->CostPrice,
                     'DiscPct'=> $request->DiscPct,
                     'ABCClass'=> $request->ABCClass,
@@ -383,7 +386,7 @@ class SptrnprcvhdrController extends Controller
         $detail = Sptrnprcvhdrdtl::where('WRSNo', $wrsno)->get();
 
         foreach ($detail as $row) {
-            $grandtotal = ($row->PurchasePrice * $row->ReceivedQty)-(($row->PurchasePrice * $row->ReceivedQty) * $row->DiscPct/100);
+            $grandtotal = ($row->PurchasePrice)-(($row->PurchasePrice) * $row->DiscPct/100);
             $total = $total + $grandtotal;
 
             $item++;
