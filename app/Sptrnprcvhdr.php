@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sptrnprcvhdr extends Model
 {
     protected $table = 'spTrnPRcvHdr';
-    protected $primaryKey = ['CompanyCode', 'BranchCode', 'WRSNo'];
+    protected $primaryKey = ['CompanyCode', 'BranchCode', 'WRSNo', 'ReferenceNo'];
     protected $keyType = 'string';
     public $incrementing = false;
     public $timestamps = false;

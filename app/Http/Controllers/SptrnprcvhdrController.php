@@ -79,9 +79,9 @@ class SptrnprcvhdrController extends Controller
         $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
 
 
-        $header = Sptrnprcvhdr::where('ReferenceNo', $docNoApbegin)
-                            ->where('CompanyCode', $request->CompanyCode)
+        $header = Sptrnprcvhdr::where('CompanyCode', $request->CompanyCode)
                             ->where('BranchCode', $branchcode)
+                            ->where('ReferenceNo', $docNoApbegin)
                             ->first();
         // dd($header);
         if ($header == null) {
