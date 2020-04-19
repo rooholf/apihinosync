@@ -252,6 +252,7 @@ class SptrnprcvhdrController extends Controller
                         ->where('PartNo','=', $request->PartNo)
                         ->where('DocNo','=', $header->DNSupplierNo)
                         ->where('BoxNo','=', $request->BoxNo)
+                        ->where('LocationCode','=', $request->LocationCode)
                         ->first();
 
             // dd($header2);
