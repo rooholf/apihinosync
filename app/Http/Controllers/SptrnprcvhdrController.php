@@ -81,6 +81,11 @@ class SptrnprcvhdrController extends Controller
         } elseif ($docEx[0] == 'WSRS') {
             $docNoApbegin = 'WSR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
         }
+
+        $grdateEx = explode("T", $request->GRDate);
+        $grdate = $grdateEx[0].' '.$grdateEx[1];
+        $duedateOdd = date("Y-m-d", strtotime("+1 month", strtotime($grdate)));
+        $duedate = $duedateOdd.' '.$grdateEx[1];
     
 
         $header = Sptrnprcvhdr::where('ReferenceNo', $docNoApbegin)->first();
@@ -96,16 +101,16 @@ class SptrnprcvhdrController extends Controller
                 'CompanyCode'=> $request->CompanyCode,
                 'BranchCode'=> $branchcode,
                 'WRSNo'=> $wrsno,
-                'WRSDate'=> Carbon::now(),
+                'WRSDate'=> $grdate,
                 'BinningNo'=> $binningno,
-                'BinningDate'=> Carbon::now(),
+                'BinningDate'=> $grdate,
                 'ReceivingType'=> $request->ReceivingType,
                 'DNSupplierNo'=> $docno,
-                'DNSupplierDate'=> Carbon::now(),
+                'DNSupplierDate'=> $grdate,
                 'TransType'=> $request->TransType,
                 'SupplierCode'=> $request->SupplierCode,
                 'ReferenceNo'=> $docNoApbegin,
-                'ReferenceDate'=> Carbon::now(),
+                'ReferenceDate'=> $grdate,
                 'TotItem'=> $request->TotItem,
                 'TotWRSAmt'=> $request->TotWRSAmt,
                 'Status'=> $request->Status,
@@ -137,7 +142,7 @@ class SptrnprcvhdrController extends Controller
                         'WRSNo'=> $wrsno,
                         'PartNo'=> $request->PartNo,
                         'DocNo'=> $docno,
-                        'DocDate'=> Carbon::now(),
+                        'DocDate'=> $grdate,
                         'WarehouseCode'=> $request->WarehouseCode,
                         'LocationCode'=> $request->LocationCode,
                         'BoxNo'=> $request->BoxNo,
@@ -199,10 +204,10 @@ class SptrnprcvhdrController extends Controller
                         'BranchCode'=> $branchcode,
                         'DocNo'=> $docNoApbegin,
                         'ProfitCenterCode'=> '300',
-                        'DocDate'=> Carbon::now(),
+                        'DocDate'=> $grdate,
                         'SupplierCode'=> $request->SupplierCode,
                         'AccountNo'=> '004.000.000.00000.300000.000.000',
-                        'DueDate'=> Carbon::now(),
+                        'DueDate'=> $duedate,
                         'TOPCode'=> 'C30',
                         'Amount'=> $request->TotWRSAmt,
                         'Status'=> '0',
@@ -267,7 +272,7 @@ class SptrnprcvhdrController extends Controller
                     'WRSNo'=> $header->WRSNo,
                     'PartNo'=> $request->PartNo,
                     'DocNo'=> $header->DNSupplierNo,
-                    'DocDate'=> Carbon::now(),
+                    'DocDate'=> $grdate,
                     'WarehouseCode'=> $request->WarehouseCode,
                     'LocationCode'=> $request->LocationCode,
                     'BoxNo'=> $request->BoxNo,
