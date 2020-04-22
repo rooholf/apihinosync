@@ -47,8 +47,10 @@ class SptrnsinvoiceController extends Controller
 
         if ($request->Dealer == 'Sparepart - JIM Muara Bungo') {
             $branchcode = '002';
+            $accountNo = '004.002.000.00000.300000.000.000';
         } else {
             $branchcode = '000';
+            $accountNo = '004.000.000.00000.300000.000.000';
         }
 
         // date
@@ -63,6 +65,11 @@ class SptrnsinvoiceController extends Controller
 		$disc = ($request->DiscAmt/$request->SalesAmt)*100;
 
 		$total = $request->NetSalesAmt + $request->PPNAmt;
+
+		// docno arbegin
+		$invnoEx = explode("/", $request->InvoiceNo);
+		$docFirst = substr($invnoEx[0], 1, 3);
+		$docNoArbegin = $docFirst .'/'. $invnoEx[3].'/'.$invnoEx[2].$invnoEx[1].$invnoEx[4];
 
 
         $header = Sptrnsinvoicehdr::where('CompanyCode', $request->CompanyCode)
@@ -239,9 +246,41 @@ class SptrnsinvoiceController extends Controller
 
         		]);
 
+        		Arbeginbalancehdr::firstOrCreate([
+        			'CompanyCode' => $request->CompanyCode,
+					'BranchCode' => $branchcode,
+					'DocNo' => $docNoArbegin,
+					'ProfitCenterCode' => '300',
+					'DocDate' => $invdate,
+					'CustomerCode' => $request->CustomerCode,
+					'AccountNo' => $accountNo,
+					'DueDate' => $duedate,
+					'TOPCode' => $request->TOPCode,
+					'Amount' => 0,
+					'SalesCode' => $request->SalesCode,
+					'LeasingCode' => $request->LeasingCode,
+					'Status' => 0,
+					'CreatedBy' => $request->CreatedBy,
+					'CreatedDate' => Carbon::now(),
+					'PrintSeq' => $request->PrintSeq,
+        		]);
+
+        		Arbeginbalancedtl::firstOrCreate([
+        			'CompanyCode' => $request->CompanyCode,
+					'BranchCode' => $branchcode,
+					'DocNo' => $docNoArbegin,
+					'SeqNo' => '1',
+					'AccountNo' => $accountNo,
+					'Description' => $request->Description,
+					'Amount' => 0,
+					'Status' => NULL,
+					'CreatedBy' => $request->CreatedBy,
+					'CreatedDate' => Carbon::now(),
+        		]);
 
 
-        		$this->updateHeader($invno, $fpjno);
+
+        		$this->updateHeader($invno, $fpjno, $request->InvoiceNo);
         	}
 
         	return response()->json([
@@ -327,8 +366,6 @@ class SptrnsinvoiceController extends Controller
 	    		$this->updateHeader($header->InvoiceNo, $header->FPJNo);
         	}
 
-	        	
-
         	return response()->json([
                 'data' => 1
             ], 200);
@@ -375,6 +412,21 @@ class SptrnsinvoiceController extends Controller
     					'TotPPNAmt' => $totppn, 
     					'TotFinalSalesAmt' => $totfinal,
     				]);
+
+    	// docno arbegin
+		$invnoEx = explode("/", $request->InvoiceNo);
+		$docFirst = substr($invnoEx[0], 1, 3);
+		$docNoArbegin = $docFirst .'/'. $invnoEx[3].'/'.$invnoEx[2].$invnoEx[1].$invnoEx[4];
+
+		Arbeginbalancehdr::where('DocNo', $docNoArbegin)
+					->update([
+						'Amount' => $totfinal,
+					]);
+
+		Arbeginbalancedtl::where('DocNo', $docNoArbegin)
+					->update([
+						'Amount' => $totfinal
+					]);
 
     }
 }
