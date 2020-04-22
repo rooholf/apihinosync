@@ -343,7 +343,7 @@ class SptrnsinvoiceController extends Controller
     					'TotFinalSalesAmt' => $totfinal,
     				]);
 
-    	Strnsfpjhdr::where('FPJNo', $fpjno)
+    	Sptrnsfpjhdr::where('FPJNo', $fpjno)
     				->update([
     					'TotSalesQty' => $totqty, 
     					'TotSalesAmt' => $totamt, 
