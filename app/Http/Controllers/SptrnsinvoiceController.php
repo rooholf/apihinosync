@@ -254,7 +254,7 @@ class SptrnsinvoiceController extends Controller
         							->where('InvoiceNo', $header->InvoiceNo)
         							->where('WarehouseCode', $request->WarehouseCode)
         							->where('PartNo', $request->PartNo)
-        							->where('PartNoOriginal', $request->PartNoOriginal)
+        							->where('PartNoOriginal', $request->PartNo)
         							->where('DocNo', $header->DocNo)
         							->first();
         	if ($detail == null) {
