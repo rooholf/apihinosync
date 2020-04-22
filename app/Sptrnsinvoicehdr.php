@@ -41,5 +41,6 @@ class Sptrnsinvoicehdr extends Model
         'isLocked', 
         'LockingBy', 
         'LockingDate',
+        'InvNo',
     ];
 }
