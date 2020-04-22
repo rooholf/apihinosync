@@ -363,7 +363,7 @@ class SptrnsinvoiceController extends Controller
 					'LastUpdateDate' => Carbon::now(),
         		]);
 
-	    		$this->updateHeader($header->InvoiceNo, $header->FPJNo);
+	    		$this->updateHeader($header->InvoiceNo, $header->FPJNo, $header->InvNo);
         	}
 
         	return response()->json([
@@ -374,7 +374,7 @@ class SptrnsinvoiceController extends Controller
 
     }
 
-    public function updateHeader($invno, $fpjno)
+    public function updateHeader($invno, $fpjno, $invodd)
     {
     	$totqty = 0;
     	$totamt = 0;
@@ -414,7 +414,7 @@ class SptrnsinvoiceController extends Controller
     				]);
 
     	// docno arbegin
-		$invnoEx = explode("/", $request->InvoiceNo);
+		$invnoEx = explode("/", $invodd);
 		$docFirst = substr($invnoEx[0], 1, 3);
 		$docNoArbegin = $docFirst .'/'. $invnoEx[3].'/'.$invnoEx[2].$invnoEx[1].$invnoEx[4];
 
