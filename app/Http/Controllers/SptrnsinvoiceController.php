@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 use App\Gnmstdocument;
 use App\Sptrnsinvoicehdr;
 use App\Sptrnsinvoicedtl;
-use App\Strnsfpjhdr;
-use App\Strnsfpjdtl;
-use App\Strnsfpjinfo;
+use App\Sptrnsfpjhdr;
+use App\Sptrnsfpjdtl;
+use App\Sptrnsfpjinfo;
 
 use Carbon\Carbon;
 
