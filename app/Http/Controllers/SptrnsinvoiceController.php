@@ -100,6 +100,7 @@ class SptrnsinvoiceController extends Controller
 				'LockingBy' => $request->LockingBy,
 				'LockingDate' => Carbon::now(),
 				'InvNo' => $request->InvoiceNo,
+				'DocNo' => $docno,
         	]);
 
         	if ($sptrnsinvoicehdr) {
@@ -136,6 +137,8 @@ class SptrnsinvoiceController extends Controller
 					'LastUpdateBy' => $request->LastUpdateBy,
 					'LastUpdateDate' => Carbon::now(),
         		]);
+
+        		$this->updateHeader($invno);
         	}
 
         	return response()->json([
@@ -143,40 +146,54 @@ class SptrnsinvoiceController extends Controller
             ], 200);
 
         } else {
-        	Sptrnsinvoicedtl::firstOrCreate([
-    			'CompanyCode' => $request->CompanyCode,
-				'BranchCode' => $branchcode,
-				'InvoiceNo' => $invno,
-				'WarehouseCode' => $request->WarehouseCode,
-				'PartNo' => $request->PartNo,
-				'PartNoOriginal' => $request->PartNo,
-				'DocNo' => $docno,
-				'DocDate' => $invdate,
-				'ReferenceNo' => $request->ReferenceNo,
-				'ReferenceDate' => $invdate,
-				'LocationCode' => $request->LocationCode,
-				'QtyBill' => $request->QtyBill,
-				'RetailPriceInclTax' => $rinctax,
-				'RetailPrice' => $request->RetailPrice,
-				'CostPrice' => $request->RetailPrice,
-				'DiscPct' => $disc,
-				'SalesAmt' => $request->SalesAmt,
-				'DiscAmt' => $request->DiscAmt,
-				'NetSalesAmt' => $request->NetSalesAmt,
-				'PPNAmt' => $request->PPNAmt,
-				'TotSalesAmt' => $total,
-				'ProductType' => $request->ProductType,
-				'PartCategory' => $request->PartCategory,
-				'MovingCode' => $request->MovingCode,
-				'ABCClass' => $request->ABCClass,
-				'ExPickingListNo' => $request->ExPickingListNo,
-				'ExPickingListDate' => $request->ExPickingListDate,
-				'CreatedBy' => $request->CreatedBy,
-				'CreatedDate' => Carbon::now(),
-				'LastUpdateBy' => $request->LastUpdateBy,
-				'LastUpdateDate' => Carbon::now(),
-    		]);
-    		
+        	$detail = Sptrnsinvoicedtl::where('CompanyCode', $header->CompanyCode)
+        							->where('BranchCode', $header->BranchCode)
+        							->where('InvoiceNo', $header->InvoiceNo)
+        							->where('WarehouseCode', $request->WarehouseCode)
+        							->where('PartNo', $request->PartNo)
+        							->where('PartNoOriginal', $request->PartNoOriginal)
+        							->where('DocNo', $header->DocNo)
+        							->first();
+        	if (!$detail) {
+        		Sptrnsinvoicedtl::firstOrCreate([
+	    			'CompanyCode' => $header->CompanyCode,
+					'BranchCode' => $header->BranchCode,
+					'InvoiceNo' => $header->InvoiceNo,
+					'WarehouseCode' => $request->WarehouseCode,
+					'PartNo' => $request->PartNo,
+					'PartNoOriginal' => $request->PartNo,
+					'DocNo' => $header->DocNo,
+					'DocDate' => $invdate,
+					'ReferenceNo' => $request->ReferenceNo,
+					'ReferenceDate' => $invdate,
+					'LocationCode' => $request->LocationCode,
+					'QtyBill' => $request->QtyBill,
+					'RetailPriceInclTax' => $rinctax,
+					'RetailPrice' => $request->RetailPrice,
+					'CostPrice' => $request->RetailPrice,
+					'DiscPct' => $disc,
+					'SalesAmt' => $request->SalesAmt,
+					'DiscAmt' => $request->DiscAmt,
+					'NetSalesAmt' => $request->NetSalesAmt,
+					'PPNAmt' => $request->PPNAmt,
+					'TotSalesAmt' => $total,
+					'ProductType' => $request->ProductType,
+					'PartCategory' => $request->PartCategory,
+					'MovingCode' => $request->MovingCode,
+					'ABCClass' => $request->ABCClass,
+					'ExPickingListNo' => $request->ExPickingListNo,
+					'ExPickingListDate' => $request->ExPickingListDate,
+					'CreatedBy' => $request->CreatedBy,
+					'CreatedDate' => Carbon::now(),
+					'LastUpdateBy' => $request->LastUpdateBy,
+					'LastUpdateDate' => Carbon::now(),
+	    		]);
+
+	    		$this->updateHeader($header->InvoiceNo);
+        	}
+
+	        	
+
         	return response()->json([
                 'data' => 1
             ], 200);
@@ -185,8 +202,34 @@ class SptrnsinvoiceController extends Controller
 
     }
 
-    public function updateTotItem()
+    public function updateHeader($invno)
     {
+    	$totqty = 0;
+    	$totamt = 0;
+    	$totdisc = 0;
+    	$totdpp = 0;
+    	$totppn = 0;
+    	$totfinal = 0;
+
+    	$detail = Sptrnsinvoicedtl::where('InvoiceNo', $invno)->get();
+    	foreach ($detail as $row) {
+    		$totqty = $totqty + $row->QtyBill;
+    		$totamt = $totamt + $row->SalesAmt;
+    		$totdisc = $totdisc + $row->DiscAmt;
+    		$totdpp = $totdpp + $row->NetSalesAmt;
+    		$totppn = $totppn + $row->TotPPNAmt;
+    		$totfinal = $totfinal + $row->TotSalesAmt;
+    	}
+
+    	Sptrnsinvoicehdr::where('InvoiceNo', $invno)
+    				->update([
+    					'TotSalesQty' => $totqty, 
+    					'TotSalesAmt' => $totamt, 
+    					'TotDiscAmt' => $totdisc, 
+    					'TotDPPAmt' => $totdpp, 
+    					'TotPPNAmt' => $totppn, 
+    					'TotFinalSalesAmt' => $totfinal,
+    				]);
 
     }
 }
