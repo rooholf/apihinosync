@@ -7,6 +7,7 @@ use Illuminate\Support\Str; //
 use Illuminate\Http\Request;
 use App\Gnmstdocument;
 use App\Sptrnsinvoicehdr;
+use App\Sptrnsinvoicedtl;
 
 use Carbon\Carbon;
 
@@ -50,6 +51,12 @@ class SptrnsinvoiceController extends Controller
 
         $invdate = $invdateEx[0].' '.$invdateEx[1];
 
+        // accomulative
+        $rinctax = $request->RetailPrice * 1.1;
+		$disc = ($request->DiscAmt/$request->SalesAmt)*100;
+
+		$total = $request->NetSalesAmt + $request->PPNAmt;
+
 
         $header = Sptrnsinvoicehdr::where('CompanyCode', $request->CompanyCode)
         						->where('BranchCode', $branchcode)
@@ -60,6 +67,7 @@ class SptrnsinvoiceController extends Controller
         	$invno = $this->noUrut('INV', $branchcode, $request->CompanyCode);
         	$pickingno = $this->noUrut('PLS', $branchcode, $request->CompanyCode);
         	$fpjno = $this->noUrut('FPJ', $branchcode, $request->CompanyCode);
+        	$docno = $this->noUrut('SOC', $branchcode, $request->CompanyCode);
 
         	$sptrnsinvoicehdr = Sptrnsinvoicehdr::firstOrCreate([
         		'CompanyCode' => $request->CompanyCode,
@@ -94,16 +102,91 @@ class SptrnsinvoiceController extends Controller
 				'InvNo' => $request->InvoiceNo,
         	]);
 
+        	if ($sptrnsinvoicehdr) {
+        		Sptrnsinvoicedtl::firstOrCreate([
+        			'CompanyCode' => $request->CompanyCode,
+					'BranchCode' => $branchcode,
+					'InvoiceNo' => $invno,
+					'WarehouseCode' => $request->WarehouseCode,
+					'PartNo' => $request->PartNo,
+					'PartNoOriginal' => $request->PartNo,
+					'DocNo' => $docno,
+					'DocDate' => $invdate,
+					'ReferenceNo' => $request->ReferenceNo,
+					'ReferenceDate' => $invdate,
+					'LocationCode' => $request->LocationCode,
+					'QtyBill' => $request->QtyBill,
+					'RetailPriceInclTax' => $rinctax,
+					'RetailPrice' => $request->RetailPrice,
+					'CostPrice' => $request->RetailPrice,
+					'DiscPct' => $disc,
+					'SalesAmt' => $request->SalesAmt,
+					'DiscAmt' => $request->DiscAmt,
+					'NetSalesAmt' => $request->NetSalesAmt,
+					'PPNAmt' => $request->PPNAmt,
+					'TotSalesAmt' => $total,
+					'ProductType' => $request->ProductType,
+					'PartCategory' => $request->PartCategory,
+					'MovingCode' => $request->MovingCode,
+					'ABCClass' => $request->ABCClass,
+					'ExPickingListNo' => $request->ExPickingListNo,
+					'ExPickingListDate' => $request->ExPickingListDate,
+					'CreatedBy' => $request->CreatedBy,
+					'CreatedDate' => Carbon::now(),
+					'LastUpdateBy' => $request->LastUpdateBy,
+					'LastUpdateDate' => Carbon::now(),
+        		]);
+        	}
+
         	return response()->json([
                 'data' => 0
             ], 200);
 
         } else {
+        	Sptrnsinvoicedtl::firstOrCreate([
+    			'CompanyCode' => $request->CompanyCode,
+				'BranchCode' => $branchcode,
+				'InvoiceNo' => $invno,
+				'WarehouseCode' => $request->WarehouseCode,
+				'PartNo' => $request->PartNo,
+				'PartNoOriginal' => $request->PartNo,
+				'DocNo' => $docno,
+				'DocDate' => $invdate,
+				'ReferenceNo' => $request->ReferenceNo,
+				'ReferenceDate' => $invdate,
+				'LocationCode' => $request->LocationCode,
+				'QtyBill' => $request->QtyBill,
+				'RetailPriceInclTax' => $rinctax,
+				'RetailPrice' => $request->RetailPrice,
+				'CostPrice' => $request->RetailPrice,
+				'DiscPct' => $disc,
+				'SalesAmt' => $request->SalesAmt,
+				'DiscAmt' => $request->DiscAmt,
+				'NetSalesAmt' => $request->NetSalesAmt,
+				'PPNAmt' => $request->PPNAmt,
+				'TotSalesAmt' => $total,
+				'ProductType' => $request->ProductType,
+				'PartCategory' => $request->PartCategory,
+				'MovingCode' => $request->MovingCode,
+				'ABCClass' => $request->ABCClass,
+				'ExPickingListNo' => $request->ExPickingListNo,
+				'ExPickingListDate' => $request->ExPickingListDate,
+				'CreatedBy' => $request->CreatedBy,
+				'CreatedDate' => Carbon::now(),
+				'LastUpdateBy' => $request->LastUpdateBy,
+				'LastUpdateDate' => Carbon::now(),
+    		]);
+    		
         	return response()->json([
                 'data' => 1
             ], 200);
         }
 
+
+    }
+
+    public function updateTotItem()
+    {
 
     }
 }
