@@ -190,7 +190,7 @@ class SptrnsinvoiceController extends Controller
 					'FPJNo' => $fpjno,
 					'WarehouseCode' => $request->WarehouseCode,
 					'PartNo' => $request->PartNo,
-					'PartNoOriginal' => $request->PartNoOriginal,
+					'PartNoOriginal' => $request->PartNo,
 					'DocNo' => $docno,
 					'DocDate' => $invdate,
 					'ReferenceNo' => $request->ReferenceNo,
