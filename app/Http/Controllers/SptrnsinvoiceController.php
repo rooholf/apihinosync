@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB; // DB
 use Illuminate\Support\Str; //
 
 use Illuminate\Http\Request;
+use App\Gnmstdocument;
 use App\Sptrnsinvoicehdr;
 
 use Carbon\Carbon;
