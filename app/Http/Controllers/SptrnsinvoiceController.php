@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use App\Gnmstdocument;
 use App\Sptrnsinvoicehdr;
 use App\Sptrnsinvoicedtl;
+use App\Strnsfpjhdr;
+use App\Strnsfpjdtl;
+use App\Strnsfpjinfo;
 
 use Carbon\Carbon;
 
@@ -50,6 +53,8 @@ class SptrnsinvoiceController extends Controller
         $invdateEx = explode("T", $request->InvoiceDate);
 
         $invdate = $invdateEx[0].' '.$invdateEx[1];
+        $duedateOdd = date("Y-m-d", strtotime("+1 month", strtotime($invdate)));
+        $duedate = $duedateOdd.' '.$invdateEx[1];
 
         // accomulative
         $rinctax = $request->RetailPrice * 1.1;
@@ -138,7 +143,82 @@ class SptrnsinvoiceController extends Controller
 					'LastUpdateDate' => Carbon::now(),
         		]);
 
-        		$this->updateHeader($invno);
+        		Sptrnsfpjhdr::firstOrCreate([
+        			'CompanyCode' => $request->CompanyCode,
+					'BranchCode' => $request->BranchCode,
+					'FPJNo' => $fpjno,
+					'FPJDate' => $invdate,
+					'TPTrans' => $request->TPTrans,
+					'FPJGovNo' => $request->FPJGovNo,
+					'FPJSignature' => $invdate,
+					'FPJCentralNo' => NULL,
+					'FPJCentralDate' => $request->FPJCentralDate,
+					'DeliveryNo' => $request->DeliveryNo,
+					'InvoiceNo' => $invno,
+					'InvoiceDate' => $invdate,
+					'PickingSlipNo' => $pickingno,
+					'PickingSlipDate' => $invdate,
+					'TransType' => $request->TransType,
+					'CustomerCode' => $request->CustomerCode,
+					'CustomerCodeBill' => $request->CustomerCodeBill,
+					'CustomerCodeShip' => $request->CustomerCodeShip,
+					'TOPCode' => $request->TOPCode,
+					'TOPDays' => $request->TOPDays,
+					'DueDate' => $duedate,
+					'TotSalesQty' => 0,
+					'TotSalesAmt' => 0,
+					'TotDiscAmt' => 0,
+					'TotDPPAmt' => 0,
+					'TotPPNAmt' => 0,
+					'TotFinalSalesAmt' => 0,
+					'isPKP' => $request->isPKP,
+					'Status' => $request->Status,
+					'PrintSeq' => $request->PrintSeq,
+					'TypeOfGoods' => $request->TypeOfGoods,
+					'CreatedBy' => $request->CreatedBy,
+					'CreatedDate' => Carbon::now(),
+					'LastUpdateBy' => $request->LastUpdateBy,
+					'LastUpdateDate' => Carbon::now(),
+					'isLocked' => $request->isLocked,
+					'LockingBy' => $request->LockingBy,
+					'LockingDate' => Carbon::now(),
+        		]);
+
+        		Sptrnsfpjdtl::firstOrCreate([
+        			'CompanyCode' => $request->CompanyCode,
+					'BranchCode' => $request->BranchCode,
+					'FPJNo' => $fpjno,
+					'WarehouseCode' => $request->WarehouseCode,
+					'PartNo' => $request->PartNo,
+					'PartNoOriginal' => $request->PartNoOriginal,
+					'DocNo' => $docno,
+					'DocDate' => $invdate,
+					'ReferenceNo' => $request->ReferenceNo,
+					'ReferenceDate' => $invdate,
+					'LocationCode' => $request->LocationCode,
+					'QtyBill' => $request->QtyBill,
+					'RetailPriceInclTax' => $rinctax,
+					'RetailPrice' => $request->RetailPrice,
+					'CostPrice' => $request->RetailPrice,
+					'DiscPct' => $disc,
+					'SalesAmt' => $request->SalesAmt,
+					'DiscAmt' => $request->DiscAmt,
+					'NetSalesAmt' => $request->NetSalesAmt,
+					'PPNAmt' => $request->PPNAmt,
+					'TotSalesAmt' => $request->TotSalesAmt,
+					'ProductType' => $request->ProductType,
+					'PartCategory' => $request->PartCategory,
+					'MovingCode' => $request->MovingCode,
+					'ABCClass' => $request->ABCClass,
+					'CreatedBy' => $request->CreatedBy,
+					'CreatedDate' => Carbon::now(),
+					'LastUpdateBy' => $request->LastUpdateBy,
+					'LastUpdateDate' => Carbon::now(),
+        		]);
+
+
+
+        		$this->updateHeader($invno, $fpjno);
         	}
 
         	return response()->json([
@@ -189,7 +269,39 @@ class SptrnsinvoiceController extends Controller
 					'LastUpdateDate' => Carbon::now(),
 	    		]);
 
-	    		$this->updateHeader($header->InvoiceNo);
+	    		Sptrnsfpjdtl::firstOrCreate([
+        			'CompanyCode' => $header->CompanyCode,
+					'BranchCode' => $header->BranchCode,
+					'FPJNo' => $header->FPJNo,
+					'WarehouseCode' => $request->WarehouseCode,
+					'PartNo' => $request->PartNo,
+					'PartNoOriginal' => $request->PartNoOriginal,
+					'DocNo' => $header->DocNo,
+					'DocDate' => $invdate,
+					'ReferenceNo' => $request->ReferenceNo,
+					'ReferenceDate' => $invdate,
+					'LocationCode' => $request->LocationCode,
+					'QtyBill' => $request->QtyBill,
+					'RetailPriceInclTax' => $rinctax,
+					'RetailPrice' => $request->RetailPrice,
+					'CostPrice' => $request->RetailPrice,
+					'DiscPct' => $disc,
+					'SalesAmt' => $request->SalesAmt,
+					'DiscAmt' => $request->DiscAmt,
+					'NetSalesAmt' => $request->NetSalesAmt,
+					'PPNAmt' => $request->PPNAmt,
+					'TotSalesAmt' => $request->TotSalesAmt,
+					'ProductType' => $request->ProductType,
+					'PartCategory' => $request->PartCategory,
+					'MovingCode' => $request->MovingCode,
+					'ABCClass' => $request->ABCClass,
+					'CreatedBy' => $request->CreatedBy,
+					'CreatedDate' => Carbon::now(),
+					'LastUpdateBy' => $request->LastUpdateBy,
+					'LastUpdateDate' => Carbon::now(),
+        		]);
+
+	    		$this->updateHeader($header->InvoiceNo, $header->FPJNo);
         	}
 
 	        	
@@ -202,7 +314,7 @@ class SptrnsinvoiceController extends Controller
 
     }
 
-    public function updateHeader($invno)
+    public function updateHeader($invno, $fpjno)
     {
     	$totqty = 0;
     	$totamt = 0;
@@ -222,6 +334,16 @@ class SptrnsinvoiceController extends Controller
     	}
 
     	Sptrnsinvoicehdr::where('InvoiceNo', $invno)
+    				->update([
+    					'TotSalesQty' => $totqty, 
+    					'TotSalesAmt' => $totamt, 
+    					'TotDiscAmt' => $totdisc, 
+    					'TotDPPAmt' => $totdpp, 
+    					'TotPPNAmt' => $totppn, 
+    					'TotFinalSalesAmt' => $totfinal,
+    				]);
+
+    	Strnsfpjhdr::where('FPJNo', $fpjno)
     				->update([
     					'TotSalesQty' => $totqty, 
     					'TotSalesAmt' => $totamt, 
