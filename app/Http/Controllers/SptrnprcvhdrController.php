@@ -128,7 +128,6 @@ class SptrnprcvhdrController extends Controller
                 'isLocked'=> $request->isLocked,
                 'LockingBy'=> $request->LockingBy,
                 'LockingDate'=> Carbon::now(),
-                'GRNo' => $request->GRNo,
             ]);
                 
 
