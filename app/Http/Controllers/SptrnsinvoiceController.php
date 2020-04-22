@@ -217,7 +217,7 @@ class SptrnsinvoiceController extends Controller
     		$totamt = $totamt + $row->SalesAmt;
     		$totdisc = $totdisc + $row->DiscAmt;
     		$totdpp = $totdpp + $row->NetSalesAmt;
-    		$totppn = $totppn + $row->TotPPNAmt;
+    		$totppn = $totppn + $row->PPNAmt;
     		$totfinal = $totfinal + $row->TotSalesAmt;
     	}
 
