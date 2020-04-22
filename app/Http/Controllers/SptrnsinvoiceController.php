@@ -11,6 +11,8 @@ use App\Sptrnsinvoicedtl;
 use App\Sptrnsfpjhdr;
 use App\Sptrnsfpjdtl;
 use App\Sptrnsfpjinfo;
+use App\Arbeginbalancehdr;
+use App\Arbeginbalancedtl;
 
 use Carbon\Carbon;
 
@@ -255,7 +257,7 @@ class SptrnsinvoiceController extends Controller
         							->where('PartNoOriginal', $request->PartNoOriginal)
         							->where('DocNo', $header->DocNo)
         							->first();
-        	if (!$detail) {
+        	if ($detail == null) {
         		Sptrnsinvoicedtl::firstOrCreate([
 	    			'CompanyCode' => $header->CompanyCode,
 					'BranchCode' => $header->BranchCode,
