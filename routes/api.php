@@ -33,4 +33,4 @@ Route::post('transrcvhdr/show', 'SptrnprcvhdrController@show');
 Route::post('transrcvhdr/add', 'SptrnprcvhdrController@add');
 Route::post('transrcvhdr/detail', 'SptrnprcvhdrController@addDetail');
 
-Route::post('transinvoice/add', 'SptrnsinvoicehdrController@add');
+Route::post('transinvoice/add', 'SptrnsinvoiceController@add');
