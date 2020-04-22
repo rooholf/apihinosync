@@ -205,7 +205,7 @@ class SptrnsinvoiceController extends Controller
 					'DiscAmt' => $request->DiscAmt,
 					'NetSalesAmt' => $request->NetSalesAmt,
 					'PPNAmt' => $request->PPNAmt,
-					'TotSalesAmt' => $request->TotSalesAmt,
+					'TotSalesAmt' => $total,
 					'ProductType' => $request->ProductType,
 					'PartCategory' => $request->PartCategory,
 					'MovingCode' => $request->MovingCode,
