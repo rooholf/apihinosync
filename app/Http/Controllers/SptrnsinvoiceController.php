@@ -216,6 +216,27 @@ class SptrnsinvoiceController extends Controller
 					'LastUpdateDate' => Carbon::now(),
         		]);
 
+        		Sptrnsfpjinfo::firstOrCreate([
+        			'CompanyCode' => $request->CompanyCode,
+					'BranchCode' => $request->BranchCode,
+					'FPJNo' => $fpjno,
+					'CustomerName' => $request->CustomerName,
+					'Address1' => $request->Address1,
+					'Address2' => $request->Address2,
+					'Address3' => $request->Address3,
+					'Address4' => $request->Address4,
+					'isPKP' => $request->isPKP,
+					'NPWPNo' => $request->NPWPNo,
+					'SKPNo' => $request->SKPNo,
+					'SKPDate' => $request->SKPDate,
+					'NPWPDate' => $request->NPWPDate,
+					'CreatedBy' => $request->CreatedBy,
+					'CreatedDate' => Carbon::now(),
+					'LastUpdateBy' => $request->LastUpdateBy,
+					'LastUpdateDate' => Carbon::now(),
+
+        		]);
+
 
 
         		$this->updateHeader($invno, $fpjno);
@@ -290,7 +311,7 @@ class SptrnsinvoiceController extends Controller
 					'DiscAmt' => $request->DiscAmt,
 					'NetSalesAmt' => $request->NetSalesAmt,
 					'PPNAmt' => $request->PPNAmt,
-					'TotSalesAmt' => $request->TotSalesAmt,
+					'TotSalesAmt' => $total,
 					'ProductType' => $request->ProductType,
 					'PartCategory' => $request->PartCategory,
 					'MovingCode' => $request->MovingCode,
