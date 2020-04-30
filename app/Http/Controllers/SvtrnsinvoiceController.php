@@ -149,7 +149,7 @@ class SvtrnsinvoiceController extends Controller
     		]);
 
     		if ($svtrnservice) {
-    			if ($request->Remarks == 'Part') {
+    			if ($request->Remarks == 'Part' Or $request->Remarks == 'Oil') {
     				Svtrnsrvitem::firstOrCreate([
     					'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => $branchcode,
