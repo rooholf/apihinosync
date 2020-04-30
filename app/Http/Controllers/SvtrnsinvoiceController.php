@@ -150,6 +150,7 @@ class SvtrnsinvoiceController extends Controller
 
     		if ($svtrnservice) {
     			if ($request->Remarks == 'Part' Or $request->Remarks == 'Oil') {
+
     				Svtrnsrvitem::firstOrCreate([
     					'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => $branchcode,
@@ -217,6 +218,8 @@ class SvtrnsinvoiceController extends Controller
     										->orderBy('PartSeq', 'DESC')
     										->first();
     			if ($svtrnsrvitem == null) {
+    				$sss = $this->noUrut('SSS', $branchcode, $request->CompanyCode);
+    				
     				Svtrnsrvitem::firstOrCreate([
 						'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => $branchcode,
@@ -231,7 +234,7 @@ class SvtrnsinvoiceController extends Controller
 						'RetailPrice' => $request->RetailPrice,
 						'TypeOfGoods' => $request->TypeOfGoods,
 						'BillType' => $request->BillType,
-						'SupplySlipNo' => $svtrnsrvitem->SupplySlipNo,
+						'SupplySlipNo' => $sss,
 						'SupplySlipDate' => $invdate,
 						'SSReturnNo' => NULL,
 						'SSReturnDate' => $invdate,
