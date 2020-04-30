@@ -49,7 +49,7 @@ class SvtrnsinvoiceController extends Controller
         }
 
         // date
-        $invdateEx = explode(" ", $request->InvoiceDate);
+        $invdateEx = explode(" ", $request->InvDate);
 
         $invdate = $invdateEx[0].' '.$invdateEx[1];
 
