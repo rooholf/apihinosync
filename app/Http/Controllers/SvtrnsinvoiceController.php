@@ -145,6 +145,7 @@ class SvtrnsinvoiceController extends Controller
 				'LastUpdateDate' => Carbon::now(),
 				'IsSparepartClaim' => $request->IsSparepartClaim,
 				'JobOrderClosed' => $request->JobOrderClosed,
+				'InvDocNo' => $request->InvDocNo,
     		]);
 
     		if ($svtrnservice) {
