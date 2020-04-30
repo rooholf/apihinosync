@@ -69,7 +69,7 @@ class SvtrnsinvoiceController extends Controller
     	$desc = "Created By RDMS : ". $request->InvDocNo;
 
     	// discount
-    	$disc = ($request->AmountDiscount / $request->RetailPrice) * $request->SupplyQty;
+    	$disc = $request->AmountDiscount / ($request->RetailPrice * $request->SupplyQty);
 
     	if ($service == null) {
     		$spk = $this->noUrut('SPK', $branchcode, $request->CompanyCode);
@@ -219,7 +219,7 @@ class SvtrnsinvoiceController extends Controller
     										->first();
     			if ($svtrnsrvitem == null) {
     				$sss = $this->noUrut('SSS', $branchcode, $request->CompanyCode);
-    				
+
     				Svtrnsrvitem::firstOrCreate([
 						'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => $branchcode,
