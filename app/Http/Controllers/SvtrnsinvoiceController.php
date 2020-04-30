@@ -77,7 +77,7 @@ class SvtrnsinvoiceController extends Controller
     		$sss = $this->noUrut('SSS', $branchcode, $request->CompanyCode);
 
     		$no = Svtrnservice::orderBy('ServiceNo', 'DESC')->first();
-    		$servno = $no + 1;
+    		$servno = $no->ServiceNo + 1;
 
     		$svtrnservice = Svtrnservice::firstOrCreate([
     			'CompanyCode' => $request->CompanyCode,
@@ -239,7 +239,7 @@ class SvtrnsinvoiceController extends Controller
 					]);
     			} else {
     				$partseq = $svtrnsrvitem->PartSeq + 1;
-    				
+
     				Svtrnsrvitem::firstOrCreate([
 						'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => $branchcode,
