@@ -79,7 +79,7 @@ class SvtrnsinvoiceController extends Controller
     		$no = Svtrnservice::orderBy('ServiceNo', 'DESC')->first();
     		$servno = $no->ServiceNo + 1;
 
-    		$svtrnservice = Svtrnservice::firstOrCreate([
+    		$svtrnservice = Svtrnservice::create([
     			'CompanyCode' => $request->CompanyCode,
 				'BranchCode' => $branchcode,
 				'ProductType' => $request->ProductType,
