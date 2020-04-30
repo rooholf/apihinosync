@@ -34,3 +34,5 @@ Route::post('transrcvhdr/add', 'SptrnprcvhdrController@add');
 Route::post('transrcvhdr/detail', 'SptrnprcvhdrController@addDetail');
 
 Route::post('transinvoice/add', 'SptrnsinvoiceController@add');
+
+Route::post('srvservice/add', 'SvtrnsinvoiceController@add');
