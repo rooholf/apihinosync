@@ -39,7 +39,7 @@ class SvtrnsinvoiceController extends Controller
     public function add(Request $request)
     {
     	$this->validate($request, [
-            'InvoiceNo' => 'required',
+            'InvDocNo' => 'required',
         ]);
 
         if ($request->Dealer == 'After Sales & Services - JIM Muara Bungo') {
