@@ -63,8 +63,8 @@ class SvtrnsinvoiceController extends Controller
     	$chassisNo = substr($request->VIN, 12, 5);
 
     	// engine code 
-    	$engineCode = substr($request->EngineCode, 0, 7);
-    	$engineNo = substr($request->EngineCode, 7, 5);
+    	$engineCode = substr($request->Engine, 0, 7);
+    	$engineNo = substr($request->Engine, 7, 5);
 
     	$desc = "Created By RDMS : ". $request->InvDocNo;
 
@@ -79,7 +79,7 @@ class SvtrnsinvoiceController extends Controller
     		$no = Svtrnservice::orderBy('ServiceNo', 'DESC')->first();
     		$servno = $no->ServiceNo + 1;
 
-    		$svtrnservice = Svtrnservice::create([
+    		$svtrnservice = Svtrnservice::firstOrCreate([
     			'CompanyCode' => $request->CompanyCode,
 				'BranchCode' => $branchcode,
 				'ProductType' => $request->ProductType,
@@ -203,6 +203,10 @@ class SvtrnsinvoiceController extends Controller
     			}
 
     		}
+
+    		return response()->json([
+                'data' => 0
+            ], 200);
     	} else {
     		if ($request->Remarks == 'Part') {
     			$svtrnsrvitem = Svtrnsrvitem::where('CompanyCode', $service->CompanyCode)
@@ -294,6 +298,10 @@ class SvtrnsinvoiceController extends Controller
 					'DiscPct' => $disc,
 				]);
 			}
+
+			return response()->json([
+                'data' => 1
+            ], 200);
     	}
     }
 }
