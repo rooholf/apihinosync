@@ -208,7 +208,7 @@ class SvtrnsinvoiceController extends Controller
                 'data' => 0
             ], 200);
     	} else {
-    		if ($request->Remarks == 'Part') {
+    		if ($request->Remarks == 'Part' Or $request->Remarks == 'Oil') {
     			$svtrnsrvitem = Svtrnsrvitem::where('CompanyCode', $service->CompanyCode)
     										->where('BranchCode', $service->BranchCode)
     										->where('ProductType', $service->ProductType)
