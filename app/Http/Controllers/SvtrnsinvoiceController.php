@@ -153,62 +153,6 @@ class SvtrnsinvoiceController extends Controller
     		]);
 
     		if ($svtrnservice) {
-    			if ($request->Remarks == 'Part' Or $request->Remarks == 'Oil') {
-
-    				Svtrnsrvitem::firstOrCreate([
-    					'CompanyCode' => $request->CompanyCode,
-						'BranchCode' => $branchcode,
-						'ProductType' => $request->ProductType,
-						'ServiceNo' => $servno,
-						'PartNo' => $request->PartNo,
-						'PartSeq' => 1,
-						'DemandQty' => $request->DemandQty,
-						'SupplyQty' => $request->SupplyQty,
-						'ReturnQty' => $request->ReturnQty,
-						'CostPrice' => $request->CostPrice,
-						'RetailPrice' => $request->RetailPrice,
-						'TypeOfGoods' => $request->TypeOfGoods,
-						'BillType' => $request->BillType,
-						'SupplySlipNo' => $sss,
-						'SupplySlipDate' => $invdate,
-						'SSReturnNo' => NULL,
-						'SSReturnDate' => $invdate,
-						'CreatedBy' => $request->CreatedBy,
-						'CreatedDate' => Carbon::now(),
-						'LastupdateBy' => $request->LastupdateBy,
-						'LastupdateDate' => Carbon::now(),
-						'DiscPct' => $disc,
-						'MechanicID' => $request->MechanicID,
-						'AmountDiscount' => $request->AmountDiscount,
-    				]);
-    			} else {
-    				Svtrnsrvtask::firstOrCreate([
-    					'CompanyCode' => $request->CompanyCode,
-						'BranchCode' => $branchcode,
-						'ProductType' => $request->ProductType,
-						'ServiceNo' => $servno,
-						'OperationNo' => $request->OperationNo,
-						'OperationHour' => $request->OperationHour,
-						'OperationCost' => $request->OperationCost,
-						'IsSubCon' => $request->IsSubCon,
-						'SubConPrice' => $request->SubConPrice,
-						'PONo' => '',
-						'ClaimHour' => $request->ClaimHour,
-						'TypeOfGoods' => $request->TypeOfGoods,
-						'BillType' => $request->BillType,
-						'SharingTask' => $request->SharingTask,
-						'TaskStatus' => $request->TaskStatus,
-						'StartService' => $invdate,
-						'FinishService' => $invdate,
-						'CreatedBy' => $request->CreatedBy,
-						'CreatedDate' => Carbon::now(),
-						'LastupdateBy' => $request->LastupdateBy,
-						'LastupdateDate' => Carbon::now(),
-						'DiscPct' => $disc,
-						'AmountDiscount' => $request->AmountDiscount,
-    				]);
-    			}
-
     			Svtrninvoice::firstOrCreate([
     				'CompanyCode' => $request->CompanyCode,
 					'BranchCode' => $branchcode,
@@ -266,8 +210,63 @@ class SvtrnsinvoiceController extends Controller
 					'LastupdateBy' => $request->LastupdateBy,
 					'LastupdateDate' => Carbon::now(),
 					'InvDocNo' => $request->InvDocNo,
-
     			]);
+
+    			if ($request->Remarks == 'Part' Or $request->Remarks == 'Oil') {
+
+    				Svtrnsrvitem::firstOrCreate([
+    					'CompanyCode' => $request->CompanyCode,
+						'BranchCode' => $branchcode,
+						'ProductType' => $request->ProductType,
+						'ServiceNo' => $servno,
+						'PartNo' => $request->PartNo,
+						'PartSeq' => 1,
+						'DemandQty' => $request->DemandQty,
+						'SupplyQty' => $request->SupplyQty,
+						'ReturnQty' => $request->ReturnQty,
+						'CostPrice' => $request->CostPrice,
+						'RetailPrice' => $request->RetailPrice,
+						'TypeOfGoods' => $request->TypeOfGoods,
+						'BillType' => $request->BillType,
+						'SupplySlipNo' => $sss,
+						'SupplySlipDate' => $invdate,
+						'SSReturnNo' => NULL,
+						'SSReturnDate' => $invdate,
+						'CreatedBy' => $request->CreatedBy,
+						'CreatedDate' => Carbon::now(),
+						'LastupdateBy' => $request->LastupdateBy,
+						'LastupdateDate' => Carbon::now(),
+						'DiscPct' => $disc,
+						'MechanicID' => $request->MechanicID,
+						'AmountDiscount' => $request->AmountDiscount,
+    				]);
+    			} else {
+    				Svtrnsrvtask::firstOrCreate([
+    					'CompanyCode' => $request->CompanyCode,
+						'BranchCode' => $branchcode,
+						'ProductType' => $request->ProductType,
+						'ServiceNo' => $servno,
+						'OperationNo' => $request->OperationNo,
+						'OperationHour' => $request->OperationHour,
+						'OperationCost' => $request->OperationCost,
+						'IsSubCon' => $request->IsSubCon,
+						'SubConPrice' => $request->SubConPrice,
+						'PONo' => '',
+						'ClaimHour' => $request->ClaimHour,
+						'TypeOfGoods' => $request->TypeOfGoods,
+						'BillType' => $request->BillType,
+						'SharingTask' => $request->SharingTask,
+						'TaskStatus' => $request->TaskStatus,
+						'StartService' => $invdate,
+						'FinishService' => $invdate,
+						'CreatedBy' => $request->CreatedBy,
+						'CreatedDate' => Carbon::now(),
+						'LastupdateBy' => $request->LastupdateBy,
+						'LastupdateDate' => Carbon::now(),
+						'DiscPct' => $disc,
+						'AmountDiscount' => $request->AmountDiscount,
+    				]);
+    			}
 
     			$this->updateHeader($request->InvDocNo, $servno, $request->Remarks);
 
