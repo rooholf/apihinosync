@@ -12,6 +12,7 @@ use App\Svtrnsrvtask;
 use App\Svtrninvoice;
 use App\Svtrninvitem;
 use App\Svtrninvitemdtl;
+use App\Svtrninvtask;
 
 use Carbon\Carbon;
 
@@ -274,7 +275,7 @@ class SvtrnsinvoiceController extends Controller
 						'CreatedDate' => Carbon::now(),
     				]);
     			} else {
-    				Svtrnsrvtask::firstOrCreate([
+    				Svtrnsrvtask::create([
     					'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => $branchcode,
 						'ProductType' => $request->ProductType,
@@ -298,6 +299,21 @@ class SvtrnsinvoiceController extends Controller
 						'LastupdateDate' => Carbon::now(),
 						'DiscPct' => $disc,
 						'AmountDiscount' => $request->AmountDiscount,
+    				]);
+
+    				Svtrninvtask::create([
+    					'CompanyCode' => $request->CompanyCode,
+						'BranchCode' => $branchcode,
+						'ProductType' => $request->ProductType,
+						'InvoiceNo' => $inc,
+						'OperationNo' => $request->OperationNo,
+						'OperationHour' => $request->OperationHour,
+						'ClaimHour' => $request->ClaimHour,
+						'OperationCost' => $request->OperationCost,
+						'SubConPrice' => $request->SubConPrice,
+						'IsSubCon' => $request->IsSubCon,
+						'SharingTask' => $request->SharingTask,
+						'DiscPct' => $disc,
     				]);
     			}
 
@@ -424,6 +440,21 @@ class SvtrnsinvoiceController extends Controller
 						'DiscPct' => $disc,
 						'AmountDiscount' => $request->AmountDiscount,
 					]);
+
+					Svtrninvtask::create([
+    					'CompanyCode' => $request->CompanyCode,
+						'BranchCode' => $branchcode,
+						'ProductType' => $request->ProductType,
+						'InvoiceNo' => $service->InvoiceNo,
+						'OperationNo' => $request->OperationNo,
+						'OperationHour' => $request->OperationHour,
+						'ClaimHour' => $request->ClaimHour,
+						'OperationCost' => $request->OperationCost,
+						'SubConPrice' => $request->SubConPrice,
+						'IsSubCon' => $request->IsSubCon,
+						'SharingTask' => $request->SharingTask,
+						'DiscPct' => $disc,
+    				]);
     			}
 
 					
