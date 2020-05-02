@@ -49,8 +49,10 @@ class SvtrnsinvoiceController extends Controller
 
         if ($request->Dealer == 'After Sales & Services - JIM Muara Bungo') {
             $branchcode = '002';
+            $accountNo = '004.002.000.00000.200000.000.000';
         } else {
             $branchcode = '000';
+            $accountNo = '004.000.000.00000.200000.000.000';
         }
 
         // date
@@ -77,6 +79,11 @@ class SvtrnsinvoiceController extends Controller
 
     	// discount
     	$disc = $request->AmountDiscount / ($request->RetailPrice * $request->SupplyQty);
+
+    	// docno arbegin
+		$invnoEx = explode("/", $request->InvDocNo);
+		$docFirst = substr($invnoEx[0], 1, 3);
+		$docNoArbegin = $docFirst .'/'. $invnoEx[3].'/'.$invnoEx[2].$invnoEx[1].$invnoEx[4];
 
     	if ($service == null) {
     		$spk = $this->noUrut('SPK', $branchcode, $request->CompanyCode);
@@ -359,6 +366,38 @@ class SvtrnsinvoiceController extends Controller
     				]);
     			}
 
+    			Arbeginbalancehdr::firstOrCreate([
+        			'CompanyCode' => $request->CompanyCode,
+					'BranchCode' => $branchcode,
+					'DocNo' => $docNoArbegin,
+					'ProfitCenterCode' => '300',
+					'DocDate' => $invdate,
+					'CustomerCode' => $request->CustomerCode,
+					'AccountNo' => $accountNo,
+					'DueDate' => $duedate,
+					'TOPCode' => $request->TOPCode,
+					'Amount' => 0,
+					'SalesCode' => '',
+					'LeasingCode' => '',
+					'Status' => 0,
+					'CreatedBy' => $request->CreatedBy,
+					'CreatedDate' => Carbon::now(),
+					'PrintSeq' => '1',
+        		]);
+
+        		Arbeginbalancedtl::firstOrCreate([
+        			'CompanyCode' => $request->CompanyCode,
+					'BranchCode' => $branchcode,
+					'DocNo' => $docNoArbegin,
+					'SeqNo' => '1',
+					'AccountNo' => $accountNo,
+					'Description' => '',
+					'Amount' => 0,
+					'Status' => '',
+					'CreatedBy' => $request->CreatedBy,
+					'CreatedDate' => Carbon::now(),
+        		]);
+
     			$this->updateHeader($request->InvDocNo, $servno, $request->Remarks);
 
     		}
@@ -614,26 +653,23 @@ class SvtrnsinvoiceController extends Controller
 					'TotalPpnAmt' => $totalppnamount,
 					'TotalSrvAmt' => $totalsrvamount,
 				]);
+
+			// docno arbegin
+			$invnoEx = explode("/", $invno);
+			$docFirst = substr($invnoEx[0], 1, 3);
+			$docNoArbegin = $docFirst .'/'. $invnoEx[3].'/'.$invnoEx[2].$invnoEx[1].$invnoEx[4];
+
+			Arbeginbalancehdr::where('DocNo', $docNoArbegin)
+						->update([
+							'Amount' => $totalsrvamount,
+						]);
+
+			Arbeginbalancedtl::where('DocNo', $docNoArbegin)
+						->update([
+							'Amount' => $totalsrvamount
+						]);
     	}
 
-		    
-
-		    
-
-    	// docno arbegin
-		// $invnoEx = explode("/", $invodd);
-		// $docFirst = substr($invnoEx[0], 1, 3);
-		// $docNoArbegin = $docFirst .'/'. $invnoEx[3].'/'.$invnoEx[2].$invnoEx[1].$invnoEx[4];
-
-		// Arbeginbalancehdr::where('DocNo', $docNoArbegin)
-		// 			->update([
-		// 				'Amount' => $totfinal,
-		// 			]);
-
-		// Arbeginbalancedtl::where('DocNo', $docNoArbegin)
-		// 			->update([
-		// 				'Amount' => $totfinal
-		// 			]);
 
     }
 }
