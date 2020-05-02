@@ -14,6 +14,8 @@ use App\Svtrninvitem;
 use App\Svtrninvitemdtl;
 use App\Svtrninvtask;
 use App\Svtrnfakturpajak;
+use App\Arbeginbalancehdr;
+use App\Arbeginbalancedtl;
 
 use Carbon\Carbon;
 
