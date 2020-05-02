@@ -288,8 +288,7 @@ class SvtrnsinvoiceController extends Controller
     										->where('BranchCode', $service->BranchCode)
     										->where('ProductType', $service->ProductType)
     										->where('ServiceNo', $service->ServiceNo)
-    										->orderBy('PartSeq', 'DESC')
-    										->first();
+    										->max('PartSeq');
 
     				$partseq_no = $partseq->PartSeq + 1;
 
