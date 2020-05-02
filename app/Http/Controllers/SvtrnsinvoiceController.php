@@ -209,7 +209,7 @@ class SvtrnsinvoiceController extends Controller
 					'CreatedDate' => Carbon::now(),
 					'LastupdateBy' => $request->LastUpdateBy,
 					'LastupdateDate' => Carbon::now(),
-					// 'InvDocNo' => $request->InvDocNo,
+					'InvDocNo' => $request->InvDocNo,
     			]);
 
     			if ($request->Remarks == 'Part' Or $request->Remarks == 'Oil') {
@@ -416,13 +416,13 @@ class SvtrnsinvoiceController extends Controller
 							'PartsDppAmt' => $partsdppamt,
 	    				]);
 
-	    	// Svtrninvoice::where('InvDocNo', $invno)
-	    	// 			->update([
-						// 	'PartsDiscPct' => $partdispct,
-						// 	'PartsGrossAmt' => $partsgrossamt,
-						// 	'PartsDiscAmt' => $partsdiscamt,
-						// 	'PartsDppAmt' => $partsdppamt,
-	    	// 			]);
+	    	Svtrninvoice::where('InvDocNo', $invno)
+	    				->update([
+							'PartsDiscPct' => $partdispct,
+							'PartsGrossAmt' => $partsgrossamt,
+							'PartsDiscAmt' => $partsdiscamt,
+							'PartsDppAmt' => $partsdppamt,
+	    				]);
 	    } else {
 	    	$detail = Svtrnsrvtask::where('ServiceNo', $serno)->get();
 	    	foreach ($detail as $row) {
@@ -445,13 +445,13 @@ class SvtrnsinvoiceController extends Controller
 							'LaborDppAmt' => $labordppamt,
 	    				]);
 
-	    	// Svtrninvoice::where('InvDocNo', $invno)
-	    	// 			->update([
-	    	// 				'LaborDiscPct' => $labordiscpct,
-						// 	'LaborGrossAmt' => $laborgrossamt,
-						// 	'LaborDiscAmt' => $labordiscamt,
-						// 	'LaborDppAmt' => $labordppamt,
-	    	// 			]);
+	    	Svtrninvoice::where('InvDocNo', $invno)
+	    				->update([
+	    					'LaborDiscPct' => $labordiscpct,
+							'LaborGrossAmt' => $laborgrossamt,
+							'LaborDiscAmt' => $labordiscamt,
+							'LaborDppAmt' => $labordppamt,
+	    				]);
 	    }
 
 	    
@@ -470,12 +470,12 @@ class SvtrnsinvoiceController extends Controller
 					'TotalSrvAmount' => $totalsrvamount,
 				]);
 
-			// Svtrninvoice::where('InvDocNo', $invno)
-			// 	->update([
-			// 		'TotalDppAmt' => $totaldppamount,
-			// 		'TotalPpnAmt' => $totalppnamount,
-			// 		'TotalSrvAmt' => $totalsrvamount,
-			// 	]);
+			Svtrninvoice::where('InvDocNo', $invno)
+				->update([
+					'TotalDppAmt' => $totaldppamount,
+					'TotalPpnAmt' => $totalppnamount,
+					'TotalSrvAmt' => $totalsrvamount,
+				]);
     	}
 
 		    
