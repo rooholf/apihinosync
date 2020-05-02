@@ -278,7 +278,6 @@
 				$gnmstcustomer->FaxNo = $request->get('FaxNo', $gnmstcustomer->FaxNo);
 				$gnmstcustomer->isPKP = $request->get('isPKP', $gnmstcustomer->isPKP);
 				$gnmstcustomer->NPWPNo = $request->get('NPWPNo', $gnmstcustomer->NPWPNo);
-				$gnmstcustomer->NPWPDate = $request->get('NPWPDate', $gnmstcustomer->NPWPDate);
 				$gnmstcustomer->SKPNo = $request->get('SKPNo', $gnmstcustomer->SKPNo);
 				$gnmstcustomer->SKPDate = $request->get('SKPDate', $gnmstcustomer->SKPDate);
 				$gnmstcustomer->ProvinceCode = $request->get('ProvinceCode', $gnmstcustomer->ProvinceCode);
@@ -286,15 +285,10 @@
 				$gnmstcustomer->CityCode = $request->get('CityCode', $gnmstcustomer->CityCode);
 				$gnmstcustomer->ZipNo = $request->get('ZipNo', $gnmstcustomer->ZipNo);
 				$gnmstcustomer->Status = $request->get('Status', $gnmstcustomer->Status);
-				$gnmstcustomer->CreatedBy = $request->get('CreatedBy', $gnmstcustomer->CreatedBy);
-				$gnmstcustomer->CreatedDate = $request->get('CreatedDate', $gnmstcustomer->CreatedDate);
 				$gnmstcustomer->LastUpdateBy = $request->get('LastUpdateBy', $gnmstcustomer->LastUpdateBy);
-				$gnmstcustomer->LastUpdateDate = $request->get('LastUpdateDate', $gnmstcustomer->LastUpdateDate);
 				$gnmstcustomer->isLocked = $request->get('isLocked', $gnmstcustomer->isLocked);
 				$gnmstcustomer->LockingBy = $request->get('LockingBy', $gnmstcustomer->LockingBy);
-				$gnmstcustomer->LockingDate = $request->get('LockingDate', $gnmstcustomer->LockingDate);
 				$gnmstcustomer->Email = $request->get('Email', $gnmstcustomer->Email);
-				$gnmstcustomer->BirthDate = $request->get('BirthDate', $gnmstcustomer->BirthDate);
 				$gnmstcustomer->Spare01 = $request->get('Spare01', $gnmstcustomer->Spare01);
 				$gnmstcustomer->Spare02 = $request->get('Spare02', $gnmstcustomer->Spare02);
 				$gnmstcustomer->Spare03 = $request->get('Spare03', $gnmstcustomer->Spare03);
@@ -315,13 +309,9 @@
 				$gnmstcustomerbank->BankName = $request->get('BankName', $gnmstcustomerbank->BankName);
 				$gnmstcustomerbank->AccountName = $request->get('AccountName', $gnmstcustomerbank->AccountName);
 				$gnmstcustomerbank->AccountBank = $request->get('AccountBank', $gnmstcustomerbank->AccountBank);
-				$gnmstcustomerbank->CreatedBy = $request->get('CreatedBy', $gnmstcustomerbank->CreatedBy);
-				$gnmstcustomerbank->CreatedDate = $request->get('CreatedDate', $gnmstcustomerbank->CreatedDate);
 				$gnmstcustomerbank->LastUpdateBy = $request->get('LastUpdateBy', $gnmstcustomerbank->LastUpdateBy);
-				$gnmstcustomerbank->LastUpdateDate = $request->get('LastUpdateDate', $gnmstcustomerbank->LastUpdateDate);
 				$gnmstcustomerbank->isLocked = $request->get('isLocked', $gnmstcustomerbank->isLocked);
 				$gnmstcustomerbank->LockingBy = $request->get('LockingBy', $gnmstcustomerbank->LockingBy);
-				$gnmstcustomerbank->LockingDate = $request->get('LockingDate', $gnmstcustomerbank->LockingDate);
 				$gnmstcustomerbank->save();
 				
 				$gnmstcustomerprofitcenter = Gnmstcustomerprofitcenter::find($request->CustomerCode);
@@ -347,14 +337,8 @@
 				$gnmstcustomerprofitcenter->SalesType = $request->get('SalesType', $gnmstcustomerprofitcenter->SalesType);
 				$gnmstcustomerprofitcenter->Salesman = $request->get('Salesman', $gnmstcustomerprofitcenter->Salesman);
 				$gnmstcustomerprofitcenter->isBlackList = $request->get('isBlackList', $gnmstcustomerprofitcenter->isBlackList);
-				$gnmstcustomerprofitcenter->CreatedBy = $request->get('CreatedBy', $gnmstcustomerprofitcenter->CreatedBy);
-				$gnmstcustomerprofitcenter->CreatedDate = $request->get('CreatedDate', $gnmstcustomerprofitcenter->CreatedDate);
 				$gnmstcustomerprofitcenter->LastUpdateBy = $request->get('LastUpdateBy', $gnmstcustomerprofitcenter->LastUpdateBy);
-				$gnmstcustomerprofitcenter->LastUpdateDate = $request->get('LastUpdateDate', $gnmstcustomerprofitcenter->LastUpdateDate);
-				$gnmstcustomerprofitcenter->isLocked = $request->get('isLocked', $gnmstcustomerprofitcenter->isLocked);
-				$gnmstcustomerprofitcenter->LockingBy = $request->get('LockingBy', $gnmstcustomerprofitcenter->LockingBy);
-				$gnmstcustomerprofitcenter->LockingDate = $request->get('LockingDate', $gnmstcustomerprofitcenter->LockingDate);
-				$gnmstcustomerbank->save();
+				$gnmstcustomerprofitcenter->save();
 
 				return response()->json([
                     'data' => 1
