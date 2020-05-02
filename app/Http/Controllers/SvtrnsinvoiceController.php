@@ -277,22 +277,25 @@ class SvtrnsinvoiceController extends Controller
             ], 200);
     	} else {
     		if ($request->Remarks == 'Part' Or $request->Remarks == 'Oil') {
-    			$svtrnsrvitem = Svtrnsrvitem::where('CompanyCode', $service->CompanyCode)
-    										->where('BranchCode', $service->BranchCode)
-    										->where('ProductType', $service->ProductType)
-    										->where('ServiceNo', $service->ServiceNo)
-    										->where('PartNo', $request->PartNo)
-    										->first();
-    			if ($svtrnsrvitem == null) {
-    				$partseq = Svtrnsrvitem::where('CompanyCode', $service->CompanyCode)
+    			$partseq = Svtrnsrvitem::where('CompanyCode', $service->CompanyCode)
     										->where('BranchCode', $service->BranchCode)
     										->where('ProductType', $service->ProductType)
     										->where('ServiceNo', $service->ServiceNo)
     										->where('PartNo', $request->PartNo)
     										->orderBy('PartSeq', 'DESC')
     										->first();
+    			
 
+    			$svtrnsrvitem = Svtrnsrvitem::where('CompanyCode', $service->CompanyCode)
+    										->where('BranchCode', $service->BranchCode)
+    										->where('ProductType', $service->ProductType)
+    										->where('ServiceNo', $service->ServiceNo)
+    										->where('PartNo', $request->PartNo)
+    										->where('PartSeq', $partseq->PartSeq)
+    										->first();
+    			if ($svtrnsrvitem == null) {
     				$partseq_no = $partseq->PartSeq + 1;
+
 
     				Svtrnsrvitem::firstOrCreate([
 						'CompanyCode' => $request->CompanyCode,
