@@ -266,7 +266,7 @@ class SvtrnsinvoiceController extends Controller
     									->where('ServiceNo', $service->ServiceNo)
     									->where('OperationNo', $request->OperationNo)
     									->first();
-    			if ($svtrntask) {
+    			if ($svtrntask == null) {
     				Svtrnsrvtask::firstOrCreate([
 						'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => $branchcode,
