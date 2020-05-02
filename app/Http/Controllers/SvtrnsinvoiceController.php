@@ -207,7 +207,7 @@ class SvtrnsinvoiceController extends Controller
 					'LockingDate' => NULL,
 					'CreatedBy' => $request->CreatedBy,
 					'CreatedDate' => Carbon::now(),
-					'LastupdateBy' => $request->LastupdateBy,
+					'LastupdateBy' => $request->LastUpdateBy,
 					'LastupdateDate' => Carbon::now(),
 					'InvDocNo' => $request->InvDocNo,
     			]);
