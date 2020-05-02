@@ -34,5 +34,6 @@ class Svtrnsrvtask extends Model
 		'LastupdateBy',
 		'LastupdateDate', 
 		'DiscPct',
+		'AmountDiscount',
     ];
 }

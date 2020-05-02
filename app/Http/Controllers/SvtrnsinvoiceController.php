@@ -175,6 +175,7 @@ class SvtrnsinvoiceController extends Controller
 						'LastupdateDate' => Carbon::now(),
 						'DiscPct' => $disc,
 						'MechanicID' => $request->MechanicID,
+						'AmountDiscount', => $request->AmountDiscount,
     				]);
     			} else {
     				Svtrnsrvtask::firstOrCreate([
@@ -200,8 +201,11 @@ class SvtrnsinvoiceController extends Controller
 						'LastupdateBy' => $request->LastupdateBy,
 						'LastupdateDate' => Carbon::now(),
 						'DiscPct' => $disc,
+						'AmountDiscount', => $request->AmountDiscount,
     				]);
     			}
+
+    			$this->updateHeader($request->InvDocNo, $servno, $request->Remarks);
 
     		}
 
@@ -244,6 +248,7 @@ class SvtrnsinvoiceController extends Controller
 						'LastupdateDate' => Carbon::now(),
 						'DiscPct' => $disc,
 						'MechanicID' => $request->MechanicID,
+						'AmountDiscount', => $request->AmountDiscount,
 					]);
     			} else {
     				$partseq = $svtrnsrvitem->PartSeq + 1;
@@ -272,6 +277,7 @@ class SvtrnsinvoiceController extends Controller
 						'LastupdateDate' => Carbon::now(),
 						'DiscPct' => $disc,
 						'MechanicID' => $request->MechanicID,
+						'AmountDiscount', => $request->AmountDiscount,
 					]);
     			}
 					
@@ -299,12 +305,105 @@ class SvtrnsinvoiceController extends Controller
 					'LastupdateBy' => $request->LastupdateBy,
 					'LastupdateDate' => Carbon::now(),
 					'DiscPct' => $disc,
+					'AmountDiscount', => $request->AmountDiscount,
 				]);
 			}
+
+			$this->updateHeader($request->InvDocNo, $service->ServiceNo, $request->Remarks);
 
 			return response()->json([
                 'data' => 1
             ], 200);
     	}
+    }
+
+    public function updateHeader($invno, $serno, $remaks)
+    {
+    	$labordiscpct = 0;
+    	$partdispct = 0;
+
+
+    	$laborgrossamt = 0;
+    	$partsgrossamt = 0;
+
+    	$labordiscamt = 0;
+    	$partsdiscamt = 0;
+
+    	$materialdiscpct = 0;
+    	$labordppamt = 0;
+    	$partsdppamt = 0;
+
+    	$totaldppamount = 0;
+
+    	$totalppnamount = 0;
+    	$totalsrvamount = 0;
+
+
+    	if ($remaks == 'Part' Or $remaks == 'Oil') {
+	    	$detail = Svtrnsrvitem::where('ServiceNo', $serno)->get();
+	    	foreach ($detail as $row) {
+		    	$partdispct = $partdispct + $detail->DiscPct;
+		    	$sum = $detail->RetailPrice * $detail->SupplyQty;
+
+		    	$partsgrossamt = $partsgrossamt + $sum;
+
+		    	
+
+		    	$partsdiscamt = $partsdiscamt + $detail->AmountDiscount;
+
+		    	$materialdiscpct = 0;
+
+		    	$partsdppamt1 = $sum - $AmountDiscount;
+		    	$partsdppamt = $partsdppamt + $partsdppamt1;
+	    	}
+	    } else {
+	    	$detail = Svtrnsrvtask::where('ServiceNo', $serno)->get();
+	    	foreach ($detail as $row) {
+	    		$labordiscpct = $labordiscpct + $detail->DiscPct;
+	    		$sum = $detail->OperationHour * $detail->OperationCost;
+
+	    		$laborgrossamt = $laborgrossamt + $sum;
+
+	    		$labordiscamt = $labordiscamt + $detail->AmountDiscount;
+
+	    		$labordppamt1 = $sum - $detail->AmountDiscount;
+	    		$labordppamt = $labordppamt + $labordppamt1;
+	    	}
+	    }
+
+	    $totaldppamount = $labordppamt + $partsdppamt;
+    	$totalppnamount = 0.1 * $totaldppamount;
+    	$totalsrvamount = $totaldppamount + $totalppnamount;
+
+    	Svtrnservice::where('InvDocNo', $invno)
+    				->update([
+    					'LaborDiscPct' => $labordiscpct,
+						'PartDiscPct' => $partdispct,
+						'LaborGrossAmt' => $laborgrossamt,
+						'PartsGrossAmt' => $partsgrossamt,
+						'LaborDiscAmt' => $labordiscamt,
+						'PartsDiscAmt' => $partsdiscamt,
+						'LaborDppAmt' => $labordppamt,
+						'PartsDppAmt' => $partsdppamt,
+						'TotalDPPAmount' => $totaldppamount,
+						'TotalPpnAmount' => $totalppnamount,
+						'TotalSrvAmount' => $totalsrvamount,
+    				]);
+
+    	// docno arbegin
+		// $invnoEx = explode("/", $invodd);
+		// $docFirst = substr($invnoEx[0], 1, 3);
+		// $docNoArbegin = $docFirst .'/'. $invnoEx[3].'/'.$invnoEx[2].$invnoEx[1].$invnoEx[4];
+
+		// Arbeginbalancehdr::where('DocNo', $docNoArbegin)
+		// 			->update([
+		// 				'Amount' => $totfinal,
+		// 			]);
+
+		// Arbeginbalancedtl::where('DocNo', $docNoArbegin)
+		// 			->update([
+		// 				'Amount' => $totfinal
+		// 			]);
+
     }
 }

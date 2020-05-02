@@ -35,5 +35,6 @@ class Svtrnsrvitem extends Model
 		'LastupdateDate',
 		'DiscPct', 
 		'MechanicID',
+		'AmountDiscount',
     ];
 }
