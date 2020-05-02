@@ -284,19 +284,20 @@ class SvtrnsinvoiceController extends Controller
     										->where('PartNo', $request->PartNo)
     										->orderBy('PartSeq', 'DESC')
     										->first();
-    			
+    			if ($partseq == null) {
+    				$partseq_no = 1;
+    			} else {
+    				$partseq_no = $partseq->PartSeq + 1;
+    			}
 
     			$svtrnsrvitem = Svtrnsrvitem::where('CompanyCode', $service->CompanyCode)
     										->where('BranchCode', $service->BranchCode)
     										->where('ProductType', $service->ProductType)
     										->where('ServiceNo', $service->ServiceNo)
     										->where('PartNo', $request->PartNo)
-    										->where('PartSeq', $partseq->PartSeq)
+    										->where('PartSeq', $partseq_no)
     										->first();
     			if ($svtrnsrvitem == null) {
-    				$partseq_no = $partseq->PartSeq + 1;
-
-
     				Svtrnsrvitem::firstOrCreate([
 						'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => $branchcode,
