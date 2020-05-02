@@ -282,8 +282,7 @@ class SvtrnsinvoiceController extends Controller
     										->where('ProductType', $service->ProductType)
     										->where('ServiceNo', $service->ServiceNo)
     										->where('PartNo', $request->PartNo)
-    										->orderBy('PartSeq', 'DESC')
-    										->first();
+    										->max('PartSeq');
     			
 
     			$svtrnsrvitem = Svtrnsrvitem::where('CompanyCode', $service->CompanyCode)
@@ -291,10 +290,10 @@ class SvtrnsinvoiceController extends Controller
     										->where('ProductType', $service->ProductType)
     										->where('ServiceNo', $service->ServiceNo)
     										->where('PartNo', $request->PartNo)
-    										->where('PartSeq', $partseq->PartSeq)
+    										->where('PartSeq', $partseq)
     										->first();
     			if ($svtrnsrvitem == null) {
-    				$partseq_no = $partseq->PartSeq + 1;
+    				$partseq_no = $partseq + 1;
 
 
     				Svtrnsrvitem::firstOrCreate([
