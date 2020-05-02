@@ -10,6 +10,7 @@ use App\Svtrnservice;
 use App\Svtrnsrvitem;
 use App\Svtrnsrvtask;
 use App\Svtrninvoice;
+use App\Svtrninvitem;
 
 use Carbon\Carbon;
 
@@ -241,6 +242,23 @@ class SvtrnsinvoiceController extends Controller
 						'MechanicID' => $request->MechanicID,
 						'AmountDiscount' => $request->AmountDiscount,
     				]);
+
+    				Svtrninvitem::create([
+    					'CompanyCode' => $request->CompanyCode,
+						'BranchCode' => $branchcode,
+						'ProductType' => $request->ProductType,
+						'InvoiceNo' => $inc,
+						'PartNo' => $request->PartNo,
+						'MovingCode' => $request->MovingCode,
+						'ABCClass' => $request->ABCClass,
+						'SupplyQty' => $request->SupplyQty,
+						'ReturnQty' => $request->ReturnQty,
+						'CostPrice' => $request->CostPrice,
+						'RetailPrice' => $request->RetailPrice,
+						'TypeOfGoods' => $request->TypeOfGoods,
+						'DiscPct' => $disc,
+						'MechanicID' => $request->MechanicID,
+    				]);
     			} else {
     				Svtrnsrvtask::firstOrCreate([
     					'CompanyCode' => $request->CompanyCode,
@@ -327,6 +345,23 @@ class SvtrnsinvoiceController extends Controller
 						'MechanicID' => $request->MechanicID,
 						'AmountDiscount' => $request->AmountDiscount,
 					]);
+
+					Svtrninvitem::create([
+    					'CompanyCode' => $request->CompanyCode,
+						'BranchCode' => $branchcode,
+						'ProductType' => $request->ProductType,
+						'InvoiceNo' => $service->InvoiceNo,
+						'PartNo' => $request->PartNo,
+						'MovingCode' => $request->MovingCode,
+						'ABCClass' => $request->ABCClass,
+						'SupplyQty' => $request->SupplyQty,
+						'ReturnQty' => $request->ReturnQty,
+						'CostPrice' => $request->CostPrice,
+						'RetailPrice' => $request->RetailPrice,
+						'TypeOfGoods' => $request->TypeOfGoods,
+						'DiscPct' => $disc,
+						'MechanicID' => $request->MechanicID,
+    				]);
     			} 
 					
 			} else {
