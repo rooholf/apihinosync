@@ -153,7 +153,7 @@ class SvtrnsinvoiceController extends Controller
     		]);
 
     		if ($svtrnservice) {
-		        $test = Svtrninvoice::firstOrCreate([
+		        Svtrninvoice::create([
     				'CompanyCode' => $request->CompanyCode,
 					'BranchCode' => $branchcode,
 					'ProductType' => $request->ProductType,
@@ -211,8 +211,6 @@ class SvtrnsinvoiceController extends Controller
 					'LastupdateDate' => Carbon::now(),
 					'InvDocNo' => $request->InvDocNo,
     			]);
-
-    			dd($test);
 	    			
 
     			if ($request->Remarks == 'Part' Or $request->Remarks == 'Oil') {
