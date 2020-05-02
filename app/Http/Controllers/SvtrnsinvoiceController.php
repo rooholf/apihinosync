@@ -209,7 +209,7 @@ class SvtrnsinvoiceController extends Controller
 					'CreatedDate' => Carbon::now(),
 					'LastupdateBy' => $request->LastUpdateBy,
 					'LastupdateDate' => Carbon::now(),
-					'InvDocNo' => $request->InvDocNo,
+					'InvDocNo' => '',
     			]);
 
     			if ($request->Remarks == 'Part' Or $request->Remarks == 'Oil') {
