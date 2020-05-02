@@ -24,5 +24,6 @@ class Svtrninvtask extends Model
         'IsSubCon', 
         'SharingTask',
         'DiscPct',
+        'CreatedBy',
     ];
 }
