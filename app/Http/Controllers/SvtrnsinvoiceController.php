@@ -213,7 +213,7 @@ class SvtrnsinvoiceController extends Controller
 						'InvDocNo' => $request->InvDocNo,
 	    			]);
 			    } catch (Throwable $e) {
-			        report($e);
+			        echo $e;
 
 			        return false;
 			    }
