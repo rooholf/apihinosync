@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Svtrninvitem extends Model
 {
-    protected $table = 'svTrnSrvItem';
-    protected $primaryKey = ['CompanyCode', 'BranchCode', 'ProductType', 'ServiceNo', 'PartNo', 'PartSeq'];
+    protected $table = 'svTrnInvItem';
+    protected $primaryKey = ['CompanyCode', 'BranchCode', 'ProductType', 'InvoiceNo', 'PartNo'];
     public $incrementing = false;
     public $timestamps = false;
 
@@ -15,25 +15,16 @@ class Svtrninvitem extends Model
         'CompanyCode', 
         'BranchCode', 
         'ProductType', 
-        'ServiceNo', 
+        'InvoiceNo',
         'PartNo', 
-        'PartSeq', 
-        'DemandQty', 
+        'MovingCode', 
+        'ABCClass', 
         'SupplyQty', 
         'ReturnQty', 
-        'CostPrice', 
+        'CostPrice',
         'RetailPrice', 
         'TypeOfGoods', 
-        'BillType', 
-        'SupplySlipNo', 
-        'SupplySlipDate', 
-        'SSReturnNo', 
-        'SSReturnDate', 
-        'CreatedBy', 
-        'CreatedDate', 
-        'LastupdateBy', 
-        'LastupdateDate', 
-        'DiscPct', 
+        'DiscPct',
         'MechanicID',
     ];
 }
