@@ -351,7 +351,7 @@ class SvtrnsinvoiceController extends Controller
 
 		    	$partsdiscamt = $partsdiscamt + $row->AmountDiscount;
 
-		    	$partsdppamt1 = $sum - $AmountDiscount;
+		    	$partsdppamt1 = $sum - $row->AmountDiscount;
 		    	$partsdppamt = $partsdppamt + $partsdppamt1;
 	    	}
 	    } else {
