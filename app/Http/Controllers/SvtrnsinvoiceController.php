@@ -13,6 +13,7 @@ use App\Svtrninvoice;
 use App\Svtrninvitem;
 use App\Svtrninvitemdtl;
 use App\Svtrninvtask;
+use App\Svtrnfakturpajak;
 
 use Carbon\Carbon;
 
@@ -213,6 +214,45 @@ class SvtrnsinvoiceController extends Controller
 					'LastupdateBy' => $request->LastUpdateBy,
 					'LastupdateDate' => Carbon::now(),
 					'InvDocNo' => $request->InvDocNo,
+    			]);
+
+    			Svtrnfakturpajak::create([
+    				'CompanyCode' => $request->CompanyCode,
+					'BranchCode' => $branchcode,
+					'FPJNo' => $fps,
+					'FPJDate' => $invdate,
+					'FPJGovNo' => $request->FPJGovNo,
+					'FPJCentralNo' => '',
+					'FPJCentralDate' => $request->FPJCentralDate,
+					'NoOfInvoice' => $request->NoOfInvoice,
+					'CustomerCode' => $request->CustomerCode,
+					'CustomerCodeBill' => $request->CustomerCodeBill,
+					'CustomerName' => $request->CustomerName,
+					'Address1' => $request->Address1,
+					'Address2' => $request->Address2,
+					'Address3' => $request->Address3,
+					'Address4' => '',
+					'PhoneNo' => $request->PhoneNo,
+					'HPNo' => $request->HPNo,
+					'IsPKP' => $request->IsPKP,
+					'SKPNo' => $request->SKPNo,
+					'SKPDate' => $request->SKPDate,
+					'NPWPNo' => $request->NPWPNo,
+					'NPWPDate' => $request->NPWPDate,
+					'TOPCode' => $request->TOPCode,
+					'TOPDays' => $request->TOPDays,
+					'DueDate' => $duedate,
+					'SignedDate' => $invdate,
+					'PrintSeq' => $request->PrintSeq,
+					'GenerateStatus' => $request->GenerateStatus,
+					'IsLocked' => $request->IsLocked,
+					'LockingBy' => NULL,
+					'LockingDate' => $request->LockingDate,
+					'CreatedBy' => $request->CreatedBy,
+					'CreatedDate' => Carbon::now(),
+					'LastupdateBy' => $request->LastUpdateBy,
+					'LastupdateDate' => Carbon::now(),
+
     			]);
 	    			
 
