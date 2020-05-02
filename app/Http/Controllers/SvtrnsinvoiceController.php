@@ -198,7 +198,7 @@ class SvtrnsinvoiceController extends Controller
 					'TotalPphAmt' => 0,
 					'TotalPpnAmt' => 0,
 					'TotalSrvAmt' => 0,
-					'Remarks' => $request->Remarks,
+					'Remarks' => '',
 					'PrintSeq' => $request->PrintSeq,
 					'PostingFlag' => $request->PostingFlag,
 					'PostingDate' => NULL,
@@ -215,7 +215,7 @@ class SvtrnsinvoiceController extends Controller
 
     			if ($request->Remarks == 'Part' Or $request->Remarks == 'Oil') {
 
-    				Svtrnsrvitem::firstOrCreate([
+    				Svtrnsrvitem::create([
     					'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => $branchcode,
 						'ProductType' => $request->ProductType,
