@@ -67,5 +67,6 @@ class Svtrninvoice extends Model
         'CreatedDate', 
         'LastupdateBy', 
         'LastupdateDate',
+        'InvDocNo',
     ];
 }

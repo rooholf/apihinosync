@@ -265,6 +265,7 @@ class SvtrnsinvoiceController extends Controller
 					'CreatedDate' => Carbon::now(),
 					'LastupdateBy' => $request->LastupdateBy,
 					'LastupdateDate' => Carbon::now(),
+					'InvDocNo' => $request->InvDocNo,
 
     			]);
 
