@@ -26,5 +26,6 @@ class Svtrninvitem extends Model
         'TypeOfGoods', 
         'DiscPct',
         'MechanicID',
+        'CreatedBy',
     ];
 }

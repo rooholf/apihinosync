@@ -260,6 +260,7 @@ class SvtrnsinvoiceController extends Controller
 						'TypeOfGoods' => $request->TypeOfGoods,
 						'DiscPct' => $disc,
 						'MechanicID' => $request->MechanicID,
+						'CreatedBy' => $request->CreatedBy,
     				]);
 
     				Svtrninvitemdtl::create([
@@ -391,6 +392,7 @@ class SvtrnsinvoiceController extends Controller
 						'TypeOfGoods' => $request->TypeOfGoods,
 						'DiscPct' => $disc,
 						'MechanicID' => $request->MechanicID,
+						'CreatedBy' => $request->CreatedBy,
     				]);
 
     				Svtrninvitemdtl::create([
