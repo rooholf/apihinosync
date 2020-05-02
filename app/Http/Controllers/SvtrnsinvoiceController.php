@@ -219,10 +219,17 @@ class SvtrnsinvoiceController extends Controller
     										->where('ProductType', $service->ProductType)
     										->where('ServiceNo', $service->ServiceNo)
     										->where('PartNo', $request->PartNo)
-    										->orderBy('PartSeq', 'DESC')
     										->first();
     			if ($svtrnsrvitem == null) {
-    				$sss = $this->noUrut('SSS', $branchcode, $request->CompanyCode);
+    				$partseq = Svtrnsrvitem::where('CompanyCode', $service->CompanyCode)
+    										->where('BranchCode', $service->BranchCode)
+    										->where('ProductType', $service->ProductType)
+    										->where('ServiceNo', $service->ServiceNo)
+    										->where('PartNo', $request->PartNo)
+    										->orderBy('PartSeq', 'DESC')
+    										->first();
+
+    				$partseq_no = $partseq->PartSeq + 1;
 
     				Svtrnsrvitem::firstOrCreate([
 						'CompanyCode' => $request->CompanyCode,
@@ -230,36 +237,7 @@ class SvtrnsinvoiceController extends Controller
 						'ProductType' => $request->ProductType,
 						'ServiceNo' => $service->ServiceNo,
 						'PartNo' => $request->PartNo,
-						'PartSeq' => 1,
-						'DemandQty' => $request->DemandQty,
-						'SupplyQty' => $request->SupplyQty,
-						'ReturnQty' => $request->ReturnQty,
-						'CostPrice' => $request->CostPrice,
-						'RetailPrice' => $request->RetailPrice,
-						'TypeOfGoods' => $request->TypeOfGoods,
-						'BillType' => $request->BillType,
-						'SupplySlipNo' => $sss,
-						'SupplySlipDate' => $invdate,
-						'SSReturnNo' => NULL,
-						'SSReturnDate' => $invdate,
-						'CreatedBy' => $request->CreatedBy,
-						'CreatedDate' => Carbon::now(),
-						'LastupdateBy' => $request->LastupdateBy,
-						'LastupdateDate' => Carbon::now(),
-						'DiscPct' => $disc,
-						'MechanicID' => $request->MechanicID,
-						'AmountDiscount' => $request->AmountDiscount,
-					]);
-    			} else {
-    				$partseq = $svtrnsrvitem->PartSeq + 1;
-
-    				Svtrnsrvitem::firstOrCreate([
-						'CompanyCode' => $request->CompanyCode,
-						'BranchCode' => $branchcode,
-						'ProductType' => $request->ProductType,
-						'ServiceNo' => $service->ServiceNo,
-						'PartNo' => $request->PartNo,
-						'PartSeq' => $partseq,
+						'PartSeq' => $partseq_no,
 						'DemandQty' => $request->DemandQty,
 						'SupplyQty' => $request->SupplyQty,
 						'ReturnQty' => $request->ReturnQty,
@@ -279,34 +257,44 @@ class SvtrnsinvoiceController extends Controller
 						'MechanicID' => $request->MechanicID,
 						'AmountDiscount' => $request->AmountDiscount,
 					]);
-    			}
+    			} 
 					
 			} else {
-				Svtrnsrvtask::firstOrCreate([
-					'CompanyCode' => $request->CompanyCode,
-					'BranchCode' => $branchcode,
-					'ProductType' => $request->ProductType,
-					'ServiceNo' => $service->ServiceNo,
-					'OperationNo' => $request->OperationNo,
-					'OperationHour' => $request->OperationHour,
-					'OperationCost' => $request->OperationCost,
-					'IsSubCon' => $request->IsSubCon,
-					'SubConPrice' => $request->SubConPrice,
-					'PONo' => '',
-					'ClaimHour' => $request->ClaimHour,
-					'TypeOfGoods' => $request->TypeOfGoods,
-					'BillType' => $request->BillType,
-					'SharingTask' => $request->SharingTask,
-					'TaskStatus' => $request->TaskStatus,
-					'StartService' => $invdate,
-					'FinishService' => $invdate,
-					'CreatedBy' => $request->CreatedBy,
-					'CreatedDate' => Carbon::now(),
-					'LastupdateBy' => $request->LastupdateBy,
-					'LastupdateDate' => Carbon::now(),
-					'DiscPct' => $disc,
-					'AmountDiscount' => $request->AmountDiscount,
-				]);
+				$svtrntask = Svtrnsrvtask::where('CompanyCode', $service->CompanyCode)
+										->where('BranchCode', $service->BranchCode)
+										->where('ProductType', $service->ProductType)
+    									->where('ServiceNo', $service->ServiceNo)
+    									->where('OperationNo', $request->OperationNo)
+    									->first();
+    			if ($svtrntask) {
+    				Svtrnsrvtask::firstOrCreate([
+						'CompanyCode' => $request->CompanyCode,
+						'BranchCode' => $branchcode,
+						'ProductType' => $request->ProductType,
+						'ServiceNo' => $service->ServiceNo,
+						'OperationNo' => $request->OperationNo,
+						'OperationHour' => $request->OperationHour,
+						'OperationCost' => $request->OperationCost,
+						'IsSubCon' => $request->IsSubCon,
+						'SubConPrice' => $request->SubConPrice,
+						'PONo' => '',
+						'ClaimHour' => $request->ClaimHour,
+						'TypeOfGoods' => $request->TypeOfGoods,
+						'BillType' => $request->BillType,
+						'SharingTask' => $request->SharingTask,
+						'TaskStatus' => $request->TaskStatus,
+						'StartService' => $invdate,
+						'FinishService' => $invdate,
+						'CreatedBy' => $request->CreatedBy,
+						'CreatedDate' => Carbon::now(),
+						'LastupdateBy' => $request->LastupdateBy,
+						'LastupdateDate' => Carbon::now(),
+						'DiscPct' => $disc,
+						'AmountDiscount' => $request->AmountDiscount,
+					]);
+    			}
+
+					
 			}
 
 			$this->updateHeader($request->InvDocNo, $service->ServiceNo, $request->Remarks);
