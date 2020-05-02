@@ -321,20 +321,14 @@ class SvtrnsinvoiceController extends Controller
     {
     	$labordiscpct = 0;
     	$partdispct = 0;
-
-
     	$laborgrossamt = 0;
     	$partsgrossamt = 0;
-
     	$labordiscamt = 0;
     	$partsdiscamt = 0;
-
     	$materialdiscpct = 0;
     	$labordppamt = 0;
     	$partsdppamt = 0;
-
     	$totaldppamount = 0;
-
     	$totalppnamount = 0;
     	$totalsrvamount = 0;
 
@@ -355,9 +349,7 @@ class SvtrnsinvoiceController extends Controller
 		    	$partsdppamt = $partsdppamt + $partsdppamt1;
 	    	}
 
-	    	$totaldppamount = $labordppamt + $partsdppamt;
-	    	$totalppnamount = 0.1 * $totaldppamount;
-	    	$totalsrvamount = $totaldppamount + $totalppnamount;
+	    	
 
 	    	Svtrnservice::where('InvDocNo', $invno)
 	    				->update([
@@ -365,9 +357,6 @@ class SvtrnsinvoiceController extends Controller
 							'PartsGrossAmt' => $partsgrossamt,
 							'PartsDiscAmt' => $partsdiscamt,
 							'PartsDppAmt' => $partsdppamt,
-							'TotalDPPAmount' => $totaldppamount,
-							'TotalPpnAmount' => $totalppnamount,
-							'TotalSrvAmount' => $totalsrvamount,
 	    				]);
 	    } else {
 	    	$detail = Svtrnsrvtask::where('ServiceNo', $serno)->get();
@@ -383,21 +372,33 @@ class SvtrnsinvoiceController extends Controller
 	    		$labordppamt = $labordppamt + $labordppamt1;
 	    	}
 
-	    	$totaldppamount = $labordppamt + $partsdppamt;
-	    	$totalppnamount = 0.1 * $totaldppamount;
-	    	$totalsrvamount = $totaldppamount + $totalppnamount;
-
 	    	Svtrnservice::where('InvDocNo', $invno)
 	    				->update([
 	    					'LaborDiscPct' => $labordiscpct,
 							'LaborGrossAmt' => $laborgrossamt,
 							'LaborDiscAmt' => $labordiscamt,
 							'LaborDppAmt' => $labordppamt,
-							'TotalDPPAmount' => $totaldppamount,
-							'TotalPpnAmount' => $totalppnamount,
-							'TotalSrvAmount' => $totalsrvamount,
 	    				]);
 	    }
+
+	    
+
+    	$service = Svtrnservice::where('InvDocNo', $invno)->first();
+    	if ($service) {
+    		// $totaldppamount = $labordppamt + $partsdppamt;
+    		$totaldppamount = $service->LaborDppAmt + $service->PartsDppAmt;
+	    	$totalppnamount = 0.1 * $totaldppamount;
+	    	$totalsrvamount = $totaldppamount + $totalppnamount;
+
+    		Svtrnservice::where('InvDocNo', $invno)
+				->update([
+					'TotalDPPAmount' => $totaldppamount,
+					'TotalPpnAmount' => $totalppnamount,
+					'TotalSrvAmount' => $totalsrvamount,
+				]);
+    	}
+
+		    
 
 		    
 
