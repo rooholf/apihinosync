@@ -175,7 +175,7 @@ class SvtrnsinvoiceController extends Controller
 						'LastupdateDate' => Carbon::now(),
 						'DiscPct' => $disc,
 						'MechanicID' => $request->MechanicID,
-						'AmountDiscount', => $request->AmountDiscount,
+						'AmountDiscount' => $request->AmountDiscount,
     				]);
     			} else {
     				Svtrnsrvtask::firstOrCreate([
@@ -201,7 +201,7 @@ class SvtrnsinvoiceController extends Controller
 						'LastupdateBy' => $request->LastupdateBy,
 						'LastupdateDate' => Carbon::now(),
 						'DiscPct' => $disc,
-						'AmountDiscount', => $request->AmountDiscount,
+						'AmountDiscount' => $request->AmountDiscount,
     				]);
     			}
 
@@ -248,7 +248,7 @@ class SvtrnsinvoiceController extends Controller
 						'LastupdateDate' => Carbon::now(),
 						'DiscPct' => $disc,
 						'MechanicID' => $request->MechanicID,
-						'AmountDiscount', => $request->AmountDiscount,
+						'AmountDiscount' => $request->AmountDiscount,
 					]);
     			} else {
     				$partseq = $svtrnsrvitem->PartSeq + 1;
@@ -277,7 +277,7 @@ class SvtrnsinvoiceController extends Controller
 						'LastupdateDate' => Carbon::now(),
 						'DiscPct' => $disc,
 						'MechanicID' => $request->MechanicID,
-						'AmountDiscount', => $request->AmountDiscount,
+						'AmountDiscount' => $request->AmountDiscount,
 					]);
     			}
 					
@@ -305,7 +305,7 @@ class SvtrnsinvoiceController extends Controller
 					'LastupdateBy' => $request->LastupdateBy,
 					'LastupdateDate' => Carbon::now(),
 					'DiscPct' => $disc,
-					'AmountDiscount', => $request->AmountDiscount,
+					'AmountDiscount' => $request->AmountDiscount,
 				]);
 			}
 
