@@ -457,6 +457,7 @@ class SvtrnsinvoiceController extends Controller
 						'IsSubCon' => $request->IsSubCon,
 						'SharingTask' => $request->SharingTask,
 						'DiscPct' => $disc,
+						'CreatedBy' => $request->CreatedBy,
     				]);
     			}
 
