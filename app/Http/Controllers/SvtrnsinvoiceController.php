@@ -466,9 +466,9 @@ class SvtrnsinvoiceController extends Controller
 
 			Svtrninvoice::where('InvDocNo', $invno)
 				->update([
-					'TotalDPPAmount' => $totaldppamount,
-					'TotalPpnAmount' => $totalppnamount,
-					'TotalSrvAmount' => $totalsrvamount,
+					'TotalDPPAmt' => $totaldppamount,
+					'TotalPpnAmt' => $totalppnamount,
+					'TotalSrvAmt' => $totalsrvamount,
 				]);
     	}
 
