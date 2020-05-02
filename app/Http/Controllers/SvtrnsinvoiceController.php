@@ -354,6 +354,21 @@ class SvtrnsinvoiceController extends Controller
 		    	$partsdppamt1 = $sum - $row->AmountDiscount;
 		    	$partsdppamt = $partsdppamt + $partsdppamt1;
 	    	}
+
+	    	$totaldppamount = $labordppamt + $partsdppamt;
+	    	$totalppnamount = 0.1 * $totaldppamount;
+	    	$totalsrvamount = $totaldppamount + $totalppnamount;
+
+	    	Svtrnservice::where('InvDocNo', $invno)
+	    				->update([
+							'PartDiscPct' => $partdispct,
+							'PartsGrossAmt' => $partsgrossamt,
+							'PartsDiscAmt' => $partsdiscamt,
+							'PartsDppAmt' => $partsdppamt,
+							'TotalDPPAmount' => $totaldppamount,
+							'TotalPpnAmount' => $totalppnamount,
+							'TotalSrvAmount' => $totalsrvamount,
+	    				]);
 	    } else {
 	    	$detail = Svtrnsrvtask::where('ServiceNo', $serno)->get();
 	    	foreach ($detail as $row) {
@@ -367,26 +382,24 @@ class SvtrnsinvoiceController extends Controller
 	    		$labordppamt1 = $sum - $row->AmountDiscount;
 	    		$labordppamt = $labordppamt + $labordppamt1;
 	    	}
+
+	    	$totaldppamount = $labordppamt + $partsdppamt;
+	    	$totalppnamount = 0.1 * $totaldppamount;
+	    	$totalsrvamount = $totaldppamount + $totalppnamount;
+
+	    	Svtrnservice::where('InvDocNo', $invno)
+	    				->update([
+	    					'LaborDiscPct' => $labordiscpct,
+							'LaborGrossAmt' => $laborgrossamt,
+							'LaborDiscAmt' => $labordiscamt,
+							'LaborDppAmt' => $labordppamt,
+							'TotalDPPAmount' => $totaldppamount,
+							'TotalPpnAmount' => $totalppnamount,
+							'TotalSrvAmount' => $totalsrvamount,
+	    				]);
 	    }
 
-	    $totaldppamount = $labordppamt + $partsdppamt;
-    	$totalppnamount = 0.1 * $totaldppamount;
-    	$totalsrvamount = $totaldppamount + $totalppnamount;
-
-    	Svtrnservice::where('InvDocNo', $invno)
-    				->update([
-    					'LaborDiscPct' => $labordiscpct,
-						'PartDiscPct' => $partdispct,
-						'LaborGrossAmt' => $laborgrossamt,
-						'PartsGrossAmt' => $partsgrossamt,
-						'LaborDiscAmt' => $labordiscamt,
-						'PartsDiscAmt' => $partsdiscamt,
-						'LaborDppAmt' => $labordppamt,
-						'PartsDppAmt' => $partsdppamt,
-						'TotalDPPAmount' => $totaldppamount,
-						'TotalPpnAmount' => $totalppnamount,
-						'TotalSrvAmount' => $totalsrvamount,
-    				]);
+		    
 
     	// docno arbegin
 		// $invnoEx = explode("/", $invodd);
