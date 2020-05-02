@@ -9,6 +9,7 @@ use App\Gnmstdocument;
 use App\Svtrnservice;
 use App\Svtrnsrvitem;
 use App\Svtrnsrvtask;
+use App\Svtrninvoice;
 
 use Carbon\Carbon;
 
@@ -52,6 +53,8 @@ class SvtrnsinvoiceController extends Controller
         $invdateEx = explode(" ", $request->InvDate);
 
         $invdate = $invdateEx[0].' '.$invdateEx[1];
+        $duedateOdd = date("Y-m-d", strtotime("+1 month", strtotime($invdate)));
+        $duedate = $duedateOdd.' '.$invdateEx[1];
 
     	$service = Svtrnservice::where('CompanyCode', $request->CompanyCode)
     						->where('BranchCode', $branchcode)
@@ -75,6 +78,7 @@ class SvtrnsinvoiceController extends Controller
     		$spk = $this->noUrut('SPK', $branchcode, $request->CompanyCode);
     		$inc = $this->noUrut('INC', $branchcode, $request->CompanyCode);
     		$sss = $this->noUrut('SSS', $branchcode, $request->CompanyCode);
+    		$fps = $this->noUrut('FPS', $branchcode, $request->CompanyCode);
 
     		$no = Svtrnservice::orderBy('ServiceNo', 'DESC')->first();
     		$servno = $no->ServiceNo + 1;
@@ -204,6 +208,65 @@ class SvtrnsinvoiceController extends Controller
 						'AmountDiscount' => $request->AmountDiscount,
     				]);
     			}
+
+    			Svtrninvoice::firstOrCreate([
+    				'CompanyCode' => $request->CompanyCode,
+					'BranchCode' => $branchcode,
+					'ProductType' => $request->ProductType,
+					'InvoiceNo' => $inc,
+					'InvoiceDate' => $invdate,
+					'InvoiceStatus' => $request->InvoiceStatus,
+					'FPJNo' => $fps,
+					'FPJDate' => $invdate,
+					'JobOrderNo' => $spk,
+					'JobOrderDate' => $invdate,
+					'JobType' => $request->JobType,
+					'ServiceRequestDesc' => $desc,
+					'ChassisCode' => $chassisCode,
+					'ChassisNo' => $chassisNo,
+					'EngineCode' => $engineCode,
+					'EngineNo' => $engineNo,
+					'PoliceRegNo' => $request->PoliceRegNo,
+					'BasicModel' => $request->BasicModel,
+					'CustomerCode' => $request->CustomerCode,
+					'CustomerCodeBill' => $request->CustomerCodeBill,
+					'Odometer' => $request->Odometer,
+					'IsPKP' => $request->IsPKP,
+					'TOPCode' => $request->TOPCode,
+					'TOPDays' => $request->TOPDays,
+					'DueDate' => $duedate,
+					'SignedDate' => $invdate,
+					'LaborDiscPct' => 0,
+					'PartsDiscPct' => 0,
+					'MaterialDiscPct' => 0,
+					'PphPct' => $request->PphPct,
+					'PpnPct' => $request->PpnPct,
+					'LaborGrossAmt' => 0,
+					'PartsGrossAmt' => 0,
+					'MaterialGrossAmt' => 0,
+					'LaborDiscAmt' => 0,
+					'PartsDiscAmt' => 0,
+					'MaterialDiscAmt' => 0,
+					'LaborDppAmt' => 0,
+					'PartsDppAmt' => 0,
+					'MaterialDppAmt' => 0,
+					'TotalDppAmt' => 0,
+					'TotalPphAmt' => 0,
+					'TotalPpnAmt' => 0,
+					'TotalSrvAmt' => 0,
+					'Remarks' => $request->Remarks,
+					'PrintSeq' => $request->PrintSeq,
+					'PostingFlag' => $request->PostingFlag,
+					'PostingDate' => NULL,
+					'IsLocked' => $request->IsLocked,
+					'LockingBy' => $request->LockingBy,
+					'LockingDate' => NULL,
+					'CreatedBy' => $request->CreatedBy,
+					'CreatedDate' => Carbon::now(),
+					'LastupdateBy' => $request->LastupdateBy,
+					'LastupdateDate' => Carbon::now(),
+
+    			]);
 
     			$this->updateHeader($request->InvDocNo, $servno, $request->Remarks);
 
@@ -346,6 +409,14 @@ class SvtrnsinvoiceController extends Controller
 							'PartsDiscAmt' => $partsdiscamt,
 							'PartsDppAmt' => $partsdppamt,
 	    				]);
+
+	    	Svtrninvoice::where('InvDocNo', $invno)
+	    				->update([
+							'PartDiscPct' => $partdispct,
+							'PartsGrossAmt' => $partsgrossamt,
+							'PartsDiscAmt' => $partsdiscamt,
+							'PartsDppAmt' => $partsdppamt,
+	    				]);
 	    } else {
 	    	$detail = Svtrnsrvtask::where('ServiceNo', $serno)->get();
 	    	foreach ($detail as $row) {
@@ -367,6 +438,14 @@ class SvtrnsinvoiceController extends Controller
 							'LaborDiscAmt' => $labordiscamt,
 							'LaborDppAmt' => $labordppamt,
 	    				]);
+
+	    	Svtrninvoice::where('InvDocNo', $invno)
+	    				->update([
+	    					'LaborDiscPct' => $labordiscpct,
+							'LaborGrossAmt' => $laborgrossamt,
+							'LaborDiscAmt' => $labordiscamt,
+							'LaborDppAmt' => $labordppamt,
+	    				]);
 	    }
 
 	    
@@ -379,6 +458,13 @@ class SvtrnsinvoiceController extends Controller
 	    	$totalsrvamount = $totaldppamount + $totalppnamount;
 
     		Svtrnservice::where('InvDocNo', $invno)
+				->update([
+					'TotalDPPAmount' => $totaldppamount,
+					'TotalPpnAmount' => $totalppnamount,
+					'TotalSrvAmount' => $totalsrvamount,
+				]);
+
+			Svtrninvoice::where('InvDocNo', $invno)
 				->update([
 					'TotalDPPAmount' => $totaldppamount,
 					'TotalPpnAmount' => $totalppnamount,
