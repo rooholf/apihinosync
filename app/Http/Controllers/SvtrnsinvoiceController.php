@@ -372,7 +372,7 @@ class SvtrnsinvoiceController extends Controller
         			'CompanyCode' => $request->CompanyCode,
 					'BranchCode' => $branchcode,
 					'DocNo' => $docNoArbegin,
-					'ProfitCenterCode' => '300',
+					'ProfitCenterCode' => '200',
 					'DocDate' => $invdate,
 					'CustomerCode' => $request->CustomerCode,
 					'AccountNo' => $accountNo,
