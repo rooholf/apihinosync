@@ -418,7 +418,7 @@ class SvtrnsinvoiceController extends Controller
 
 	    	Svtrninvoice::where('InvDocNo', $invno)
 	    				->update([
-							'PartDiscPct' => $partdispct,
+							'PartsDiscPct' => $partdispct,
 							'PartsGrossAmt' => $partsgrossamt,
 							'PartsDiscAmt' => $partsdiscamt,
 							'PartsDppAmt' => $partsdppamt,
