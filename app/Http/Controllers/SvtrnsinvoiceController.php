@@ -286,8 +286,10 @@ class SvtrnsinvoiceController extends Controller
     										->first();
     			if ($partseq == null) {
     				$partseq_no = 1;
+    				$sss = $this->noUrut('SSS', $branchcode, $request->CompanyCode);
     			} else {
     				$partseq_no = $partseq->PartSeq + 1;
+    				$sss = $partseq->SupplySlipNo;
     			}
 
     			$svtrnsrvitem = Svtrnsrvitem::where('CompanyCode', $service->CompanyCode)
@@ -312,7 +314,7 @@ class SvtrnsinvoiceController extends Controller
 						'RetailPrice' => $request->RetailPrice,
 						'TypeOfGoods' => $request->TypeOfGoods,
 						'BillType' => $request->BillType,
-						'SupplySlipNo' => $svtrnsrvitem->SupplySlipNo,
+						'SupplySlipNo' => $sss,
 						'SupplySlipDate' => $invdate,
 						'SSReturnNo' => NULL,
 						'SSReturnDate' => $invdate,
