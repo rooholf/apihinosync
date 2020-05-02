@@ -342,16 +342,14 @@ class SvtrnsinvoiceController extends Controller
     	if ($remaks == 'Part' Or $remaks == 'Oil') {
 	    	$detail = Svtrnsrvitem::where('ServiceNo', $serno)->get();
 	    	foreach ($detail as $row) {
-		    	$partdispct = $partdispct + $detail->DiscPct;
-		    	$sum = $detail->RetailPrice * $detail->SupplyQty;
+		    	$partdispct = $partdispct + $row->DiscPct;
+		    	$sum = $row->RetailPrice * $row->SupplyQty;
 
 		    	$partsgrossamt = $partsgrossamt + $sum;
 
 		    	
 
-		    	$partsdiscamt = $partsdiscamt + $detail->AmountDiscount;
-
-		    	$materialdiscpct = 0;
+		    	$partsdiscamt = $partsdiscamt + $row->AmountDiscount;
 
 		    	$partsdppamt1 = $sum - $AmountDiscount;
 		    	$partsdppamt = $partsdppamt + $partsdppamt1;
@@ -359,14 +357,14 @@ class SvtrnsinvoiceController extends Controller
 	    } else {
 	    	$detail = Svtrnsrvtask::where('ServiceNo', $serno)->get();
 	    	foreach ($detail as $row) {
-	    		$labordiscpct = $labordiscpct + $detail->DiscPct;
-	    		$sum = $detail->OperationHour * $detail->OperationCost;
+	    		$labordiscpct = $labordiscpct + $row->DiscPct;
+	    		$sum = $row->OperationHour * $row->OperationCost;
 
 	    		$laborgrossamt = $laborgrossamt + $sum;
 
-	    		$labordiscamt = $labordiscamt + $detail->AmountDiscount;
+	    		$labordiscamt = $labordiscamt + $row->AmountDiscount;
 
-	    		$labordppamt1 = $sum - $detail->AmountDiscount;
+	    		$labordppamt1 = $sum - $row->AmountDiscount;
 	    		$labordppamt = $labordppamt + $labordppamt1;
 	    	}
 	    }
