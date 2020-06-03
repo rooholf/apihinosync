@@ -70,8 +70,10 @@ class SptrnprcvhdrController extends Controller
         // nomor WRSNo
         if ($request->WhsCodeDesc == 'WH NORMAL - MUARA BUNGO') {
             $branchcode = '002';
+            $accountNo = '004.002.000.00000.300000.000.000';
         } else {
             $branchcode = '000';
+            $accountNo = '004.000.000.00000.300000.000.000';
         }
 
         // grno header
@@ -116,8 +118,8 @@ class SptrnprcvhdrController extends Controller
                 'SupplierCode'=> $request->SupplierCode,
                 'ReferenceNo'=> $docNoApbegin,
                 'ReferenceDate'=> $grdate,
-                'TotItem'=> $request->TotItem,
-                'TotWRSAmt'=> $request->TotWRSAmt,
+                'TotItem'=> 0,
+                'TotWRSAmt'=> 0,
                 'Status'=> $request->Status,
                 'PrintSeq'=> $request->PrintSeq,
                 'TypeOfGoods'=> $request->TypeOfGoods,
@@ -217,10 +219,10 @@ class SptrnprcvhdrController extends Controller
                         'ProfitCenterCode'=> '300',
                         'DocDate'=> $grdate,
                         'SupplierCode'=> $request->SupplierCode,
-                        'AccountNo'=> '004.000.000.00000.300000.000.000',
+                        'AccountNo'=> $accountNo,
                         'DueDate'=> $duedate,
                         'TOPCode'=> 'C30',
-                        'Amount'=> $request->TotWRSAmt,
+                        'Amount'=> 0,
                         'Status'=> '0',
                         'CreatedBy'=> $request->CreatedBy,
                         'CreatedDate'=> Carbon::now(),
@@ -240,9 +242,9 @@ class SptrnprcvhdrController extends Controller
                         'BranchCode'=> $branchcode,
                         'DocNo'=> $docNoApbegin,
                         'SeqNo'=> '1',
-                        'AccountNo'=> '004.000.000.00000.300000.000.000',
+                        'AccountNo'=> $accountNo,
                         'Description'=> $request->ReferenceNo,
-                        'Amount'=> $request->TotWRSAmt,
+                        'Amount'=> 0,
                         'Status'=> '0',
                         'CreatedBy'=> $request->CreatedBy,
                         'CreatedDate'=> Carbon::now(),

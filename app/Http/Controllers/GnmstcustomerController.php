@@ -261,7 +261,46 @@
                     'data' => 0
                 ], 200);
 			} else {
-				
+				$gnmstcustomer = Gnmstcustomer::find($request->CustomerCode);
+				$gnmstcustomer->CompanyCode = $request->get('CompanyCode', $gnmstcustomer->CompanyCode);
+				$gnmstcustomer->StandardCode = $request->get('StandardCode', $gnmstcustomer->StandardCode);
+				$gnmstcustomer->CustomerName = $request->get('CustomerName', $gnmstcustomer->CustomerName);
+				$gnmstcustomer->CustomerAbbrName = $request->get('CustomerAbbrName', $gnmstcustomer->CustomerAbbrName);
+				$gnmstcustomer->CustomerGovName = $request->get('CustomerGovName', $gnmstcustomer->CustomerGovName);
+				$gnmstcustomer->CustomerType = $request->get('CustomerType', $gnmstcustomer->CustomerType);
+				$gnmstcustomer->CategoryCode = $request->get('CategoryCode', $gnmstcustomer->CategoryCode);
+				$gnmstcustomer->Address1 = $request->get('Address1', $gnmstcustomer->Address1);
+				$gnmstcustomer->Address2 = $request->get('Address2', $gnmstcustomer->Address2);
+				$gnmstcustomer->Address3 = $request->get('Address3', $gnmstcustomer->Address3);
+				$gnmstcustomer->Address4 = $request->get('Address4', $gnmstcustomer->Address4);
+				$gnmstcustomer->PhoneNo = $request->get('PhoneNo', $gnmstcustomer->PhoneNo);
+				$gnmstcustomer->HPNo = $request->get('HPNo', $gnmstcustomer->HPNo);
+				$gnmstcustomer->FaxNo = $request->get('FaxNo', $gnmstcustomer->FaxNo);
+				$gnmstcustomer->isPKP = $request->get('isPKP', $gnmstcustomer->isPKP);
+				$gnmstcustomer->NPWPNo = $request->get('NPWPNo', $gnmstcustomer->NPWPNo);
+				$gnmstcustomer->SKPNo = $request->get('SKPNo', $gnmstcustomer->SKPNo);
+				$gnmstcustomer->ProvinceCode = $request->get('ProvinceCode', $gnmstcustomer->ProvinceCode);
+				$gnmstcustomer->AreaCode = $request->get('AreaCode', $gnmstcustomer->AreaCode);
+				$gnmstcustomer->CityCode = $request->get('CityCode', $gnmstcustomer->CityCode);
+				$gnmstcustomer->ZipNo = $request->get('ZipNo', $gnmstcustomer->ZipNo);
+				$gnmstcustomer->Status = $request->get('Status', $gnmstcustomer->Status);
+				$gnmstcustomer->LastUpdateBy = $request->get('LastUpdateBy', $gnmstcustomer->LastUpdateBy);
+				$gnmstcustomer->isLocked = $request->get('isLocked', $gnmstcustomer->isLocked);
+				$gnmstcustomer->LockingBy = $request->get('LockingBy', $gnmstcustomer->LockingBy);
+				$gnmstcustomer->Email = $request->get('Email', $gnmstcustomer->Email);
+				$gnmstcustomer->Spare01 = $request->get('Spare01', $gnmstcustomer->Spare01);
+				$gnmstcustomer->Spare02 = $request->get('Spare02', $gnmstcustomer->Spare02);
+				$gnmstcustomer->Spare03 = $request->get('Spare03', $gnmstcustomer->Spare03);
+				$gnmstcustomer->Spare04 = $request->get('Spare04', $gnmstcustomer->Spare04);
+				$gnmstcustomer->Spare05 = $request->get('Spare05', $gnmstcustomer->Spare05);
+				$gnmstcustomer->Gender = $request->get('Gender', $gnmstcustomer->Gender);
+				$gnmstcustomer->OfficePhoneNo = $request->get('OfficePhoneNo', $gnmstcustomer->OfficePhoneNo);
+				$gnmstcustomer->KelurahanDesa = $request->get('KelurahanDesa', $gnmstcustomer->KelurahanDesa);        
+				$gnmstcustomer->KecamatanDistrik = $request->get('KecamatanDistrik', $gnmstcustomer->KecamatanDistrik);
+				$gnmstcustomer->KotaKabupaten = $request->get('KotaKabupaten', $gnmstcustomer->KotaKabupaten);
+				$gnmstcustomer->IbuKota = $request->get('IbuKota', $gnmstcustomer->IbuKota);
+				$gnmstcustomer->CustomerStatus = $request->get('CustomerStatus', $gnmstcustomer->CustomerStatus);
+				$gnmstcustomer->save();
 
 				return response()->json([
                     'data' => 1

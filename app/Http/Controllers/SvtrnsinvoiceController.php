@@ -637,10 +637,22 @@ class SvtrnsinvoiceController extends Controller
 
     	$service = Svtrnservice::where('InvDocNo', $invno)->first();
     	if ($service) {
+    		// docno arbegin
+			$invnoEx = explode("/", $invno);
+			$docFirst = substr($invnoEx[0], 1, 3);
+			$docNoArbegin = $docFirst .'/'. $invnoEx[3].'/'.$invnoEx[2].$invnoEx[1].$invnoEx[4];
+
     		// $totaldppamount = $labordppamt + $partsdppamt;
-    		$totaldppamount = $service->LaborDppAmt + $service->PartsDppAmt;
-	    	$totalppnamount = 0.1 * $totaldppamount;
-	    	$totalsrvamount = $totaldppamount + $totalppnamount;
+    		if ($docFirst == 'SIT') {
+    			$totaldppamount = $service->LaborDppAmt + $service->PartsDppAmt;
+		    	$totalppnamount = 0;
+		    	$totalsrvamount = $totaldppamount + $totalppnamount;
+    		} else {
+    			$totaldppamount = $service->LaborDppAmt + $service->PartsDppAmt;
+		    	$totalppnamount = 0.1 * $totaldppamount;
+		    	$totalsrvamount = $totaldppamount + $totalppnamount;
+    		}
+    		
 
     		Svtrnservice::where('InvDocNo', $invno)
 				->update([
@@ -656,10 +668,7 @@ class SvtrnsinvoiceController extends Controller
 					'TotalSrvAmt' => $totalsrvamount,
 				]);
 
-			// docno arbegin
-			$invnoEx = explode("/", $invno);
-			$docFirst = substr($invnoEx[0], 1, 3);
-			$docNoArbegin = $docFirst .'/'. $invnoEx[3].'/'.$invnoEx[2].$invnoEx[1].$invnoEx[4];
+			
 
 			Arbeginbalancehdr::where('DocNo', $docNoArbegin)
 						->update([
