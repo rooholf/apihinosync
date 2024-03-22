@@ -157,6 +157,7 @@ class SvtrnsinvoiceController extends Controller
 		// 								$request->OperationCost);
 
 		// 	$this->updateHeader($request->InvDocNo, $service->ServiceNo, $request->Remarks, $request->Amount);
+		
 		// }
 
 
@@ -506,7 +507,7 @@ class SvtrnsinvoiceController extends Controller
     										->where('PartSeq', $partseq_no)
     										->first();
     			if ($svtrnsrvitem == null) {
-    				Svtrnsrvitem::firstOrCreate([
+    				Svtrnsrvitem::create([
 						'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => $branchcode,
 						'ProductType' => $request->ProductType,
@@ -532,7 +533,7 @@ class SvtrnsinvoiceController extends Controller
 						'MechanicID' => $request->MechanicID,
 					]);
 
-					Svtrninvitem::firstOrCreate([
+					Svtrninvitem::create([
     					'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => $branchcode,
 						'ProductType' => $request->ProductType,
@@ -550,7 +551,7 @@ class SvtrnsinvoiceController extends Controller
 						'CreatedBy' => $request->CreatedBy,
     				]);
 
-    				Svtrninvitemdtl::firstOrCreate([
+    				Svtrninvitemdtl::create([
     					'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => $branchcode,
 						'ProductType' => $request->ProductType,
@@ -590,7 +591,7 @@ class SvtrnsinvoiceController extends Controller
     									->first();
 
     			if ($svtrntask == null) {
-    				Svtrnsrvtask::firstOrCreate([
+    				Svtrnsrvtask::create([
 						'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => $branchcode,
 						'ProductType' => $request->ProductType,
@@ -615,7 +616,7 @@ class SvtrnsinvoiceController extends Controller
 						'DiscPct' => ((int)$request->AmountDiscount / ((int)$request->RetailPrice * (float)$request->SupplyQty)) * 100,
 					]);
 
-					Svtrninvtask::firstOrCreate([
+					Svtrninvtask::create([
     					'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => $branchcode,
 						'ProductType' => $request->ProductType,
