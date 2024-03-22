@@ -20,8 +20,8 @@
 		public function show(Request $request, Spmstitem $spmstitem)
 		{
 			$items = $spmstitem->where('PartNo', $request->PartNo)
-								->where('CompanyCode', 'TUA00')
-								->where('BranchCode', '000')->first();
+								->where('CompanyCode', '1020')
+								->where('BranchCode', '1000')->first();
 
 			if ($items) {
 				return fractal()
@@ -41,8 +41,8 @@
 		public function showtwo(Request $request, Spmstitem $spmstitem)
 		{
 			$items = $spmstitem->where('PartNo', $request->PartNo)
-								->where('CompanyCode', 'TUA00')
-								->where('BranchCode', '002')->first();
+								->where('CompanyCode', '1020')
+								->where('BranchCode', '1002')->first();
 
 			if ($items) {
 				return fractal()
@@ -73,7 +73,7 @@
 
 			// dd($items);
 			if (!$items) {
-				$spmstitem = $spmstitem->firstOrCreate([
+				$spmstitem = $spmstitem->updateOrCreate([
 			        'CompanyCode' => $request->CompanyCode,
 					'BranchCode' => $request->BranchCode,
 					'PartNo' => $request->PartNo,
@@ -130,7 +130,7 @@
 	            						->where('PartNo', $request->PartNo)->first();
 
 	            if (!$iteminfo) {
-	            	$spmstiteminfo = $spmstiteminfo->firstOrCreate([
+	            	$spmstiteminfo = $spmstiteminfo->updateOrCreate([
 		                'CompanyCode'=> $request->CompanyCode,
 		                'PartNo'=> $request->PartNo,
 		                'SupplierCode'=> $request->SupplierCode,
@@ -160,7 +160,7 @@
 	            						->where('WarehouseCode', $request->WarehouseCode)->first();
 
 	           	if (!$itemloc) {
-	           		$spmstitemloc = $spmstitemloc->firstOrCreate([
+	           		$spmstitemloc = $spmstitemloc->updateOrCreate([
 		                'CompanyCode'=> $request->CompanyCode,
 		                'BranchCode'=> $request->BranchCode,
 		                'PartNo'=> $request->PartNo,
@@ -205,7 +205,7 @@
 	            						->where('BranchCode', $request->BranchCode)->count();
 
 	            if ($itemprice < 1) {
-	            	$spmstitemprice = $spmstitemprice->firstOrCreate([
+	            	$spmstitemprice = $spmstitemprice->updateOrCreate([
 				        'CompanyCode' => $request->CompanyCode,
 						'BranchCode' => $request->BranchCode,
 						'PartNo' => $request->PartNo,

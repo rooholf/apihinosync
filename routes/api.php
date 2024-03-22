@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('customer/show', 'GnmstcustomerController@show');
 Route::post('customer/add', 'GnmstcustomerController@add');
 Route::put('customer/update/{gnmstcustomer}', 'GnmstcustomerController@update');
+Route::put('customer/update/', 'GnmstcustomerController@update');
 
 Route::post('supplier/show', 'GnmstsupplierController@show');
 Route::post('supplier/add', 'GnmstsupplierController@add');

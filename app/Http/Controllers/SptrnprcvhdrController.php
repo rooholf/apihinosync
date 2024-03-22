@@ -13,6 +13,8 @@ use App\Apbeginbalancehdr;
 use App\Apbeginbalancedtl;
 use App\Sptrnphpp;
 
+// use App\ApInterface;
+
 use App\Transformers\SptrnprcvhdrTransformer; //transformer
 
 use Carbon\Carbon;
@@ -68,11 +70,11 @@ class SptrnprcvhdrController extends Controller
         ]);
 
         // nomor WRSNo
-        if ($request->WhsCodeDesc == 'WH NORMAL - MUARA BUNGO') {
-            $branchcode = '002';
+        if ($request->Dealer == 'Sparepart - JIM Muaro Bungo' || $request->Dealer == 'Service - JIM Muaro Bungo') {
+            $branchcode = '1002';
             $accountNo = '004.002.000.00000.300000.000.000';
         } else {
-            $branchcode = '000';
+            $branchcode = '1000';
             $accountNo = '004.000.000.00000.300000.000.000';
         }
 
@@ -84,7 +86,7 @@ class SptrnprcvhdrController extends Controller
             $docNoApbegin = 'WSR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
         }
 
-        $grdateEx = explode("T", $request->GRDate);
+        $grdateEx = explode(" ", $request->GRDate);
         $grdateExDate = explode("-", $grdateEx[0]);
         $grdate = $grdateEx[0].' '.$grdateEx[1];
 
@@ -142,7 +144,7 @@ class SptrnprcvhdrController extends Controller
                                         ->where('PartNo', $request->PartNo)
                                         ->first();
                 if (!$detail) {
-                    Sptrnprcvhdrdtl::create([
+                    Sptrnprcvhdrdtl::firstOrCreate([
                         'CompanyCode'=> $request->CompanyCode,
                         'BranchCode'=> $branchcode,
                         'WRSNo'=> $wrsno,
@@ -174,7 +176,7 @@ class SptrnprcvhdrController extends Controller
                                         ->first();
                     
                 if (!$hpp) {
-                    Sptrnphpp::create([
+                    Sptrnphpp::firstOrCreate([
                         'CompanyCode'=> $request->CompanyCode,  
                         'BranchCode'=> $branchcode, 
                         'HPPNo'=> $hppno, 
@@ -212,7 +214,7 @@ class SptrnprcvhdrController extends Controller
                                                     ->first();
 
                 if (!$apbeginbalancehdr) {
-                    Apbeginbalancehdr::create([
+                    Apbeginbalancehdr::firstOrCreate([
                         'CompanyCode'=> $request->CompanyCode,
                         'BranchCode'=> $branchcode,
                         'DocNo'=> $docNoApbegin,
@@ -237,7 +239,7 @@ class SptrnprcvhdrController extends Controller
                                                 ->first();
 
                 if (!$apbeginbalancedtl) {
-                    Apbeginbalancedtl::create([
+                    Apbeginbalancedtl::firstOrCreate([
                         'CompanyCode'=> $request->CompanyCode,
                         'BranchCode'=> $branchcode,
                         'DocNo'=> $docNoApbegin,
@@ -253,8 +255,7 @@ class SptrnprcvhdrController extends Controller
                 // apibegin detail
                     
 
-
-                $this->updateTotItem($wrsno, $request->GRNo);
+                $this->updateTotItem($wrsno, $request->GRNo, $branchcode);
 
             }
 
@@ -279,7 +280,7 @@ class SptrnprcvhdrController extends Controller
             // dd($header2);
 
             if ($header2 == null) {
-                Sptrnprcvhdrdtl::create([
+                Sptrnprcvhdrdtl:firstOrCreate([
                     'CompanyCode'=> $request->CompanyCode,
                     'BranchCode'=> $branchcode,
                     'WRSNo'=> $header->WRSNo,
@@ -303,15 +304,20 @@ class SptrnprcvhdrController extends Controller
                     'LastUpdateDate'=> Carbon::now(),
                 ]);
 
-                $this->updateTotItem($header->WRSNo, $request->GRNo);
-            }
 
+
+                $this->updateTotItem($header->WRSNo, $request->GRNo, $branchcode);
+            }
+            $this->updateTotItem($header->WRSNo, $request->GRNo, $branchcode);
             return response()->json([
                 'data' => 1
             ], 200);
         }
 
-            
+         $this->updateTotItem($wrsno, $request->GRNo, $branchcode);
+            return response()->json([
+                'data' => 0
+            ], 200);
     }
 
     public function addDetail(Request $request, Sptrnprcvhdrdtl $sptrnprcvhdrdtl, Gnmstdocument $gnmstdocument)
@@ -323,10 +329,10 @@ class SptrnprcvhdrController extends Controller
         // dd($header);
         $header = Sptrnprcvhdr::where('ReferenceNo', $request->ReferenceNo)->first();
 
-        if ($request->WhsCodeDesc == 'WH NORMAL - MUARA BUNGO') {
-            $branchcode = '002';
+        if ($request->Dealer == 'Sparepart - JIM Muaro Bungo' || $request->Dealer == 'Service - JIM Muaro Bungo') {
+            $branchcode = '1002';
         } else {
-            $branchcode = '000';
+            $branchcode = '1000';
         }
 
         // $gnmstdocument3 = $gnmstdocument->where('DocumentType', 'POS')
@@ -374,7 +380,7 @@ class SptrnprcvhdrController extends Controller
                     'LastUpdateDate'=> Carbon::now(),
                 ]);
 
-                $this->updateTotItem($header->WRSNo);
+                $this->updateTotItem($header->WRSNo, $request->GRNo, $branchcode);
 
                 return response()->json([
                     'data' => 0
@@ -385,6 +391,13 @@ class SptrnprcvhdrController extends Controller
                     'data' => 1
                 ], 200);
             }
+        } else {
+             $this->updateTotItem($header->WRSNo, $request->GRNo, $branchcode);
+
+                return response()->json([
+                    'data' => 0
+                ], 200);
+
         }
 
 
@@ -397,13 +410,15 @@ class SptrnprcvhdrController extends Controller
 
     }
 
-    public function updateTotItem($wrsno, $grno)
+    public function updateTotItem($wrsno, $grno, $branchcode)
     {
         $total = 0;
         $item = 0;
 
         // header
-        $detail = Sptrnprcvhdrdtl::where('WRSNo', $wrsno)->get();
+        $detail = Sptrnprcvhdrdtl::where('WRSNo', $wrsno)
+                                    ->where('BranchCode', $branchcode)
+                                    ->get();
 
         foreach ($detail as $row) {
             $grandtotal = ($row->PurchasePrice * $row->ReceivedQty)-(($row->PurchasePrice * $row->ReceivedQty) * $row->DiscPct/100);
@@ -412,10 +427,11 @@ class SptrnprcvhdrController extends Controller
             $item = $item + 1;
         }
 
-        $totAmt = $total * 1.1;
-        $totTax = $total * 0.1;
+        $totAmt = $total * 1.11;
+        $totTax = $total * 0.11;
 
         spTrnPRcvHdr::where('WRSNo', $wrsno)
+            ->where('BranchCode', $branchcode)
             ->update([
                 'TotItem' => $item, 
                 'TotWRSAmt' => $total
@@ -432,21 +448,33 @@ class SptrnprcvhdrController extends Controller
         // $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
 
         Apbeginbalancehdr::where('DocNo', $docNoApbegin)
-            ->update([
-                'Amount' => $totAmt
-            ]);
+            ->where('BranchCode', $branchcode)
+            ->increment('Amount', $totAmt);
+            // ->update([
+            //     'Amount' => $totAmt
+            // ]);
 
         Apbeginbalancedtl::where('DocNo', $docNoApbegin)
-            ->update([
-                'Amount' => $totAmt
-            ]);
+            ->where('BranchCode', $branchcode)
+            ->increment('Amount', $totAmt);
+            // ->update([
+            //     'Amount' => $totAmt
+            // ]);
 
         Sptrnphpp::where('WRSNo', $wrsno)
+            ->where('BranchCode', $branchcode)
             ->update([
                 'TotPurchAmt' => $totAmt,
                 'TotNetPurchAmt' => $total,
                 'TotTaxAmt' => $totTax,
             ]);
+
+        // ApInterface::where('DocNo', $docNoApbegin)
+        //             ->where('BranchCode', $branchcode)
+        //             ->update([
+        //                 'NetAmt' => $totAmt,
+        //                 'TotalAmt' => $totAmt,
+        //     ]);
 
     }
 }
