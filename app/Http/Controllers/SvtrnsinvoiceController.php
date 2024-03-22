@@ -80,13 +80,13 @@ class SvtrnsinvoiceController extends Controller
     						->where('InvDocNo', $request->InvDocNo)
     						->first();
 
-    	
+
 
     	// chasis
     	$chassisCode = substr($request->VIN, 0, 12);
     	$chassisNo = substr($request->VIN, 12, 5);
 
-    	// engine code 
+    	// engine code
     	$engineCode = substr($request->Engine, 0, 7);
     	$engineNo = substr($request->Engine, 7, 5);
 
@@ -139,16 +139,16 @@ class SvtrnsinvoiceController extends Controller
 		// 			'CreatedDate' => Carbon::now(),
   //       		]);
 		// }
-		
+
 
 		// nembak header dan detail
 		// if($service){
-		// 	$this->updateDetail($branchcode, 
-		// 								$service->ServiceNo, 
-		// 								$service->ProductType, 
-		// 								$service->OperationNo, 
+		// 	$this->updateDetail($branchcode,
+		// 								$service->ServiceNo,
+		// 								$service->ProductType,
+		// 								$service->OperationNo,
 		// 								$request->PartNo,
-		// 								$service->InvoiceNo, 
+		// 								$service->InvoiceNo,
 		// 								$service->SupplySlipNo,
 		// 								$request->AmountDiscount,
 		// 								$request->RetailPrice,
@@ -159,7 +159,7 @@ class SvtrnsinvoiceController extends Controller
 		// 	$this->updateHeader($request->InvDocNo, $service->ServiceNo, $request->Remarks, $request->Amount);
 		// }
 
-		
+
 
     	if ($service == null) {
     		$spk = $this->noUrut('SPK', $branchcode, $request->CompanyCode);
@@ -337,7 +337,7 @@ class SvtrnsinvoiceController extends Controller
 					'LastupdateDate' => Carbon::now(),
 
     			]);
-	    			
+
 
     			if ($request->Remarks == 'Sparepart' Or $request->Remarks == 'Oil' Or  $request->Remarks == 'Material') {
 
@@ -565,22 +565,22 @@ class SvtrnsinvoiceController extends Controller
 
 
 
-    				$this->updateDetail($branchcode, 
-									$service->ServiceNo, 
-									$service->ProductType, 
-									$request->OperationNo, 
-									$request->PartNo, 
-									$service->InvoiceNo, 
+    				$this->updateDetail($branchcode,
+									$service->ServiceNo,
+									$service->ProductType,
+									$request->OperationNo,
+									$request->PartNo,
+									$service->InvoiceNo,
 									$sss,
 									$request->AmountDiscount,
 									$request->RetailPrice,
 									$request->SupplyQty,
 									$request->OperationHour,
 									$request->OperationCost);
-    			} 
+    			}
 
-    			
-    			} 
+
+    			}
     			else {
 				$svtrntask = Svtrnsrvtask::where('CompanyCode', $service->CompanyCode)
 										->where('BranchCode', $service->BranchCode)
@@ -612,7 +612,7 @@ class SvtrnsinvoiceController extends Controller
 						'CreatedDate' => Carbon::now(),
 						'LastupdateBy' => $request->LastupdateBy,
 						'LastupdateDate' => Carbon::now(),
-						'DiscPct' => ((int)$request->AmountDiscount / (int)$request->RetailPrice * (float)$request->SupplyQty)) * 100,
+						'DiscPct' => ((int)$request->AmountDiscount / ((int)$request->RetailPrice * (float)$request->SupplyQty)) * 100,
 					]);
 
 					Svtrninvtask::firstOrCreate([
@@ -630,7 +630,7 @@ class SvtrnsinvoiceController extends Controller
 						'DiscPct' => ((int)$request->AmountDiscount / ((int)$request->RetailPrice * (float)$request->SupplyQty)) * 100,
 						'CreatedBy' => $request->CreatedBy,
     				]);
-    				}		
+    				}
 				}
 
 			Arbeginbalancehdr::firstOrCreate([
@@ -665,12 +665,12 @@ class SvtrnsinvoiceController extends Controller
 				'CreatedDate' => Carbon::now(),
     		]);
 
-			$this->updateDetail($branchcode, 
-									$service->ServiceNo, 
-									$service->ProductType, 
-									$service->OperationNo, 
+			$this->updateDetail($branchcode,
+									$service->ServiceNo,
+									$service->ProductType,
+									$service->OperationNo,
 									$request->PartNo,
-									$service->InvoiceNo, 
+									$service->InvoiceNo,
 									$service->SupplySlipNo,
 									$request->AmountDiscount,
 									$request->RetailPrice,
@@ -737,7 +737,7 @@ class SvtrnsinvoiceController extends Controller
     	$partdispct = 0;
     	$laborgrossamt = 0;
     	$partsgrossamt = 0;
-    	$labordiscamt = 0;s
+    	$labordiscamt = 0;
     	$partsdiscamt = 0;
     	$materialdiscpct = 0;
     	$labordppamt = 0;
@@ -756,7 +756,7 @@ class SvtrnsinvoiceController extends Controller
 
 		    	$partsgrossamt = $partsgrossamt + $sum;
 
-		    	
+
 
 		    	$partsdiscamt = $row->AmountDiscount;
 
@@ -764,7 +764,7 @@ class SvtrnsinvoiceController extends Controller
 		    	$partsdppamt = $partsdppamt + $partsdppamt1;
 	    	}
 
-	    	
+
 
 	    	Svtrnservice::where('InvDocNo', $invno)
 	    				->update([
@@ -816,7 +816,7 @@ class SvtrnsinvoiceController extends Controller
 
 	    }
 
-	    
+
 
     	$service = Svtrnservice::where('InvDocNo', $invno)->first();
     	if ($service) {
@@ -833,7 +833,7 @@ class SvtrnsinvoiceController extends Controller
 		    	$totalppnamount = 0.11 * $totaldppamount;
 		    	$totalsrvamount = $totaldppamount + $totalppnamount;
     		}
-    		
+
 
     		Svtrnservice::where('InvDocNo', $invno)
 				->update([
@@ -847,7 +847,7 @@ class SvtrnsinvoiceController extends Controller
 					'TotalDppAmt' => $totaldppamount,
 					'TotalPpnAmt' => $totalppnamount,
 					'TotalSrvAmt' => $totalsrvamount,
-				]);	
+				]);
 
 			Arbeginbalancehdr::where('DocNo', $docNoArbegin)
 						->update([
