@@ -239,7 +239,7 @@ class SvtrnsinvoiceController extends Controller
                     "LockingDate" => Carbon::now(),
                     "CreatedBy" => $request->CreatedBy,
                     "CreatedDate" => Carbon::now(),
-                    "LastUpdateBy" => $request->LastupdateBy,
+                    "LastUpdateBy" => $request->LastUpdateBy,
                     "LastUpdateDate" => Carbon::now(),
                     "IsSparepartClaim" => $request->IsSparepartClaim,
                     "JobOrderClosed" => $request->JobOrderClosed,
@@ -302,7 +302,7 @@ class SvtrnsinvoiceController extends Controller
                     "LockingDate" => null,
                     "CreatedBy" => $request->CreatedBy,
                     "CreatedDate" => Carbon::now(),
-                    "LastupdateBy" => $request->LastupdateBy,
+                    "LastupdateBy" => $request->LastUpdateBy,
                     "LastupdateDate" => Carbon::now(),
                     "InvDocNo" => $request->InvDocNo,
                 ]);
@@ -341,7 +341,7 @@ class SvtrnsinvoiceController extends Controller
                     "LockingDate" => $request->LockingDate,
                     "CreatedBy" => $request->CreatedBy,
                     "CreatedDate" => Carbon::now(),
-                    "LastupdateBy" => $request->LastupdateBy,
+                    "LastupdateBy" => $request->LastUpdateBy,
                     "LastupdateDate" => Carbon::now(),
                 ]);
 
@@ -370,7 +370,7 @@ class SvtrnsinvoiceController extends Controller
                         "SSReturnDate" => $invdate,
                         "CreatedBy" => $request->CreatedBy,
                         "CreatedDate" => Carbon::now(),
-                        "LastupdateBy" => $request->LastupdateBy,
+                        "LastupdateBy" => $request->LastUpdateBy,
                         "LastupdateDate" => Carbon::now(),
                         "DiscPct" => round(
                             ((int) $request->AmountDiscount /
@@ -438,7 +438,7 @@ class SvtrnsinvoiceController extends Controller
                         "FinishService" => $invdate,
                         "CreatedBy" => $request->CreatedBy,
                         "CreatedDate" => Carbon::now(),
-                        "LastupdateBy" => $request->LastupdateBy,
+                        "LastupdateBy" => $request->LastUpdateBy,
                         "LastupdateDate" => Carbon::now(),
                         "DiscPct" =>
                             ((int) $request->AmountDiscount /
@@ -574,7 +574,7 @@ class SvtrnsinvoiceController extends Controller
                         "SSReturnDate" => $invdate,
                         "CreatedBy" => $request->CreatedBy,
                         "CreatedDate" => Carbon::now(),
-                        "LastupdateBy" => $request->LastupdateBy,
+                        "LastupdateBy" => $request->LastUpdateBy,
                         "LastupdateDate" => Carbon::now(),
                         "DiscPct" => round(
                             ((int) $request->AmountDiscount /
@@ -670,7 +670,7 @@ class SvtrnsinvoiceController extends Controller
                         "FinishService" => $invdate,
                         "CreatedBy" => $request->CreatedBy,
                         "CreatedDate" => Carbon::now(),
-                        "LastupdateBy" => $request->LastupdateBy,
+                        "LastupdateBy" => $request->LastUpdateBy,
                         "LastupdateDate" => Carbon::now(),
                         "DiscPct" => round(
                             ((int) $request->AmountDiscount /
