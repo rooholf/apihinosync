@@ -361,7 +361,7 @@ class SvtrnsinvoiceController extends Controller
                         "SupplyQty" => $request->SupplyQty,
                         "ReturnQty" => $request->ReturnQty,
                         "CostPrice" => $request->CostPrice,
-                        "RetailPrice" => $request->RetailPrice,
+                        "RetailPrice" =>(int) $request->RetailPrice,
                         "TypeOfGoods" => $request->TypeOfGoods,
                         "BillType" => $request->BillType,
                         "SupplySlipNo" => $sss,
@@ -394,7 +394,7 @@ class SvtrnsinvoiceController extends Controller
                         "SupplyQty" => $request->SupplyQty,
                         "ReturnQty" => $request->ReturnQty,
                         "CostPrice" => $request->CostPrice,
-                        "RetailPrice" => $request->RetailPrice,
+                        "RetailPrice" => (int) $request->RetailPrice,
                         "TypeOfGoods" => $request->TypeOfGoods,
                         "DiscPct" =>
                             ((int) $request->AmountDiscount /
@@ -565,7 +565,7 @@ class SvtrnsinvoiceController extends Controller
                         "SupplyQty" => $request->SupplyQty,
                         "ReturnQty" => $request->ReturnQty,
                         "CostPrice" => $request->CostPrice,
-                        "RetailPrice" => $request->RetailPrice,
+                        "RetailPrice" => (int) $request->RetailPrice,
                         "TypeOfGoods" => $request->TypeOfGoods,
                         "BillType" => $request->BillType,
                         "SupplySlipNo" => $sss,
@@ -597,7 +597,7 @@ class SvtrnsinvoiceController extends Controller
                         "SupplyQty" => $request->SupplyQty,
                         "ReturnQty" => $request->ReturnQty,
                         "CostPrice" => $request->CostPrice,
-                        "RetailPrice" => $request->RetailPrice,
+                        "RetailPrice" => (int)$request->RetailPrice,
                         "TypeOfGoods" => $request->TypeOfGoods,
                         "DiscPct" => round(
                             ((int) $request->AmountDiscount /
