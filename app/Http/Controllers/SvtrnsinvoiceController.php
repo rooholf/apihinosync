@@ -171,7 +171,14 @@ class SvtrnsinvoiceController extends Controller
     		$no = Svtrnservice::orderBy('ServiceNo', 'DESC')->first();
     		$servno = $no->ServiceNo + 1;
 
-    		$svtrnservice = Svtrnservice::firstOrCreate([
+    		$svtrnservice = Svtrnservice::firstOrCreate(
+				['CompanyCode' => $request->CompanyCode,
+			'BranchCode' => $branchcode,
+			'ProductType' => $request->ProductType,
+			'ServiceNo' => $servno,
+			'ServiceType' => $request->ServiceType,
+		],
+			[
     			'CompanyCode' => $request->CompanyCode,
 				'BranchCode' => $branchcode,
 				'ProductType' => $request->ProductType,
@@ -702,7 +709,7 @@ class SvtrnsinvoiceController extends Controller
 							->where('PartNo', $partno)
 							->where('SupplySlipNo', $slip)
 							->update([
-								"DiscPct" => ($disc / ($retailPrice * $supplyQty)) * 100,
+								"DiscPct" => ((int)$disc / ($retailPrice * $supplyQty)) * 100,
 							]);
 
 		 Svtrninvitem::where('BranchCode', $branch)
@@ -710,7 +717,7 @@ class SvtrnsinvoiceController extends Controller
 							->where('InvoiceNo', $invno)
 							->where('PartNo', $partno)
 							->update([
-								"DiscPct" => ($disc / ($retailPrice * $supplyQty)) * 100,
+								"DiscPct" => ((int)$disc / ($retailPrice * $supplyQty)) * 100,
 							]);
 
 		Svtrnsrvtask::where('BranchCode', $branch)
@@ -718,14 +725,14 @@ class SvtrnsinvoiceController extends Controller
 							->where('ServiceNo', $serno)
 							->where('OperationNo', $operationNo)
 							->update([
-								"DiscPct" => ($disc / ($opHour * $opCost)) * 100,
+								"DiscPct" => ((int)$disc / ($opHour * $opCost)) * 100,
 							]);
 		Svtrninvtask::where('BranchCode', $branch)
 							->where('ProductType', $productType)
 							->where('InvoiceNo', $invno)
 							->where('OperationNo', $operationNo)
 							->update([
-								"DiscPct" => ($disc / ($opHour * $opCost)) * 100,
+								"DiscPct" => ((int)$disc / ($opHour * $opCost)) * 100,
 							]);
     }
 
