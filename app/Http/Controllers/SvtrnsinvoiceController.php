@@ -239,7 +239,7 @@ class SvtrnsinvoiceController extends Controller
                     "LockingDate" => Carbon::now(),
                     "CreatedBy" => $request->CreatedBy,
                     "CreatedDate" => Carbon::now(),
-                    "LastUpdateBy" => $request->LastUpdateBy,
+                    "LastUpdateBy" => $request->LastupdateBy,
                     "LastUpdateDate" => Carbon::now(),
                     "IsSparepartClaim" => $request->IsSparepartClaim,
                     "JobOrderClosed" => $request->JobOrderClosed,
@@ -302,7 +302,7 @@ class SvtrnsinvoiceController extends Controller
                     "LockingDate" => null,
                     "CreatedBy" => $request->CreatedBy,
                     "CreatedDate" => Carbon::now(),
-                    "LastupdateBy" => $request->LastUpdateBy,
+                    "LastupdateBy" => $request->LastupdateBy,
                     "LastupdateDate" => Carbon::now(),
                     "InvDocNo" => $request->InvDocNo,
                 ]);
@@ -341,7 +341,7 @@ class SvtrnsinvoiceController extends Controller
                     "LockingDate" => $request->LockingDate,
                     "CreatedBy" => $request->CreatedBy,
                     "CreatedDate" => Carbon::now(),
-                    "LastupdateBy" => $request->LastUpdateBy,
+                    "LastupdateBy" => $request->LastupdateBy,
                     "LastupdateDate" => Carbon::now(),
                 ]);
 
