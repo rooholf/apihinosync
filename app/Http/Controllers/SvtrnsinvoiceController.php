@@ -795,7 +795,7 @@ class SvtrnsinvoiceController extends Controller
             ->where("PartNo", $partno)
             ->where("SupplySlipNo", $slip)
             ->update([
-                "DiscPct" => round(($disc / ($retailPrice * $supplyQty)) * 100,2)
+                "DiscPct" => (float)round(($disc / ($retailPrice * $supplyQty)) * 100,2)
             ]);
 
         Svtrninvitem::where("BranchCode", $branch)
@@ -803,7 +803,7 @@ class SvtrnsinvoiceController extends Controller
             ->where("InvoiceNo", $invno)
             ->where("PartNo", $partno)
             ->update([
-                "DiscPct" => round(($disc / ($retailPrice * $supplyQty)) * 100,2)
+                "DiscPct" => (float)round(($disc / ($retailPrice * $supplyQty)) * 100,2)
             ]);
 
         Svtrnsrvtask::where("BranchCode", $branch)
