@@ -366,7 +366,7 @@ class SvtrnsinvoiceController extends Controller
                         "BillType" => $request->BillType,
                         "SupplySlipNo" => $sss,
                         "SupplySlipDate" => $invdate,
-                        "SSReturnNo" => null,
+                        "SSReturnNo" => NULL,
                         "SSReturnDate" => $invdate,
                         "CreatedBy" => $request->CreatedBy,
                         "CreatedDate" => Carbon::now(),
