@@ -797,7 +797,7 @@ class SvtrnsinvoiceController extends Controller
         $partno,
         $invno,
         $slip,
-        $disc,
+        $discountAmount,
         $retailPrice,
         $supplyQty,
         $opHour,
@@ -806,9 +806,9 @@ class SvtrnsinvoiceController extends Controller
         $amtItem = (int) $retailPrice * $supplyQty;
         $amtSrv = (float) $opHour * (int) $opCost;
 
-        $discPct = ((int) $disc / (int) $amtItem) * 100;
+        $discPct = ((int) $discountAmount / (int) $amtItem) * 100;
 
-        $discSrv = ((int) $disc / (int) $amtSrv) * 100;
+        $discSrv = ((int) $discountAmount / (int) $amtSrv) * 100;
 
         Svtrnsrvitem::where('BranchCode', $branch)
             ->where('ProductType', $productType)
