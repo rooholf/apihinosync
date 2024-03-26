@@ -804,7 +804,8 @@ class SvtrnsinvoiceController extends Controller
         $opCost
     ) {
         $discPct =
-            (float) ((int) $disc / ($retailPrice * (float) $supplyQty)) * 100;
+            (float) ((int) $disc / ((int) $retailPrice * (float) $supplyQty)) *
+            100;
 
         $discSrv =
             (float) ((int) $disc / ((float) $opHour * (int) $opCost)) * 100;
