@@ -143,20 +143,20 @@ class SvtrnsinvoiceController extends Controller
         // }
         // nembak header dan detail
         if ($service) {
-            $this->updateDetail(
-                $branchcode,
-                $service->ServiceNo,
-                $service->ProductType,
-                $service->OperationNo,
-                $request->PartNo,
-                $service->InvoiceNo,
-                $service->SupplySlipNo,
-                $request->AmountDiscount,
-                $request->RetailPrice,
-                $request->SupplyQty,
-                $request->OperationHour,
-                $request->OperationCost
-            );
+            // $this->updateDetail(
+            //     $branchcode,
+            //     $service->ServiceNo,
+            //     $service->ProductType,
+            //     $service->OperationNo,
+            //     $request->PartNo,
+            //     $service->InvoiceNo,
+            //     $service->SupplySlipNo,
+            //     $request->AmountDiscount,
+            //     $request->RetailPrice,
+            //     $request->SupplyQty,
+            //     $request->OperationHour,
+            //     $request->OperationCost
+            // );
 
             $this->updateHeader(
                 $request->InvDocNo,
