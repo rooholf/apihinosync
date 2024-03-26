@@ -142,629 +142,21 @@ class SvtrnsinvoiceController extends Controller
         //     ]);
         // }
         // nembak header dan detail
-        if ($service) {
-            // $this->updateDetail(
-            //     $branchcode,
-            //     $service->ServiceNo,
-            //     $service->ProductType,
-            //     $service->OperationNo,
-            //     $request->PartNo,
-            //     $service->InvoiceNo,
-            //     $service->SupplySlipNo,
-            //     $request->AmountDiscount,
-            //     $request->RetailPrice,
-            //     $request->SupplyQty,
-            //     $request->OperationHour,
-            //     $request->OperationCost
-            // );
-
-            $this->updateHeader(
-                $request->InvDocNo,
-                $service->ServiceNo,
-                $request->Remarks,
-                $request->Amount
-            );
-        }
-
-        // if ($service == null) {
-        //     $spk = $this->noUrut('SPK', $branchcode, $request->CompanyCode);
-        //     $inc = $this->noUrut('INC', $branchcode, $request->CompanyCode);
-        //     $sss = $this->noUrut('SSS', $branchcode, $request->CompanyCode);
-        //     $fps = $this->noUrut('FPS', $branchcode, $request->CompanyCode);
-
-        //     $no = Svtrnservice::orderBy('ServiceNo', 'DESC')->first();
-        //     $servno = $no->ServiceNo + 1;
-
-        //     $svtrnservice = Svtrnservice::firstOrCreate(
-        //         [
-        //             'CompanyCode' => $request->CompanyCode,
-        //             'BranchCode' => $branchcode,
-        //             'ProductType' => $request->ProductType,
-        //             'ServiceNo' => $servno,
-        //             'ServiceType' => $request->ServiceType,
-        //         ],
-        //         [
-        //             'CompanyCode' => $request->CompanyCode,
-        //             'BranchCode' => $branchcode,
-        //             'ProductType' => $request->ProductType,
-        //             'ServiceNo' => $servno,
-        //             'ServiceType' => $request->ServiceType,
-        //             'ServiceStatus' => $request->ServiceStatus,
-        //             'JobOrderNo' => $spk,
-        //             'JobOrderDate' => $invdate,
-        //             'EstimationNo' => '',
-        //             'EstimationDate' => $request->EstimationDate,
-        //             'BookingNo' => '',
-        //             'BookingDate' => $request->BookingDate,
-        //             'InvoiceNo' => $inc,
-        //             'ForemanID' => $request->ForemanID,
-        //             'MechanicID' => $request->MechanicID,
-        //             'CustomerCode' => $request->CustomerCode,
-        //             'CustomerCodeBill' => $request->CustomerCodeBill,
-        //             'PoliceRegNo' => $request->PoliceRegNo,
-        //             'ServiceBookNo' => '',
-        //             'BasicModel' => $request->BasicModel,
-        //             'TransmissionType' => $request->TransmissionType,
-        //             'VIN' => $request->VIN,
-        //             'ChassisCode' => $chassisCode,
-        //             'ChassisNo' => $chassisNo,
-        //             'EngineCode' => $engineCode,
-        //             'EngineNo' => $engineNo,
-        //             'ColorCode' => $request->ColorCode,
-        //             'Odometer' => $request->Odometer,
-        //             'JobType' => $request->JobType,
-        //             'ServiceRequestDesc' => $desc,
-        //             'ConfirmChangingPart' => $request->ConfirmChangingPart,
-        //             'EstimateFinishDate' => $invdate,
-        //             'EstimateFinishDateSys' => $invdate,
-        //             'LaborDiscPct' => 0,
-        //             'PartDiscPct' => 0,
-        //             'MaterialDiscAmt' => 0,
-        //             'InsurancePayFlag' => $request->InsurancePayFlag,
-        //             'InsuranceOwnRisk' => '0',
-        //             'InsuranceNo' => '',
-        //             'InsuranceJobOrderNo' => '',
-        //             'PPNPct' => $request->PPNPct,
-        //             'PPHPct' => $request->PPHPct,
-        //             'LaborGrossAmt' => 0,
-        //             'PartsGrossAmt' => 0,
-        //             'MaterialGrossAmt' => 0,
-        //             'LaborDiscAmt' => 0,
-        //             'PartsDiscAmt' => 0,
-        //             'MaterialDiscPct' => 0,
-        //             'LaborDppAmt' => 0,
-        //             'PartsDppAmt' => 0,
-        //             'MaterialDppAmt' => 0,
-        //             'TotalDPPAmount' => 0,
-        //             'TotalPphAmount' => 0,
-        //             'TotalPpnAmount' => 0,
-        //             'TotalSrvAmount' => 0,
-        //             'PrintSeq' => $request->PrintSeq,
-        //             'IsLocked' => $request->IsLocked,
-        //             'LockingBy' => $request->LockingBy,
-        //             'LockingDate' => Carbon::now(),
-        //             'CreatedBy' => $request->CreatedBy,
-        //             'CreatedDate' => Carbon::now(),
-        //             'LastUpdateBy' => $request->LastUpdateBy,
-        //             'LastUpdateDate' => Carbon::now(),
-        //             'IsSparepartClaim' => $request->IsSparepartClaim,
-        //             'JobOrderClosed' => $request->JobOrderClosed,
-        //             'InvDocNo' => $request->InvDocNo,
-        //         ]
-        //     );
-
-        //     if ($svtrnservice) {
-        //         Svtrninvoice::create([
-        //             'CompanyCode' => $request->CompanyCode,
-        //             'BranchCode' => $branchcode,
-        //             'ProductType' => $request->ProductType,
-        //             'InvoiceNo' => $inc,
-        //             'InvoiceDate' => $invdate,
-        //             'InvoiceStatus' => $request->InvoiceStatus,
-        //             'FPJNo' => $fps,
-        //             'FPJDate' => $invdate,
-        //             'JobOrderNo' => $spk,
-        //             'JobOrderDate' => $invdate,
-        //             'JobType' => $request->JobType,
-        //             'ServiceRequestDesc' => $desc,
-        //             'ChassisCode' => $chassisCode,
-        //             'ChassisNo' => $chassisNo,
-        //             'EngineCode' => $engineCode,
-        //             'EngineNo' => $engineNo,
-        //             'PoliceRegNo' => $request->PoliceRegNo,
-        //             'BasicModel' => $request->BasicModel,
-        //             'CustomerCode' => $request->CustomerCode,
-        //             'CustomerCodeBill' => $request->CustomerCodeBill,
-        //             'Odometer' => $request->Odometer,
-        //             'IsPKP' => $request->IsPKP,
-        //             'TOPCode' => $request->TOPCode,
-        //             'TOPDays' => $request->TOPDays,
-        //             'DueDate' => $duedate,
-        //             'SignedDate' => $invdate,
-        //             'LaborDiscPct' => 0,
-        //             'PartsDiscPct' => 0,
-        //             'MaterialDiscPct' => 0,
-        //             'PphPct' => $request->PPHPct,
-        //             'PpnPct' => $request->PPNPct,
-        //             'LaborGrossAmt' => 0,
-        //             'PartsGrossAmt' => 0,
-        //             'MaterialGrossAmt' => 0,
-        //             'LaborDiscAmt' => 0,
-        //             'PartsDiscAmt' => 0,
-        //             'MaterialDiscAmt' => 0,
-        //             'LaborDppAmt' => 0,
-        //             'PartsDppAmt' => 0,
-        //             'MaterialDppAmt' => 0,
-        //             'TotalDppAmt' => 0,
-        //             'TotalPphAmt' => 0,
-        //             'TotalPpnAmt' => 0,
-        //             'TotalSrvAmt' => 0,
-        //             'Remarks' => $request->Remarks,
-        //             'PrintSeq' => $request->PrintSeq,
-        //             'PostingFlag' => $request->PostingFlag,
-        //             'PostingDate' => null,
-        //             'IsLocked' => false,
-        //             'LockingBy' => null,
-        //             'LockingDate' => null,
-        //             'CreatedBy' => $request->CreatedBy,
-        //             'CreatedDate' => Carbon::now(),
-        //             'LastupdateBy' => $request->LastUpdateBy,
-        //             'LastupdateDate' => Carbon::now(),
-        //             'InvDocNo' => $request->InvDocNo,
-        //         ]);
-
-        //         Svtrnfakturpajak::create([
-        //             'CompanyCode' => $request->CompanyCode,
-        //             'BranchCode' => $branchcode,
-        //             'FPJNo' => $fps,
-        //             'FPJDate' => $invdate,
-        //             'FPJGovNo' => $request->FPJGovNo,
-        //             'FPJCentralNo' => '',
-        //             'FPJCentralDate' => $request->FPJCentralDate,
-        //             'NoOfInvoice' => $request->NoOfInvoice,
-        //             'CustomerCode' => $request->CustomerCode,
-        //             'CustomerCodeBill' => $request->CustomerCodeBill,
-        //             'CustomerName' => $request->CustomerName,
-        //             'Address1' => str_replace(',', ' ', $request->Address1),
-        //             'Address2' => str_replace(',', ' ', $request->Address2),
-        //             'Address3' => str_replace(',', ' ', $request->Address3),
-        //             'Address4' => '',
-        //             'PhoneNo' => $request->PhoneNo,
-        //             'HPNo' => $request->HPNo,
-        //             'IsPKP' => $request->IsPKP,
-        //             'SKPNo' => $request->SKPNo,
-        //             'SKPDate' => $request->SKPDate,
-        //             'NPWPNo' => $request->NPWPNo,
-        //             'NPWPDate' => $request->NPWPDate,
-        //             'TOPCode' => $request->TOPCode,
-        //             'TOPDays' => $request->TOPDays,
-        //             'DueDate' => $duedate,
-        //             'SignedDate' => $invdate,
-        //             'PrintSeq' => $request->PrintSeq,
-        //             'GenerateStatus' => $request->GenerateStatus,
-        //             'IsLocked' => $request->IsLocked,
-        //             'LockingBy' => null,
-        //             'LockingDate' => $request->LockingDate,
-        //             'CreatedBy' => $request->CreatedBy,
-        //             'CreatedDate' => Carbon::now(),
-        //             'LastupdateBy' => $request->LastUpdateBy,
-        //             'LastupdateDate' => Carbon::now(),
-        //         ]);
-
-        //         if (
-        //             $request->Remarks == 'Sparepart' or
-        //             $request->Remarks == 'Oil' or
-        //             $request->Remarks == 'Material'
-        //         ) {
-        //             Svtrnsrvitem::create([
-        //                 'CompanyCode' => $request->CompanyCode,
-        //                 'BranchCode' => $branchcode,
-        //                 'ProductType' => $request->ProductType,
-        //                 'ServiceNo' => $servno,
-        //                 'PartNo' => $request->PartNo,
-        //                 'PartSeq' => 1,
-        //                 'DemandQty' => $request->DemandQty,
-        //                 'SupplyQty' => $request->SupplyQty,
-        //                 'ReturnQty' => $request->ReturnQty,
-        //                 'CostPrice' => $request->CostPrice,
-        //                 'RetailPrice' => (int) $request->RetailPrice,
-        //                 'TypeOfGoods' => $request->TypeOfGoods,
-        //                 'BillType' => $request->BillType,
-        //                 'SupplySlipNo' => $sss,
-        //                 'SupplySlipDate' => $invdate,
-        //                 'SSReturnNo' => null,
-        //                 'SSReturnDate' => $invdate,
-        //                 'CreatedBy' => $request->CreatedBy,
-        //                 'CreatedDate' => Carbon::now(),
-        //                 'LastupdateBy' => $request->LastUpdateBy,
-        //                 'LastupdateDate' => Carbon::now(),
-        //                 'DiscPct' => round(
-        //                     ((int) $request->AmountDiscount /
-        //                         ((int) $request->RetailPrice *
-        //                             (float) $request->SupplyQty)) *
-        //                         100,
-        //                     2
-        //                 ),
-        //                 'MechanicID' => $request->MechanicID,
-        //                 'AmountDiscount' => $request->AmountDiscount,
-        //             ]);
-
-        //             Svtrninvitem::create([
-        //                 'CompanyCode' => $request->CompanyCode,
-        //                 'BranchCode' => $branchcode,
-        //                 'ProductType' => $request->ProductType,
-        //                 'InvoiceNo' => $inc,
-        //                 'PartNo' => $request->PartNo,
-        //                 'MovingCode' => $request->MovingCode,
-        //                 'ABCClass' => $request->ABCClass,
-        //                 'SupplyQty' => $request->SupplyQty,
-        //                 'ReturnQty' => $request->ReturnQty,
-        //                 'CostPrice' => $request->CostPrice,
-        //                 'RetailPrice' => (int) $request->RetailPrice,
-        //                 'TypeOfGoods' => $request->TypeOfGoods,
-        //                 'DiscPct' =>
-        //                     ((int) $request->AmountDiscount /
-        //                         ($request->RetailPrice *
-        //                             (float) $request->SupplyQty)) *
-        //                     100,
-        //                 'MechanicID' => $request->MechanicID,
-        //                 'CreatedBy' => $request->CreatedBy,
-        //             ]);
-
-        //             Svtrninvitemdtl::create([
-        //                 'CompanyCode' => $request->CompanyCode,
-        //                 'BranchCode' => $branchcode,
-        //                 'ProductType' => $request->ProductType,
-        //                 'InvoiceNo' => $inc,
-        //                 'PartNo' => $request->PartNo,
-        //                 'SupplySlipNo' => $sss,
-        //                 'SupplyQty' => $request->SupplyQty,
-        //                 'CostPrice' => $request->CostPrice,
-        //                 'CreatedBy' => $request->CreatedBy,
-        //                 'CreatedDate' => Carbon::now(),
-        //             ]);
-        //         } else {
-        //             Svtrnsrvtask::create([
-        //                 'CompanyCode' => $request->CompanyCode,
-        //                 'BranchCode' => $branchcode,
-        //                 'ProductType' => $request->ProductType,
-        //                 'ServiceNo' => $servno,
-        //                 'OperationNo' => $request->OperationNo,
-        //                 'OperationHour' => $request->OperationHour,
-        //                 'OperationCost' => $request->OperationCost,
-        //                 'IsSubCon' => $request->IsSubCon,
-        //                 'SubConPrice' => $request->SubConPrice,
-        //                 'PONo' => '',
-        //                 'ClaimHour' => $request->ClaimHour,
-        //                 'TypeOfGoods' => $request->TypeOfGoods,
-        //                 'BillType' => $request->BillType,
-        //                 'SharingTask' => $request->SharingTask,
-        //                 'TaskStatus' => $request->TaskStatus,
-        //                 'StartService' => $invdate,
-        //                 'FinishService' => $invdate,
-        //                 'CreatedBy' => $request->CreatedBy,
-        //                 'CreatedDate' => Carbon::now(),
-        //                 'LastupdateBy' => $request->LastUpdateBy,
-        //                 'LastupdateDate' => Carbon::now(),
-        //                 'DiscPct' =>
-        //                     ((int) $request->AmountDiscount /
-        //                         ((int) $request->OperationCost *
-        //                             (int) $request->OperationHour)) *
-        //                     100,
-        //                 'AmountDiscount' => $request->AmountDiscount,
-        //             ]);
-
-        //             Svtrninvtask::create([
-        //                 'CompanyCode' => $request->CompanyCode,
-        //                 'BranchCode' => $branchcode,
-        //                 'ProductType' => $request->ProductType,
-        //                 'InvoiceNo' => $inc,
-        //                 'OperationNo' => $request->OperationNo,
-        //                 'OperationHour' => $request->OperationHour,
-        //                 'ClaimHour' => $request->ClaimHour,
-        //                 'OperationCost' => $request->OperationCost,
-        //                 'SubConPrice' => $request->SubConPrice,
-        //                 'IsSubCon' => $request->IsSubCon,
-        //                 'SharingTask' => $request->SharingTask,
-        //                 'DiscPct' =>
-        //                     ((int) $request->AmountDiscount /
-        //                         ((int) $request->OperationCost *
-        //                             (int) $request->OperationHour)) *
-        //                     100,
-        //                 'CreatedBy' => $request->CreatedBy,
-        //             ]);
-        //         }
-
-        //         Arbeginbalancehdr::firstOrCreate(
-        //             [
-        //                 'CompanyCode' => $request->CompanyCode,
-        //                 'BranchCode' => $branchcode,
-        //                 'DocNo' => $docNoArbegin,
-        //             ],
-        //             [
-        //                 'ProfitCenterCode' => '200',
-        //                 'DocDate' => $invdate,
-        //                 'CustomerCode' => $request->CustomerCodeBill,
-        //                 'AccountNo' => $accountNo,
-        //                 'DueDate' => $duedate,
-        //                 'TOPCode' => $request->TOPCode,
-        //                 'Amount' => 0,
-        //                 'SalesCode' => '',
-        //                 'LeasingCode' => '',
-        //                 'Status' => 0,
-        //                 'CreatedBy' => $request->CreatedBy,
-        //                 'CreatedDate' => Carbon::now(),
-        //                 'PrintSeq' => '1',
-        //             ]
-        //         );
-
-        //         Arbeginbalancedtl::firstOrCreate(
-        //             [
-        //                 'CompanyCode' => $request->CompanyCode,
-        //                 'BranchCode' => $branchcode,
-        //                 'DocNo' => $docNoArbegin,
-        //             ],
-        //             [
-        //                 'SeqNo' => '1',
-        //                 'AccountNo' => $accountNo,
-        //                 'Description' => '',
-        //                 'Amount' => 0,
-        //                 'Status' => '',
-        //                 'CreatedBy' => $request->CreatedBy,
-        //                 'CreatedDate' => Carbon::now(),
-        //             ]
-        //         );
-
-        //         $this->updateHeader(
-        //             $request->InvDocNo,
-        //             $servno,
-        //             $request->Remarks,
-        //             $request->Amount
-        //         );
-        //     }
-
-        //     return response()->json(
-        //         [
-        //             'data' => 0,
-        //         ],
-        //         200
-        //     );
-        // } else {
-        //     if (
-        //         $request->Remarks == 'Sparepart' or
-        //         $request->Remarks == 'Oil' or
-        //         $request->Remarks == 'Material'
-        //     ) {
-        //         $partseq = Svtrnsrvitem::where(
-        //             'CompanyCode',
-        //             $service->CompanyCode
-        //         )
-        //             ->where('BranchCode', $service->BranchCode)
-        //             ->where('ProductType', $service->ProductType)
-        //             ->where('ServiceNo', $service->ServiceNo)
-        //             ->where('PartNo', $request->PartNo)
-        //             ->orderBy('PartSeq', 'DESC')
-        //             ->first();
-        //         if ($partseq == null) {
-        //             $partseq_no = 1;
-        //             $sss = $this->noUrut(
-        //                 'SSS',
-        //                 $branchcode,
-        //                 $request->CompanyCode
-        //             );
-        //         } else {
-        //             $partseq_no = $partseq->PartSeq + 1;
-        //             $sss = $partseq->SupplySlipNo;
-        //         }
-
-        //         $svtrnsrvitem = Svtrnsrvitem::where(
-        //             'CompanyCode',
-        //             $service->CompanyCode
-        //         )
-        //             ->where('BranchCode', $service->BranchCode)
-        //             ->where('ProductType', $service->ProductType)
-        //             ->where('ServiceNo', $service->ServiceNo)
-        //             ->where('PartNo', $request->PartNo)
-        //             ->where('PartSeq', $partseq_no)
-        //             ->first();
-        //         if ($svtrnsrvitem == null) {
-        //             Svtrnsrvitem::create([
-        //                 'CompanyCode' => $request->CompanyCode,
-        //                 'BranchCode' => $branchcode,
-        //                 'ProductType' => $request->ProductType,
-        //                 'ServiceNo' => $service->ServiceNo,
-        //                 'PartNo' => $request->PartNo,
-        //                 'PartSeq' => $partseq_no,
-        //                 'DemandQty' => $request->DemandQty,
-        //                 'SupplyQty' => $request->SupplyQty,
-        //                 'ReturnQty' => $request->ReturnQty,
-        //                 'CostPrice' => $request->CostPrice,
-        //                 'RetailPrice' => (int) $request->RetailPrice,
-        //                 'TypeOfGoods' => $request->TypeOfGoods,
-        //                 'BillType' => $request->BillType,
-        //                 'SupplySlipNo' => $sss,
-        //                 'SupplySlipDate' => $invdate,
-        //                 'SSReturnNo' => null,
-        //                 'SSReturnDate' => $invdate,
-        //                 'CreatedBy' => $request->CreatedBy,
-        //                 'CreatedDate' => Carbon::now(),
-        //                 'LastupdateBy' => $request->LastUpdateBy,
-        //                 'LastupdateDate' => Carbon::now(),
-        //                 'DiscPct' => round(
-        //                     ((int) $request->AmountDiscount /
-        //                         ((int) $request->RetailPrice *
-        //                             (float) $request->SupplyQty)) *
-        //                         100,
-        //                     2
-        //                 ),
-        //                 'MechanicID' => $request->MechanicID,
-        //             ]);
-
-        //             Svtrninvitem::create([
-        //                 'CompanyCode' => $request->CompanyCode,
-        //                 'BranchCode' => $branchcode,
-        //                 'ProductType' => $request->ProductType,
-        //                 'InvoiceNo' => $service->InvoiceNo,
-        //                 'PartNo' => $request->PartNo,
-        //                 'MovingCode' => $request->MovingCode,
-        //                 'ABCClass' => $request->ABCClass,
-        //                 'SupplyQty' => $request->SupplyQty,
-        //                 'ReturnQty' => $request->ReturnQty,
-        //                 'CostPrice' => $request->CostPrice,
-        //                 'RetailPrice' => (int) $request->RetailPrice,
-        //                 'TypeOfGoods' => $request->TypeOfGoods,
-        //                 'DiscPct' => round(
-        //                     ((int) $request->AmountDiscount /
-        //                         ((int) $request->RetailPrice *
-        //                             (float) $request->SupplyQty)) *
-        //                         100,
-        //                     2
-        //                 ),
-        //                 'MechanicID' => $request->MechanicID,
-        //                 'CreatedBy' => $request->CreatedBy,
-        //             ]);
-
-        //             Svtrninvitemdtl::create([
-        //                 'CompanyCode' => $request->CompanyCode,
-        //                 'BranchCode' => $branchcode,
-        //                 'ProductType' => $request->ProductType,
-        //                 'InvoiceNo' => $service->InvoiceNo,
-        //                 'PartNo' => $request->PartNo,
-        //                 'SupplySlipNo' => $sss,
-        //                 'SupplyQty' => $request->SupplyQty,
-        //                 'CostPrice' => $request->CostPrice,
-        //                 'CreatedBy' => $request->CreatedBy,
-        //                 'CreatedDate' => Carbon::now(),
-        //             ]);
-
-        //             $this->updateDetail(
-        //                 $branchcode,
-        //                 $service->ServiceNo,
-        //                 $service->ProductType,
-        //                 $request->OperationNo,
-        //                 $request->PartNo,
-        //                 $service->InvoiceNo,
-        //                 $sss,
-        //                 $request->AmountDiscount,
-        //                 $request->RetailPrice,
-        //                 $request->SupplyQty,
-        //                 $request->OperationHour,
-        //                 $request->OperationCost
-        //             );
-        //         }
-        //     } else {
-        //         $svtrntask = Svtrnsrvtask::where(
-        //             'CompanyCode',
-        //             $service->CompanyCode
-        //         )
-        //             ->where('BranchCode', $service->BranchCode)
-        //             ->where('ProductType', $service->ProductType)
-        //             ->where('ServiceNo', $service->ServiceNo)
-        //             ->where('OperationNo', $request->OperationNo)
-        //             ->first();
-
-        //         if ($svtrntask == null) {
-        //             Svtrnsrvtask::create([
-        //                 'CompanyCode' => $request->CompanyCode,
-        //                 'BranchCode' => $branchcode,
-        //                 'ProductType' => $request->ProductType,
-        //                 'ServiceNo' => $service->ServiceNo,
-        //                 'OperationNo' => $request->OperationNo,
-        //                 'OperationHour' => $request->OperationHour,
-        //                 'OperationCost' => $request->OperationCost,
-        //                 'IsSubCon' => $request->IsSubCon,
-        //                 'SubConPrice' => $request->SubConPrice,
-        //                 'PONo' => '',
-        //                 'ClaimHour' => $request->ClaimHour,
-        //                 'TypeOfGoods' => $request->TypeOfGoods,
-        //                 'BillType' => $request->BillType,
-        //                 'SharingTask' => $request->SharingTask,
-        //                 'TaskStatus' => $request->TaskStatus,
-        //                 'StartService' => $invdate,
-        //                 'FinishService' => $invdate,
-        //                 'CreatedBy' => $request->CreatedBy,
-        //                 'CreatedDate' => Carbon::now(),
-        //                 'LastupdateBy' => $request->LastUpdateBy,
-        //                 'LastupdateDate' => Carbon::now(),
-        //                 'DiscPct' => round(
-        //                     ((int) $request->AmountDiscount /
-        //                         ((int) $request->RetailPrice *
-        //                             (float) $request->SupplyQty)) *
-        //                         100,
-        //                     2
-        //                 ),
-        //             ]);
-
-        //             Svtrninvtask::create([
-        //                 'CompanyCode' => $request->CompanyCode,
-        //                 'BranchCode' => $branchcode,
-        //                 'ProductType' => $request->ProductType,
-        //                 'InvoiceNo' => $service->InvoiceNo,
-        //                 'OperationNo' => $request->OperationNo,
-        //                 'OperationHour' => $request->OperationHour,
-        //                 'ClaimHour' => $request->ClaimHour,
-        //                 'OperationCost' => $request->OperationCost,
-        //                 'SubConPrice' => $request->SubConPrice,
-        //                 'IsSubCon' => $request->IsSubCon,
-        //                 'SharingTask' => $request->SharingTask,
-        //                 'DiscPct' => round(
-        //                     ((int) $request->AmountDiscount /
-        //                         ((int) $request->RetailPrice *
-        //                             (float) $request->SupplyQty)) *
-        //                         100,
-        //                     2
-        //                 ),
-        //                 'CreatedBy' => $request->CreatedBy,
-        //             ]);
-        //         }
-        //     }
-
-        //     Arbeginbalancehdr::firstOrCreate([
-        //         'CompanyCode' => $request->CompanyCode,
-        //         'BranchCode' => $branchcode,
-        //         'DocNo' => $docNoArbegin,
-        //         'ProfitCenterCode' => '200',
-        //         'DocDate' => $invdate,
-        //         'CustomerCode' => $request->CustomerCode,
-        //         'AccountNo' => $accountNo,
-        //         'DueDate' => $duedate,
-        //         'TOPCode' => $request->TOPCode,
-        //         'Amount' => 0,
-        //         'SalesCode' => '',
-        //         'LeasingCode' => '',
-        //         'Status' => 0,
-        //         'CreatedBy' => $request->CreatedBy,
-        //         'CreatedDate' => Carbon::now(),
-        //         'PrintSeq' => '1',
-        //     ]);
-
-        //     Arbeginbalancedtl::firstOrCreate([
-        //         'CompanyCode' => $request->CompanyCode,
-        //         'BranchCode' => $branchcode,
-        //         'DocNo' => $docNoArbegin,
-        //         'SeqNo' => '1',
-        //         'AccountNo' => $accountNo,
-        //         'Description' => '',
-        //         'Amount' => 0,
-        //         'Status' => '',
-        //         'CreatedBy' => $request->CreatedBy,
-        //         'CreatedDate' => Carbon::now(),
-        //     ]);
-
-        //     $this->updateDetail(
-        //         $branchcode,
-        //         $service->ServiceNo,
-        //         $service->ProductType,
-        //         $service->OperationNo,
-        //         $request->PartNo,
-        //         $service->InvoiceNo,
-        //         $service->SupplySlipNo,
-        //         $request->AmountDiscount,
-        //         $request->RetailPrice,
-        //         $request->SupplyQty,
-        //         $request->OperationHour,
-        //         $request->OperationCost
-        //     );
+        // if ($service) {
+        //     // $this->updateDetail(
+        //     //     $branchcode,
+        //     //     $service->ServiceNo,
+        //     //     $service->ProductType,
+        //     //     $service->OperationNo,
+        //     //     $request->PartNo,
+        //     //     $service->InvoiceNo,
+        //     //     $service->SupplySlipNo,
+        //     //     $request->AmountDiscount,
+        //     //     $request->RetailPrice,
+        //     //     $request->SupplyQty,
+        //     //     $request->OperationHour,
+        //     //     $request->OperationCost
+        //     // );
 
         //     $this->updateHeader(
         //         $request->InvDocNo,
@@ -772,14 +164,622 @@ class SvtrnsinvoiceController extends Controller
         //         $request->Remarks,
         //         $request->Amount
         //     );
-
-        //     return response()->json(
-        //         [
-        //             'data' => 1,
-        //         ],
-        //         200
-        //     );
         // }
+
+        if ($service == null) {
+            $spk = $this->noUrut('SPK', $branchcode, $request->CompanyCode);
+            $inc = $this->noUrut('INC', $branchcode, $request->CompanyCode);
+            $sss = $this->noUrut('SSS', $branchcode, $request->CompanyCode);
+            $fps = $this->noUrut('FPS', $branchcode, $request->CompanyCode);
+
+            $no = Svtrnservice::orderBy('ServiceNo', 'DESC')->first();
+            $servno = $no->ServiceNo + 1;
+
+            $svtrnservice = Svtrnservice::firstOrCreate(
+                [
+                    'CompanyCode' => $request->CompanyCode,
+                    'BranchCode' => $branchcode,
+                    'ProductType' => $request->ProductType,
+                    'ServiceNo' => $servno,
+                    'ServiceType' => $request->ServiceType,
+                ],
+                [
+                    'CompanyCode' => $request->CompanyCode,
+                    'BranchCode' => $branchcode,
+                    'ProductType' => $request->ProductType,
+                    'ServiceNo' => $servno,
+                    'ServiceType' => $request->ServiceType,
+                    'ServiceStatus' => $request->ServiceStatus,
+                    'JobOrderNo' => $spk,
+                    'JobOrderDate' => $invdate,
+                    'EstimationNo' => '',
+                    'EstimationDate' => $request->EstimationDate,
+                    'BookingNo' => '',
+                    'BookingDate' => $request->BookingDate,
+                    'InvoiceNo' => $inc,
+                    'ForemanID' => $request->ForemanID,
+                    'MechanicID' => $request->MechanicID,
+                    'CustomerCode' => $request->CustomerCode,
+                    'CustomerCodeBill' => $request->CustomerCodeBill,
+                    'PoliceRegNo' => $request->PoliceRegNo,
+                    'ServiceBookNo' => '',
+                    'BasicModel' => $request->BasicModel,
+                    'TransmissionType' => $request->TransmissionType,
+                    'VIN' => $request->VIN,
+                    'ChassisCode' => $chassisCode,
+                    'ChassisNo' => $chassisNo,
+                    'EngineCode' => $engineCode,
+                    'EngineNo' => $engineNo,
+                    'ColorCode' => $request->ColorCode,
+                    'Odometer' => $request->Odometer,
+                    'JobType' => $request->JobType,
+                    'ServiceRequestDesc' => $desc,
+                    'ConfirmChangingPart' => $request->ConfirmChangingPart,
+                    'EstimateFinishDate' => $invdate,
+                    'EstimateFinishDateSys' => $invdate,
+                    'LaborDiscPct' => 0,
+                    'PartDiscPct' => 0,
+                    'MaterialDiscAmt' => 0,
+                    'InsurancePayFlag' => $request->InsurancePayFlag,
+                    'InsuranceOwnRisk' => '0',
+                    'InsuranceNo' => '',
+                    'InsuranceJobOrderNo' => '',
+                    'PPNPct' => $request->PPNPct,
+                    'PPHPct' => $request->PPHPct,
+                    'LaborGrossAmt' => 0,
+                    'PartsGrossAmt' => 0,
+                    'MaterialGrossAmt' => 0,
+                    'LaborDiscAmt' => 0,
+                    'PartsDiscAmt' => 0,
+                    'MaterialDiscPct' => 0,
+                    'LaborDppAmt' => 0,
+                    'PartsDppAmt' => 0,
+                    'MaterialDppAmt' => 0,
+                    'TotalDPPAmount' => 0,
+                    'TotalPphAmount' => 0,
+                    'TotalPpnAmount' => 0,
+                    'TotalSrvAmount' => 0,
+                    'PrintSeq' => $request->PrintSeq,
+                    'IsLocked' => $request->IsLocked,
+                    'LockingBy' => $request->LockingBy,
+                    'LockingDate' => Carbon::now(),
+                    'CreatedBy' => $request->CreatedBy,
+                    'CreatedDate' => Carbon::now(),
+                    'LastUpdateBy' => $request->LastUpdateBy,
+                    'LastUpdateDate' => Carbon::now(),
+                    'IsSparepartClaim' => $request->IsSparepartClaim,
+                    'JobOrderClosed' => $request->JobOrderClosed,
+                    'InvDocNo' => $request->InvDocNo,
+                ]
+            );
+
+            if ($svtrnservice) {
+                Svtrninvoice::create([
+                    'CompanyCode' => $request->CompanyCode,
+                    'BranchCode' => $branchcode,
+                    'ProductType' => $request->ProductType,
+                    'InvoiceNo' => $inc,
+                    'InvoiceDate' => $invdate,
+                    'InvoiceStatus' => $request->InvoiceStatus,
+                    'FPJNo' => $fps,
+                    'FPJDate' => $invdate,
+                    'JobOrderNo' => $spk,
+                    'JobOrderDate' => $invdate,
+                    'JobType' => $request->JobType,
+                    'ServiceRequestDesc' => $desc,
+                    'ChassisCode' => $chassisCode,
+                    'ChassisNo' => $chassisNo,
+                    'EngineCode' => $engineCode,
+                    'EngineNo' => $engineNo,
+                    'PoliceRegNo' => $request->PoliceRegNo,
+                    'BasicModel' => $request->BasicModel,
+                    'CustomerCode' => $request->CustomerCode,
+                    'CustomerCodeBill' => $request->CustomerCodeBill,
+                    'Odometer' => $request->Odometer,
+                    'IsPKP' => $request->IsPKP,
+                    'TOPCode' => $request->TOPCode,
+                    'TOPDays' => $request->TOPDays,
+                    'DueDate' => $duedate,
+                    'SignedDate' => $invdate,
+                    'LaborDiscPct' => 0,
+                    'PartsDiscPct' => 0,
+                    'MaterialDiscPct' => 0,
+                    'PphPct' => $request->PPHPct,
+                    'PpnPct' => $request->PPNPct,
+                    'LaborGrossAmt' => 0,
+                    'PartsGrossAmt' => 0,
+                    'MaterialGrossAmt' => 0,
+                    'LaborDiscAmt' => 0,
+                    'PartsDiscAmt' => 0,
+                    'MaterialDiscAmt' => 0,
+                    'LaborDppAmt' => 0,
+                    'PartsDppAmt' => 0,
+                    'MaterialDppAmt' => 0,
+                    'TotalDppAmt' => 0,
+                    'TotalPphAmt' => 0,
+                    'TotalPpnAmt' => 0,
+                    'TotalSrvAmt' => 0,
+                    'Remarks' => $request->Remarks,
+                    'PrintSeq' => $request->PrintSeq,
+                    'PostingFlag' => $request->PostingFlag,
+                    'PostingDate' => null,
+                    'IsLocked' => false,
+                    'LockingBy' => null,
+                    'LockingDate' => null,
+                    'CreatedBy' => $request->CreatedBy,
+                    'CreatedDate' => Carbon::now(),
+                    'LastupdateBy' => $request->LastUpdateBy,
+                    'LastupdateDate' => Carbon::now(),
+                    'InvDocNo' => $request->InvDocNo,
+                ]);
+
+                Svtrnfakturpajak::create([
+                    'CompanyCode' => $request->CompanyCode,
+                    'BranchCode' => $branchcode,
+                    'FPJNo' => $fps,
+                    'FPJDate' => $invdate,
+                    'FPJGovNo' => $request->FPJGovNo,
+                    'FPJCentralNo' => '',
+                    'FPJCentralDate' => $request->FPJCentralDate,
+                    'NoOfInvoice' => $request->NoOfInvoice,
+                    'CustomerCode' => $request->CustomerCode,
+                    'CustomerCodeBill' => $request->CustomerCodeBill,
+                    'CustomerName' => $request->CustomerName,
+                    'Address1' => str_replace(',', ' ', $request->Address1),
+                    'Address2' => str_replace(',', ' ', $request->Address2),
+                    'Address3' => str_replace(',', ' ', $request->Address3),
+                    'Address4' => '',
+                    'PhoneNo' => $request->PhoneNo,
+                    'HPNo' => $request->HPNo,
+                    'IsPKP' => $request->IsPKP,
+                    'SKPNo' => $request->SKPNo,
+                    'SKPDate' => $request->SKPDate,
+                    'NPWPNo' => $request->NPWPNo,
+                    'NPWPDate' => $request->NPWPDate,
+                    'TOPCode' => $request->TOPCode,
+                    'TOPDays' => $request->TOPDays,
+                    'DueDate' => $duedate,
+                    'SignedDate' => $invdate,
+                    'PrintSeq' => $request->PrintSeq,
+                    'GenerateStatus' => $request->GenerateStatus,
+                    'IsLocked' => $request->IsLocked,
+                    'LockingBy' => null,
+                    'LockingDate' => $request->LockingDate,
+                    'CreatedBy' => $request->CreatedBy,
+                    'CreatedDate' => Carbon::now(),
+                    'LastupdateBy' => $request->LastUpdateBy,
+                    'LastupdateDate' => Carbon::now(),
+                ]);
+
+                if (
+                    $request->Remarks == 'Sparepart' or
+                    $request->Remarks == 'Oil' or
+                    $request->Remarks == 'Material'
+                ) {
+                    Svtrnsrvitem::create([
+                        'CompanyCode' => $request->CompanyCode,
+                        'BranchCode' => $branchcode,
+                        'ProductType' => $request->ProductType,
+                        'ServiceNo' => $servno,
+                        'PartNo' => $request->PartNo,
+                        'PartSeq' => 1,
+                        'DemandQty' => $request->DemandQty,
+                        'SupplyQty' => $request->SupplyQty,
+                        'ReturnQty' => $request->ReturnQty,
+                        'CostPrice' => $request->CostPrice,
+                        'RetailPrice' => (int) $request->RetailPrice,
+                        'TypeOfGoods' => $request->TypeOfGoods,
+                        'BillType' => $request->BillType,
+                        'SupplySlipNo' => $sss,
+                        'SupplySlipDate' => $invdate,
+                        'SSReturnNo' => null,
+                        'SSReturnDate' => $invdate,
+                        'CreatedBy' => $request->CreatedBy,
+                        'CreatedDate' => Carbon::now(),
+                        'LastupdateBy' => $request->LastUpdateBy,
+                        'LastupdateDate' => Carbon::now(),
+                        'DiscPct' => round(
+                            ((int) $request->AmountDiscount /
+                                ((int) $request->RetailPrice *
+                                    (float) $request->SupplyQty)) *
+                                100,
+                            2
+                        ),
+                        'MechanicID' => $request->MechanicID,
+                        'AmountDiscount' => $request->AmountDiscount,
+                    ]);
+
+                    Svtrninvitem::create([
+                        'CompanyCode' => $request->CompanyCode,
+                        'BranchCode' => $branchcode,
+                        'ProductType' => $request->ProductType,
+                        'InvoiceNo' => $inc,
+                        'PartNo' => $request->PartNo,
+                        'MovingCode' => $request->MovingCode,
+                        'ABCClass' => $request->ABCClass,
+                        'SupplyQty' => $request->SupplyQty,
+                        'ReturnQty' => $request->ReturnQty,
+                        'CostPrice' => $request->CostPrice,
+                        'RetailPrice' => (int) $request->RetailPrice,
+                        'TypeOfGoods' => $request->TypeOfGoods,
+                        'DiscPct' =>
+                            ((int) $request->AmountDiscount /
+                                ($request->RetailPrice *
+                                    (float) $request->SupplyQty)) *
+                            100,
+                        'MechanicID' => $request->MechanicID,
+                        'CreatedBy' => $request->CreatedBy,
+                    ]);
+
+                    Svtrninvitemdtl::create([
+                        'CompanyCode' => $request->CompanyCode,
+                        'BranchCode' => $branchcode,
+                        'ProductType' => $request->ProductType,
+                        'InvoiceNo' => $inc,
+                        'PartNo' => $request->PartNo,
+                        'SupplySlipNo' => $sss,
+                        'SupplyQty' => $request->SupplyQty,
+                        'CostPrice' => $request->CostPrice,
+                        'CreatedBy' => $request->CreatedBy,
+                        'CreatedDate' => Carbon::now(),
+                    ]);
+                } else {
+                    Svtrnsrvtask::create([
+                        'CompanyCode' => $request->CompanyCode,
+                        'BranchCode' => $branchcode,
+                        'ProductType' => $request->ProductType,
+                        'ServiceNo' => $servno,
+                        'OperationNo' => $request->OperationNo,
+                        'OperationHour' => $request->OperationHour,
+                        'OperationCost' => $request->OperationCost,
+                        'IsSubCon' => $request->IsSubCon,
+                        'SubConPrice' => $request->SubConPrice,
+                        'PONo' => '',
+                        'ClaimHour' => $request->ClaimHour,
+                        'TypeOfGoods' => $request->TypeOfGoods,
+                        'BillType' => $request->BillType,
+                        'SharingTask' => $request->SharingTask,
+                        'TaskStatus' => $request->TaskStatus,
+                        'StartService' => $invdate,
+                        'FinishService' => $invdate,
+                        'CreatedBy' => $request->CreatedBy,
+                        'CreatedDate' => Carbon::now(),
+                        'LastupdateBy' => $request->LastUpdateBy,
+                        'LastupdateDate' => Carbon::now(),
+                        'DiscPct' =>
+                            ((int) $request->AmountDiscount /
+                                ((int) $request->OperationCost *
+                                    (int) $request->OperationHour)) *
+                            100,
+                        'AmountDiscount' => $request->AmountDiscount,
+                    ]);
+
+                    Svtrninvtask::create([
+                        'CompanyCode' => $request->CompanyCode,
+                        'BranchCode' => $branchcode,
+                        'ProductType' => $request->ProductType,
+                        'InvoiceNo' => $inc,
+                        'OperationNo' => $request->OperationNo,
+                        'OperationHour' => $request->OperationHour,
+                        'ClaimHour' => $request->ClaimHour,
+                        'OperationCost' => $request->OperationCost,
+                        'SubConPrice' => $request->SubConPrice,
+                        'IsSubCon' => $request->IsSubCon,
+                        'SharingTask' => $request->SharingTask,
+                        'DiscPct' =>
+                            ((int) $request->AmountDiscount /
+                                ((int) $request->OperationCost *
+                                    (int) $request->OperationHour)) *
+                            100,
+                        'CreatedBy' => $request->CreatedBy,
+                    ]);
+                }
+
+                Arbeginbalancehdr::firstOrCreate(
+                    [
+                        'CompanyCode' => $request->CompanyCode,
+                        'BranchCode' => $branchcode,
+                        'DocNo' => $docNoArbegin,
+                    ],
+                    [
+                        'ProfitCenterCode' => '200',
+                        'DocDate' => $invdate,
+                        'CustomerCode' => $request->CustomerCodeBill,
+                        'AccountNo' => $accountNo,
+                        'DueDate' => $duedate,
+                        'TOPCode' => $request->TOPCode,
+                        'Amount' => 0,
+                        'SalesCode' => '',
+                        'LeasingCode' => '',
+                        'Status' => 0,
+                        'CreatedBy' => $request->CreatedBy,
+                        'CreatedDate' => Carbon::now(),
+                        'PrintSeq' => '1',
+                    ]
+                );
+
+                Arbeginbalancedtl::firstOrCreate(
+                    [
+                        'CompanyCode' => $request->CompanyCode,
+                        'BranchCode' => $branchcode,
+                        'DocNo' => $docNoArbegin,
+                    ],
+                    [
+                        'SeqNo' => '1',
+                        'AccountNo' => $accountNo,
+                        'Description' => '',
+                        'Amount' => 0,
+                        'Status' => '',
+                        'CreatedBy' => $request->CreatedBy,
+                        'CreatedDate' => Carbon::now(),
+                    ]
+                );
+
+                $this->updateHeader(
+                    $request->InvDocNo,
+                    $servno,
+                    $request->Remarks,
+                    $request->Amount
+                );
+            }
+
+            return response()->json(
+                [
+                    'data' => 0,
+                ],
+                200
+            );
+        } else {
+            if (
+                $request->Remarks == 'Sparepart' or
+                $request->Remarks == 'Oil' or
+                $request->Remarks == 'Material'
+            ) {
+                $partseq = Svtrnsrvitem::where(
+                    'CompanyCode',
+                    $service->CompanyCode
+                )
+                    ->where('BranchCode', $service->BranchCode)
+                    ->where('ProductType', $service->ProductType)
+                    ->where('ServiceNo', $service->ServiceNo)
+                    ->where('PartNo', $request->PartNo)
+                    ->orderBy('PartSeq', 'DESC')
+                    ->first();
+                if ($partseq == null) {
+                    $partseq_no = 1;
+                    $sss = $this->noUrut(
+                        'SSS',
+                        $branchcode,
+                        $request->CompanyCode
+                    );
+                } else {
+                    $partseq_no = $partseq->PartSeq + 1;
+                    $sss = $partseq->SupplySlipNo;
+                }
+
+                $svtrnsrvitem = Svtrnsrvitem::where(
+                    'CompanyCode',
+                    $service->CompanyCode
+                )
+                    ->where('BranchCode', $service->BranchCode)
+                    ->where('ProductType', $service->ProductType)
+                    ->where('ServiceNo', $service->ServiceNo)
+                    ->where('PartNo', $request->PartNo)
+                    ->where('PartSeq', $partseq_no)
+                    ->first();
+                if ($svtrnsrvitem == null) {
+                    Svtrnsrvitem::create([
+                        'CompanyCode' => $request->CompanyCode,
+                        'BranchCode' => $branchcode,
+                        'ProductType' => $request->ProductType,
+                        'ServiceNo' => $service->ServiceNo,
+                        'PartNo' => $request->PartNo,
+                        'PartSeq' => $partseq_no,
+                        'DemandQty' => $request->DemandQty,
+                        'SupplyQty' => $request->SupplyQty,
+                        'ReturnQty' => $request->ReturnQty,
+                        'CostPrice' => $request->CostPrice,
+                        'RetailPrice' => (int) $request->RetailPrice,
+                        'TypeOfGoods' => $request->TypeOfGoods,
+                        'BillType' => $request->BillType,
+                        'SupplySlipNo' => $sss,
+                        'SupplySlipDate' => $invdate,
+                        'SSReturnNo' => null,
+                        'SSReturnDate' => $invdate,
+                        'CreatedBy' => $request->CreatedBy,
+                        'CreatedDate' => Carbon::now(),
+                        'LastupdateBy' => $request->LastUpdateBy,
+                        'LastupdateDate' => Carbon::now(),
+                        'DiscPct' => round(
+                            ((int) $request->AmountDiscount /
+                                ((int) $request->RetailPrice *
+                                    (float) $request->SupplyQty)) *
+                                100,
+                            2
+                        ),
+                        'MechanicID' => $request->MechanicID,
+                    ]);
+
+                    Svtrninvitem::create([
+                        'CompanyCode' => $request->CompanyCode,
+                        'BranchCode' => $branchcode,
+                        'ProductType' => $request->ProductType,
+                        'InvoiceNo' => $service->InvoiceNo,
+                        'PartNo' => $request->PartNo,
+                        'MovingCode' => $request->MovingCode,
+                        'ABCClass' => $request->ABCClass,
+                        'SupplyQty' => $request->SupplyQty,
+                        'ReturnQty' => $request->ReturnQty,
+                        'CostPrice' => $request->CostPrice,
+                        'RetailPrice' => (int) $request->RetailPrice,
+                        'TypeOfGoods' => $request->TypeOfGoods,
+                        'DiscPct' => round(
+                            ((int) $request->AmountDiscount /
+                                ((int) $request->RetailPrice *
+                                    (float) $request->SupplyQty)) *
+                                100,
+                            2
+                        ),
+                        'MechanicID' => $request->MechanicID,
+                        'CreatedBy' => $request->CreatedBy,
+                    ]);
+
+                    Svtrninvitemdtl::create([
+                        'CompanyCode' => $request->CompanyCode,
+                        'BranchCode' => $branchcode,
+                        'ProductType' => $request->ProductType,
+                        'InvoiceNo' => $service->InvoiceNo,
+                        'PartNo' => $request->PartNo,
+                        'SupplySlipNo' => $sss,
+                        'SupplyQty' => $request->SupplyQty,
+                        'CostPrice' => $request->CostPrice,
+                        'CreatedBy' => $request->CreatedBy,
+                        'CreatedDate' => Carbon::now(),
+                    ]);
+
+                    $this->updateDetail(
+                        $branchcode,
+                        $service->ServiceNo,
+                        $service->ProductType,
+                        $request->OperationNo,
+                        $request->PartNo,
+                        $service->InvoiceNo,
+                        $sss,
+                        $request->AmountDiscount,
+                        $request->RetailPrice,
+                        $request->SupplyQty,
+                        $request->OperationHour,
+                        $request->OperationCost
+                    );
+                }
+            } else {
+                $svtrntask = Svtrnsrvtask::where(
+                    'CompanyCode',
+                    $service->CompanyCode
+                )
+                    ->where('BranchCode', $service->BranchCode)
+                    ->where('ProductType', $service->ProductType)
+                    ->where('ServiceNo', $service->ServiceNo)
+                    ->where('OperationNo', $request->OperationNo)
+                    ->first();
+
+                if ($svtrntask == null) {
+                    Svtrnsrvtask::create([
+                        'CompanyCode' => $request->CompanyCode,
+                        'BranchCode' => $branchcode,
+                        'ProductType' => $request->ProductType,
+                        'ServiceNo' => $service->ServiceNo,
+                        'OperationNo' => $request->OperationNo,
+                        'OperationHour' => $request->OperationHour,
+                        'OperationCost' => $request->OperationCost,
+                        'IsSubCon' => $request->IsSubCon,
+                        'SubConPrice' => $request->SubConPrice,
+                        'PONo' => '',
+                        'ClaimHour' => $request->ClaimHour,
+                        'TypeOfGoods' => $request->TypeOfGoods,
+                        'BillType' => $request->BillType,
+                        'SharingTask' => $request->SharingTask,
+                        'TaskStatus' => $request->TaskStatus,
+                        'StartService' => $invdate,
+                        'FinishService' => $invdate,
+                        'CreatedBy' => $request->CreatedBy,
+                        'CreatedDate' => Carbon::now(),
+                        'LastupdateBy' => $request->LastUpdateBy,
+                        'LastupdateDate' => Carbon::now(),
+                        'DiscPct' => round(
+                            ((int) $request->AmountDiscount /
+                                ((int) $request->RetailPrice *
+                                    (float) $request->SupplyQty)) *
+                                100,
+                            2
+                        ),
+                    ]);
+
+                    Svtrninvtask::create([
+                        'CompanyCode' => $request->CompanyCode,
+                        'BranchCode' => $branchcode,
+                        'ProductType' => $request->ProductType,
+                        'InvoiceNo' => $service->InvoiceNo,
+                        'OperationNo' => $request->OperationNo,
+                        'OperationHour' => $request->OperationHour,
+                        'ClaimHour' => $request->ClaimHour,
+                        'OperationCost' => $request->OperationCost,
+                        'SubConPrice' => $request->SubConPrice,
+                        'IsSubCon' => $request->IsSubCon,
+                        'SharingTask' => $request->SharingTask,
+                        'DiscPct' => round(
+                            ((int) $request->AmountDiscount /
+                                ((int) $request->RetailPrice *
+                                    (float) $request->SupplyQty)) *
+                                100,
+                            2
+                        ),
+                        'CreatedBy' => $request->CreatedBy,
+                    ]);
+                }
+            }
+
+            Arbeginbalancehdr::firstOrCreate([
+                'CompanyCode' => $request->CompanyCode,
+                'BranchCode' => $branchcode,
+                'DocNo' => $docNoArbegin,
+                'ProfitCenterCode' => '200',
+                'DocDate' => $invdate,
+                'CustomerCode' => $request->CustomerCode,
+                'AccountNo' => $accountNo,
+                'DueDate' => $duedate,
+                'TOPCode' => $request->TOPCode,
+                'Amount' => 0,
+                'SalesCode' => '',
+                'LeasingCode' => '',
+                'Status' => 0,
+                'CreatedBy' => $request->CreatedBy,
+                'CreatedDate' => Carbon::now(),
+                'PrintSeq' => '1',
+            ]);
+
+            Arbeginbalancedtl::firstOrCreate([
+                'CompanyCode' => $request->CompanyCode,
+                'BranchCode' => $branchcode,
+                'DocNo' => $docNoArbegin,
+                'SeqNo' => '1',
+                'AccountNo' => $accountNo,
+                'Description' => '',
+                'Amount' => 0,
+                'Status' => '',
+                'CreatedBy' => $request->CreatedBy,
+                'CreatedDate' => Carbon::now(),
+            ]);
+
+            $this->updateDetail(
+                $branchcode,
+                $service->ServiceNo,
+                $service->ProductType,
+                $service->OperationNo,
+                $request->PartNo,
+                $service->InvoiceNo,
+                $service->SupplySlipNo,
+                $request->AmountDiscount,
+                $request->RetailPrice,
+                $request->SupplyQty,
+                $request->OperationHour,
+                $request->OperationCost
+            );
+
+            $this->updateHeader(
+                $request->InvDocNo,
+                $service->ServiceNo,
+                $request->Remarks,
+                $request->Amount
+            );
+
+            return response()->json(
+                [
+                    'data' => 1,
+                ],
+                200
+            );
+        }
 
         return response()->json(
             [
