@@ -834,7 +834,7 @@ class SvtrnsinvoiceController extends Controller
             ->where('OperationNo', $operationNo)
             ->update([
                 'DiscPct' => (float) round(
-                    ((int) $disc / ($opHour * $opCost)) * 100,
+                    ((int) $disc / ((float) $opHour * (int) $opCost)) * 100,
                     2
                 ),
             ]);
@@ -844,7 +844,7 @@ class SvtrnsinvoiceController extends Controller
             ->where('OperationNo', $operationNo)
             ->update([
                 'DiscPct' => (float) round(
-                    ((int) $disc / ($opHour * $opCost)) * 100,
+                    ((int) $disc / ((float) $opHour * (int) $opCost)) * 100,
                     2
                 ),
             ]);
