@@ -833,14 +833,20 @@ class SvtrnsinvoiceController extends Controller
             ->where('ServiceNo', $serno)
             ->where('OperationNo', $operationNo)
             ->update([
-                'DiscPct' => round(($disc / ($opHour * $opCost)) * 100, 2),
+                'DiscPct' => (float) round(
+                    ((int) $disc / ($opHour * $opCost)) * 100,
+                    2
+                ),
             ]);
         Svtrninvtask::where('BranchCode', $branch)
             ->where('ProductType', $productType)
             ->where('InvoiceNo', $invno)
             ->where('OperationNo', $operationNo)
             ->update([
-                'DiscPct' => round(($disc / ($opHour * $opCost)) * 100, 2),
+                'DiscPct' => (float) round(
+                    ((int) $disc / ($opHour * $opCost)) * 100,
+                    2
+                ),
             ]);
     }
 
