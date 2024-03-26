@@ -108,39 +108,39 @@ class SvtrnsinvoiceController extends Controller
 
         // Nembak AR
         // Dari sini
-        if ($service) {
-            Arbeginbalancehdr::firstOrCreate([
-                'CompanyCode' => $request->CompanyCode,
-                'BranchCode' => $branchcode,
-                'DocNo' => $docNoArbegin,
-                'ProfitCenterCode' => '200',
-                'DocDate' => $invdate,
-                'CustomerCode' => $request->CustomerCode,
-                'AccountNo' => $accountNo,
-                'DueDate' => $duedate,
-                'TOPCode' => $request->TOPCode,
-                'Amount' => 0,
-                'SalesCode' => '',
-                'LeasingCode' => '',
-                'Status' => 0,
-                'CreatedBy' => $request->CreatedBy,
-                'CreatedDate' => Carbon::now(),
-                'PrintSeq' => '1',
-            ]);
+        // if ($service) {
+        //     Arbeginbalancehdr::firstOrCreate([
+        //         'CompanyCode' => $request->CompanyCode,
+        //         'BranchCode' => $branchcode,
+        //         'DocNo' => $docNoArbegin,
+        //         'ProfitCenterCode' => '200',
+        //         'DocDate' => $invdate,
+        //         'CustomerCode' => $request->CustomerCode,
+        //         'AccountNo' => $accountNo,
+        //         'DueDate' => $duedate,
+        //         'TOPCode' => $request->TOPCode,
+        //         'Amount' => 0,
+        //         'SalesCode' => '',
+        //         'LeasingCode' => '',
+        //         'Status' => 0,
+        //         'CreatedBy' => $request->CreatedBy,
+        //         'CreatedDate' => Carbon::now(),
+        //         'PrintSeq' => '1',
+        //     ]);
 
-            Arbeginbalancedtl::firstOrCreate([
-                'CompanyCode' => $request->CompanyCode,
-                'BranchCode' => $branchcode,
-                'DocNo' => $docNoArbegin,
-                'SeqNo' => '1',
-                'AccountNo' => $accountNo,
-                'Description' => '',
-                'Amount' => 0,
-                'Status' => '',
-                'CreatedBy' => $request->CreatedBy,
-                'CreatedDate' => Carbon::now(),
-            ]);
-        }
+        //     Arbeginbalancedtl::firstOrCreate([
+        //         'CompanyCode' => $request->CompanyCode,
+        //         'BranchCode' => $branchcode,
+        //         'DocNo' => $docNoArbegin,
+        //         'SeqNo' => '1',
+        //         'AccountNo' => $accountNo,
+        //         'Description' => '',
+        //         'Amount' => 0,
+        //         'Status' => '',
+        //         'CreatedBy' => $request->CreatedBy,
+        //         'CreatedDate' => Carbon::now(),
+        //     ]);
+        // }
         // nembak header dan detail
         if ($service) {
             $this->updateDetail(
