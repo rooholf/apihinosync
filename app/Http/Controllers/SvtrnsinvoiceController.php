@@ -803,17 +803,19 @@ class SvtrnsinvoiceController extends Controller
         $opHour,
         $opCost
     ) {
+        $discPct =
+            (float) ((int) $disc / ($retailPrice * (float) $supplyQty)) * 100;
+
+        $discSrv =
+            (float) ((int) $disc / ((float) $opHour * (int) $opCost)) * 100;
+
         Svtrnsrvitem::where('BranchCode', $branch)
             ->where('ProductType', $productType)
             ->where('ServiceNo', $serno)
             ->where('PartNo', $partno)
             ->where('SupplySlipNo', $slip)
             ->update([
-                'DiscPct' => (float) round(
-                    ((int) $disc / ((int) $retailPrice * (float) $supplyQty)) *
-                        100,
-                    2
-                ),
+                'DiscPct' => $discPct,
             ]);
 
         Svtrninvitem::where('BranchCode', $branch)
@@ -821,11 +823,7 @@ class SvtrnsinvoiceController extends Controller
             ->where('InvoiceNo', $invno)
             ->where('PartNo', $partno)
             ->update([
-                'DiscPct' => (float) round(
-                    ((int) $disc / ((int) $retailPrice * (float) $supplyQty)) *
-                        100,
-                    2
-                ),
+                'DiscPct' => $discPct,
             ]);
 
         Svtrnsrvtask::where('BranchCode', $branch)
@@ -833,20 +831,14 @@ class SvtrnsinvoiceController extends Controller
             ->where('ServiceNo', $serno)
             ->where('OperationNo', $operationNo)
             ->update([
-                'DiscPct' => (float) round(
-                    ((int) $disc / ((float) $opHour * (int) $opCost)) * 100,
-                    2
-                ),
+                'DiscPct' => $discSrv,
             ]);
         Svtrninvtask::where('BranchCode', $branch)
             ->where('ProductType', $productType)
             ->where('InvoiceNo', $invno)
             ->where('OperationNo', $operationNo)
             ->update([
-                'DiscPct' => (float) round(
-                    ((int) $disc / ((float) $opHour * (int) $opCost)) * 100,
-                    2
-                ),
+                'DiscPct' => $discSrv,
             ]);
     }
 
