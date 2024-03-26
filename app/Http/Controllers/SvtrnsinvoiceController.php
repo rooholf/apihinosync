@@ -803,12 +803,12 @@ class SvtrnsinvoiceController extends Controller
         $opHour,
         $opCost
     ) {
-        $discPct =
-            (float) ((int) $disc / ((int) $retailPrice * (float) $supplyQty)) *
-            100;
+        $amtItem = (int) $retailPrice * $supplyQty;
+        $amtSrv = (float) $opHour * (int) $opCost;
 
-        $discSrv =
-            (float) ((int) $disc / ((float) $opHour * (int) $opCost)) * 100;
+        $discPct = ((int) $disc / (int) $amtItem) * 100;
+
+        $discSrv = ((int) $disc / (int) $amtSrv) * 100;
 
         Svtrnsrvitem::where('BranchCode', $branch)
             ->where('ProductType', $productType)
@@ -816,7 +816,7 @@ class SvtrnsinvoiceController extends Controller
             ->where('PartNo', $partno)
             ->where('SupplySlipNo', $slip)
             ->update([
-                'DiscPct' => $discPct,
+                'DiscPct' => round($discPct, 2),
             ]);
 
         Svtrninvitem::where('BranchCode', $branch)
@@ -824,7 +824,7 @@ class SvtrnsinvoiceController extends Controller
             ->where('InvoiceNo', $invno)
             ->where('PartNo', $partno)
             ->update([
-                'DiscPct' => $discPct,
+                'DiscPct' => round($discPct, 2),
             ]);
 
         Svtrnsrvtask::where('BranchCode', $branch)
@@ -832,14 +832,14 @@ class SvtrnsinvoiceController extends Controller
             ->where('ServiceNo', $serno)
             ->where('OperationNo', $operationNo)
             ->update([
-                'DiscPct' => $discSrv,
+                'DiscPct' => round($discSrv, 2),
             ]);
         Svtrninvtask::where('BranchCode', $branch)
             ->where('ProductType', $productType)
             ->where('InvoiceNo', $invno)
             ->where('OperationNo', $operationNo)
             ->update([
-                'DiscPct' => $discSrv,
+                'DiscPct' => round($discSrv, 2),
             ]);
     }
 
