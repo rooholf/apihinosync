@@ -810,7 +810,7 @@ class SvtrnsinvoiceController extends Controller
             ->where('SupplySlipNo', $slip)
             ->update([
                 'DiscPct' => (float) round(
-                    ($disc / ($retailPrice * $supplyQty)) * 100,
+                    ((int) $disc / (int) ($retailPrice * $supplyQty)) * 100,
                     2
                 ),
             ]);
@@ -821,7 +821,7 @@ class SvtrnsinvoiceController extends Controller
             ->where('PartNo', $partno)
             ->update([
                 'DiscPct' => (float) round(
-                    ($disc / ($retailPrice * $supplyQty)) * 100,
+                    ((int) $disc / (int) ($retailPrice * $supplyQty)) * 100,
                     2
                 ),
             ]);
