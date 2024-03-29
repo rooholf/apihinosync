@@ -29,7 +29,7 @@ class SptrnsinvoiceController extends Controller
         $thn = substr($gnmstdocument->DocumentYear, 2, 2);
         $nourut = sprintf('%06s', $no);
 
-        $newnumb = $type . '/' . $thn . '/' . $nourut;
+        $newnumb = $type.'/'.$thn.'/'.$nourut;
 
         Gnmstdocument::where('DocumentType', $type)
             ->where('BranchCode', $branchcode)
@@ -56,9 +56,9 @@ class SptrnsinvoiceController extends Controller
         // date
         $invdateEx = explode(' ', $request->InvoiceDate);
 
-        $invdate = $invdateEx[0] . ' ' . $invdateEx[1];
+        $invdate = $invdateEx[0].' '.$invdateEx[1];
         $duedateOdd = date('Y-m-d', strtotime('+1 month', strtotime($invdate)));
-        $duedate = $duedateOdd . ' ' . $invdateEx[1];
+        $duedate = $duedateOdd.' '.$invdateEx[1];
 
         // accomulative
         $rinctax = $request->RetailPrice * 1.1;
@@ -67,12 +67,12 @@ class SptrnsinvoiceController extends Controller
         $invnoEx = explode('/', $request->InvoiceNo);
         $docFirst = substr($invnoEx[0], 1, 3);
         $docNoArbegin =
-            $docFirst .
-            '/' .
-            $invnoEx[3] .
-            '/' .
-            $invnoEx[2] .
-            $invnoEx[1] .
+            $docFirst.
+            '/'.
+            $invnoEx[3].
+            '/'.
+            $invnoEx[2].
+            $invnoEx[1].
             $invnoEx[4];
 
         $header = Sptrnsinvoicehdr::where('CompanyCode', $request->CompanyCode)
@@ -146,7 +146,7 @@ class SptrnsinvoiceController extends Controller
                 'CustomerCodeShip' => $request->CustomerCodeShip,
                 'TotSalesQty' => 0,
                 'TotSalesAmt' => 0,
-                'TotDiscAmt' => (int) $request->DiscAmt,
+                'TotDiscAmt' => $request->DiscAmt,
                 'TotDPPAmt' => 0,
                 'TotPPNAmt' => 0,
                 'TotFinalSalesAmt' => 0,
@@ -228,7 +228,7 @@ class SptrnsinvoiceController extends Controller
                     'DueDate' => $duedate,
                     'TotSalesQty' => 0,
                     'TotSalesAmt' => 0,
-                    'TotDiscAmt' => (int) $request->DiscAmt,
+                    'TotDiscAmt' => $request->DiscAmt,
                     'TotDPPAmt' => 0,
                     'TotPPNAmt' => 0,
                     'TotFinalSalesAmt' => 0,
@@ -524,7 +524,7 @@ class SptrnsinvoiceController extends Controller
                 'DueDate' => $duedate,
                 'TotSalesQty' => 0,
                 'TotSalesAmt' => 0,
-                'TotDiscAmt' => (int) $request->DiscAmt,
+                'TotDiscAmt' => $request->DiscAmt,
                 'TotDPPAmt' => 0,
                 'TotPPNAmt' => $request->TotPPNAmt,
                 'TotFinalSalesAmt' => $request->Amount,
@@ -727,12 +727,12 @@ class SptrnsinvoiceController extends Controller
         $invnoEx = explode('/', $invodd);
         $docFirst = substr($invnoEx[0], 1, 3);
         $docNoArbegin =
-            $docFirst .
-            '/' .
-            $invnoEx[3] .
-            '/' .
-            $invnoEx[2] .
-            $invnoEx[1] .
+            $docFirst.
+            '/'.
+            $invnoEx[3].
+            '/'.
+            $invnoEx[2].
+            $invnoEx[1].
             $invnoEx[4];
 
         Arbeginbalancehdr::where('DocNo', $docNoArbegin)->update([
