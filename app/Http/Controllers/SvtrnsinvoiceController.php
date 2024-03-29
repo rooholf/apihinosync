@@ -32,7 +32,7 @@ class SvtrnsinvoiceController extends Controller
         $thn = substr($gnmstdocument->DocumentYear, 2, 2);
         $nourut = sprintf('%06s', $no);
 
-        $newnumb = $type . '/' . $thn . '/' . $nourut;
+        $newnumb = $type. '/'. $thn. '/'. $nourut;
 
         Gnmstdocument::where('DocumentType', $type)
 
@@ -69,9 +69,9 @@ class SvtrnsinvoiceController extends Controller
         // date
         $invdateEx = explode(' ', $request->InvDate);
 
-        $invdate = $invdateEx[0] . ' ' . $invdateEx[1];
+        $invdate = $invdateEx[0]. ' '. $invdateEx[1];
         $duedateOdd = date('Y-m-d', strtotime('+1 month', strtotime($invdate)));
-        $duedate = $duedateOdd . ' ' . $invdateEx[1];
+        $duedate = $duedateOdd. ' '. $invdateEx[1];
 
         $service = Svtrnservice::where('CompanyCode', $request->CompanyCode)
             ->where('BranchCode', $branchcode)
@@ -87,7 +87,7 @@ class SvtrnsinvoiceController extends Controller
         $engineCode = substr($request->Engine, 0, 7);
         $engineNo = substr($request->Engine, 7, 5);
 
-        $desc = 'Created By RDMS : ' . $request->InvDocNo;
+        $desc = 'Created By RDMS : '. $request->InvDocNo;
 
         $amt = (float) $request->SupplyQty * (int) $request->RetailPrice;
 
@@ -98,12 +98,12 @@ class SvtrnsinvoiceController extends Controller
         $invnoEx = explode('/', $request->InvDocNo);
         $docFirst = substr($invnoEx[0], 1, 3);
         $docNoArbegin =
-            $docFirst .
-            '/' .
-            $invnoEx[3] .
-            '/' .
-            $invnoEx[2] .
-            $invnoEx[1] .
+            $docFirst.
+            '/'.
+            $invnoEx[3].
+            '/'.
+            $invnoEx[2].
+            $invnoEx[1].
             $invnoEx[4];
 
         // Nembak AR
@@ -926,12 +926,12 @@ class SvtrnsinvoiceController extends Controller
             $invnoEx = explode('/', $invno);
             $docFirst = substr($invnoEx[0], 1, 3);
             $docNoArbegin =
-                $docFirst .
-                '/' .
-                $invnoEx[3] .
-                '/' .
-                $invnoEx[2] .
-                $invnoEx[1] .
+                $docFirst.
+                '/'.
+                $invnoEx[3].
+                '/'.
+                $invnoEx[2].
+                $invnoEx[1].
                 $invnoEx[4];
 
             // $totaldppamount = $labordppamt + $partsdppamt;
