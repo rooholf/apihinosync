@@ -91,11 +91,12 @@ class SvtrnsinvoiceController extends Controller
 
         //retail Price sanitizer 
         $rPrice = filter_var($request->RetailPrice, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $amountDisct = filter_var($request->AmountDiscount, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
         $amt = (float) $request->SupplyQty * (int) $rPrice;
 
         // discount
-        $disc = ((int) $request->AmountDiscount / (int) $amt) * 100;
+        $disc = ((int) $amountDisct / (int) $amt) * 100;
 
         // docno arbegin
         $invnoEx = explode('/', $request->InvDocNo);
@@ -154,7 +155,7 @@ class SvtrnsinvoiceController extends Controller
         //     //     $request->PartNo,
         //     //     $service->InvoiceNo,
         //     //     $service->SupplySlipNo,
-        //     //     $request->AmountDiscount,
+        //     //     $amountDisct,
         //     //     $rPrice,
         //     //     $request->SupplyQty,
         //     //     $request->OperationHour,
@@ -382,14 +383,14 @@ class SvtrnsinvoiceController extends Controller
                         'LastupdateBy' => $request->LastUpdateBy,
                         'LastupdateDate' => Carbon::now(),
                         'DiscPct' => round(
-                            ((int) $request->AmountDiscount /
+                            ((int) $amountDisct /
                                 ((int) $rPrice *
                                     (float) $request->SupplyQty)) *
                                 100,
                             2
                         ),
                         'MechanicID' => $request->MechanicID,
-                        'AmountDiscount' => $request->AmountDiscount,
+                        'AmountDiscount' => $amountDisct,
                     ]);
 
                     Svtrninvitem::create([
@@ -406,7 +407,7 @@ class SvtrnsinvoiceController extends Controller
                         'RetailPrice' => (int) $rPrice,
                         'TypeOfGoods' => $request->TypeOfGoods,
                         'DiscPct' =>
-                            ((int) $request->AmountDiscount /
+                            ((int) $amountDisct /
                                 ($rPrice *
                                     (float) $request->SupplyQty)) *
                             100,
@@ -450,11 +451,11 @@ class SvtrnsinvoiceController extends Controller
                         'LastupdateBy' => $request->LastUpdateBy,
                         'LastupdateDate' => Carbon::now(),
                         'DiscPct' =>
-                            ((int) $request->AmountDiscount /
+                            ((int) $amountDisct /
                                 ((int) $request->OperationCost *
                                     (int) $request->OperationHour)) *
                             100,
-                        'AmountDiscount' => $request->AmountDiscount,
+                        'AmountDiscount' => $amountDisct,
                     ]);
 
                     Svtrninvtask::create([
@@ -470,7 +471,7 @@ class SvtrnsinvoiceController extends Controller
                         'IsSubCon' => $request->IsSubCon,
                         'SharingTask' => $request->SharingTask,
                         'DiscPct' =>
-                            ((int) $request->AmountDiscount /
+                            ((int) $amountDisct /
                                 ((int) $request->OperationCost *
                                     (int) $request->OperationHour)) *
                             100,
@@ -594,14 +595,14 @@ class SvtrnsinvoiceController extends Controller
                         'LastupdateBy' => $request->LastUpdateBy,
                         'LastupdateDate' => Carbon::now(),
                         'DiscPct' => round(
-                            ((int) $request->AmountDiscount /
+                            ((int) $amountDisct /
                                 ((int) $rPrice *
                                     (float) $request->SupplyQty)) *
                                 100,
                             2
                         ),
                         'MechanicID' => $request->MechanicID,
-                        'AmountDiscount' => $request->AmountDiscount,
+                        'AmountDiscount' => $amountDisct,
                         
                     ]);
 
@@ -619,7 +620,7 @@ class SvtrnsinvoiceController extends Controller
                         'RetailPrice' => (int) $rPrice,
                         'TypeOfGoods' => $request->TypeOfGoods,
                         'DiscPct' => round(
-                            ((int) $request->AmountDiscount /
+                            ((int) $amountDisct /
                                 ((int) $rPrice *
                                     (float) $request->SupplyQty)) *
                                 100,
@@ -650,7 +651,7 @@ class SvtrnsinvoiceController extends Controller
                         $request->PartNo,
                         $service->InvoiceNo,
                         $sss,
-                        $request->AmountDiscount,
+                        $amountDisct,
                         $rPrice,
                         $request->SupplyQty,
                         $request->OperationHour,
@@ -692,7 +693,7 @@ class SvtrnsinvoiceController extends Controller
                         'LastupdateBy' => $request->LastUpdateBy,
                         'LastupdateDate' => Carbon::now(),
                         'DiscPct' => round(
-                            ((int) $request->AmountDiscount /
+                            ((int) $amountDisct /
                                 ((int) $rPrice *
                                     (float) $request->SupplyQty)) *
                                 100,
@@ -713,7 +714,7 @@ class SvtrnsinvoiceController extends Controller
                         'IsSubCon' => $request->IsSubCon,
                         'SharingTask' => $request->SharingTask,
                         'DiscPct' => round(
-                            ((int) $request->AmountDiscount /
+                            ((int) $amountDisct /
                                 ((int) $rPrice *
                                     (float) $request->SupplyQty)) *
                                 100,
@@ -764,7 +765,7 @@ class SvtrnsinvoiceController extends Controller
                 $request->PartNo,
                 $service->InvoiceNo,
                 $service->SupplySlipNo,
-                $request->AmountDiscount,
+                $amountDisct,
                 $rPrice,
                 $request->SupplyQty,
                 $request->OperationHour,
