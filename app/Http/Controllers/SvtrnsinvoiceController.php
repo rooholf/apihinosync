@@ -601,6 +601,8 @@ class SvtrnsinvoiceController extends Controller
                             2
                         ),
                         'MechanicID' => $request->MechanicID,
+                        'AmountDiscount' => $request->AmountDiscount,
+                        
                     ]);
 
                     Svtrninvitem::create([
