@@ -89,7 +89,10 @@ class SvtrnsinvoiceController extends Controller
 
         $desc = 'Created By RDMS : '. $request->InvDocNo;
 
-        $amt = (float) $request->SupplyQty * (int) $request->RetailPrice;
+        //retail Price sanitizer 
+        $rPrice = filter_var($request->RetailPrice, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+
+        $amt = (float) $request->SupplyQty * (int) $rPrice;
 
         // discount
         $disc = ((int) $request->AmountDiscount / (int) $amt) * 100;
@@ -152,7 +155,7 @@ class SvtrnsinvoiceController extends Controller
         //     //     $service->InvoiceNo,
         //     //     $service->SupplySlipNo,
         //     //     $request->AmountDiscount,
-        //     //     $request->RetailPrice,
+        //     //     $rPrice,
         //     //     $request->SupplyQty,
         //     //     $request->OperationHour,
         //     //     $request->OperationCost
@@ -367,7 +370,7 @@ class SvtrnsinvoiceController extends Controller
                         'SupplyQty' => $request->SupplyQty,
                         'ReturnQty' => $request->ReturnQty,
                         'CostPrice' => $request->CostPrice,
-                        'RetailPrice' => (int) $request->RetailPrice,
+                        'RetailPrice' => (int) $rPrice,
                         'TypeOfGoods' => $request->TypeOfGoods,
                         'BillType' => $request->BillType,
                         'SupplySlipNo' => $sss,
@@ -380,7 +383,7 @@ class SvtrnsinvoiceController extends Controller
                         'LastupdateDate' => Carbon::now(),
                         'DiscPct' => round(
                             ((int) $request->AmountDiscount /
-                                ((int) $request->RetailPrice *
+                                ((int) $rPrice *
                                     (float) $request->SupplyQty)) *
                                 100,
                             2
@@ -400,11 +403,11 @@ class SvtrnsinvoiceController extends Controller
                         'SupplyQty' => $request->SupplyQty,
                         'ReturnQty' => $request->ReturnQty,
                         'CostPrice' => $request->CostPrice,
-                        'RetailPrice' => (int) $request->RetailPrice,
+                        'RetailPrice' => (int) $rPrice,
                         'TypeOfGoods' => $request->TypeOfGoods,
                         'DiscPct' =>
                             ((int) $request->AmountDiscount /
-                                ($request->RetailPrice *
+                                ($rPrice *
                                     (float) $request->SupplyQty)) *
                             100,
                         'MechanicID' => $request->MechanicID,
@@ -579,7 +582,7 @@ class SvtrnsinvoiceController extends Controller
                         'SupplyQty' => $request->SupplyQty,
                         'ReturnQty' => $request->ReturnQty,
                         'CostPrice' => $request->CostPrice,
-                        'RetailPrice' => (int) $request->RetailPrice,
+                        'RetailPrice' => (int) $rPrice,
                         'TypeOfGoods' => $request->TypeOfGoods,
                         'BillType' => $request->BillType,
                         'SupplySlipNo' => $sss,
@@ -592,7 +595,7 @@ class SvtrnsinvoiceController extends Controller
                         'LastupdateDate' => Carbon::now(),
                         'DiscPct' => round(
                             ((int) $request->AmountDiscount /
-                                ((int) $request->RetailPrice *
+                                ((int) $rPrice *
                                     (float) $request->SupplyQty)) *
                                 100,
                             2
@@ -611,11 +614,11 @@ class SvtrnsinvoiceController extends Controller
                         'SupplyQty' => $request->SupplyQty,
                         'ReturnQty' => $request->ReturnQty,
                         'CostPrice' => $request->CostPrice,
-                        'RetailPrice' => (int) $request->RetailPrice,
+                        'RetailPrice' => (int) $rPrice,
                         'TypeOfGoods' => $request->TypeOfGoods,
                         'DiscPct' => round(
                             ((int) $request->AmountDiscount /
-                                ((int) $request->RetailPrice *
+                                ((int) $rPrice *
                                     (float) $request->SupplyQty)) *
                                 100,
                             2
@@ -646,7 +649,7 @@ class SvtrnsinvoiceController extends Controller
                         $service->InvoiceNo,
                         $sss,
                         $request->AmountDiscount,
-                        $request->RetailPrice,
+                        $rPrice,
                         $request->SupplyQty,
                         $request->OperationHour,
                         $request->OperationCost
@@ -688,7 +691,7 @@ class SvtrnsinvoiceController extends Controller
                         'LastupdateDate' => Carbon::now(),
                         'DiscPct' => round(
                             ((int) $request->AmountDiscount /
-                                ((int) $request->RetailPrice *
+                                ((int) $rPrice *
                                     (float) $request->SupplyQty)) *
                                 100,
                             2
@@ -709,7 +712,7 @@ class SvtrnsinvoiceController extends Controller
                         'SharingTask' => $request->SharingTask,
                         'DiscPct' => round(
                             ((int) $request->AmountDiscount /
-                                ((int) $request->RetailPrice *
+                                ((int) $rPrice *
                                     (float) $request->SupplyQty)) *
                                 100,
                             2
@@ -760,7 +763,7 @@ class SvtrnsinvoiceController extends Controller
                 $service->InvoiceNo,
                 $service->SupplySlipNo,
                 $request->AmountDiscount,
-                $request->RetailPrice,
+                $rPrice,
                 $request->SupplyQty,
                 $request->OperationHour,
                 $request->OperationCost
