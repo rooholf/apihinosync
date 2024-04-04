@@ -260,7 +260,7 @@ class SptrnprcvhdrController extends Controller
             }
 
             return response()->json([
-                'data' => 0
+                'data' => '263'
             ], 200);
 
             // return fractal()
@@ -310,13 +310,13 @@ class SptrnprcvhdrController extends Controller
             }
             $this->updateTotItem($header->WRSNo, $request->GRNo, $branchcode);
             return response()->json([
-                'data' => 1
+                'data' => '313'
             ], 200);
         }
 
          $this->updateTotItem($wrsno, $request->GRNo, $branchcode);
             return response()->json([
-                'data' => 0
+                'data' => '319'
             ], 200);
     }
 
@@ -383,19 +383,19 @@ class SptrnprcvhdrController extends Controller
                 $this->updateTotItem($header->WRSNo, $request->GRNo, $branchcode);
 
                 return response()->json([
-                    'data' => 0
+                    'data' => '386'
                 ], 200);
 
             } else {
                 return response()->json([
-                    'data' => 1
+                    'data' => '391'
                 ], 200);
             }
         } else {
              $this->updateTotItem($header->WRSNo, $request->GRNo, $branchcode);
 
                 return response()->json([
-                    'data' => 0
+                    'data' => '398'
                 ], 200);
 
         }
