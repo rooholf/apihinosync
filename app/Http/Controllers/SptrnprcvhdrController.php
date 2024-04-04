@@ -320,14 +320,20 @@ class SptrnprcvhdrController extends Controller
     //         ], 200);
     // }
 
-    public function addDetail(Request $request, Sptrnprcvhdrdtl $sptrnprcvhdrdtl, Gnmstdocument $gnmstdocument)
+    public function add(Request $request, Sptrnprcvhdrdtl $sptrnprcvhdrdtl, Gnmstdocument $gnmstdocument)
     {
         $this->validate($request, [
             'ReferenceNo' => 'required',
         ]);
+        $docEx = explode("/", $request->GRNo);
+            if ($docEx[0] == 'SPRS') {
+                $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+            } elseif ($docEx[0] == 'WSRS') {
+                $docNoApbegin = 'WSR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+            }
 
         // dd($header);
-        $header = Sptrnprcvhdr::where('ReferenceNo', $request->ReferenceNo)->first();
+        $header = Sptrnprcvhdr::where('ReferenceNo', $docNoApbegin)->first();
 
         if ($request->Dealer == 'Sparepart - JIM Muaro Bungo' || $request->Dealer == 'Service - JIM Muaro Bungo') {
             $branchcode = '1002';
