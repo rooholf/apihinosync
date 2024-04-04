@@ -23,8 +23,15 @@ class SptrnprcvhdrController extends Controller
 {
     public function show(Request $request, Sptrnprcvhdr $sptrnprcvhdr)
     {
+        $docEx = explode("/", $request->GRNo);
+            if ($docEx[0] == 'SPRS') {
+                $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+            } elseif ($docEx[0] == 'WSRS') {
+                $docNoApbegin = 'WSR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+            }
 
-        $sptrnprcvhdr = $sptrnprcvhdr->where('ReferenceNo', $request->ReferenceNo)->first();
+
+        $sptrnprcvhdr = $sptrnprcvhdr->where('ReferenceNo', $docNoApbegin)->first();
 
         if ($sptrnprcvhdr) {
             // return fractal()
@@ -33,7 +40,7 @@ class SptrnprcvhdrController extends Controller
             //     ->toArray();
 
             return response()->json([
-                'data' => 1
+                'data' => 'show'
             ], 200);
         } else {
 
