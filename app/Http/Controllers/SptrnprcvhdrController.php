@@ -280,7 +280,7 @@ class SptrnprcvhdrController extends Controller
             // dd($header2);
 
             if ($header2 == null) {
-                Sptrnprcvhdrdtl:firstOrCreate([
+                Sptrnprcvhdrdtl:create([
                     'CompanyCode'=> $request->CompanyCode,
                     'BranchCode'=> $branchcode,
                     'WRSNo'=> $header->WRSNo,
@@ -356,7 +356,7 @@ class SptrnprcvhdrController extends Controller
             // dd($header2);
 
             if ($header2 == null) {
-                $sptrnprcvhdrdtl = $sptrnprcvhdrdtl->firstOrCreate([
+                Sptrnprcvhdrdtl:create([
                     'CompanyCode'=> $request->CompanyCode,
                     'BranchCode'=> $branchcode,
                     'WRSNo'=> $header->WRSNo,
@@ -430,7 +430,7 @@ class SptrnprcvhdrController extends Controller
         $totAmt = $total * 1.11;
         $totTax = $total * 0.11;
 
-        spTrnPRcvHdr::where('WRSNo', $wrsno)
+        Sptrnprcvhdr::where('WRSNo', $wrsno)
             ->where('BranchCode', $branchcode)
             ->update([
                 'TotItem' => $item, 
@@ -449,17 +449,17 @@ class SptrnprcvhdrController extends Controller
 
         Apbeginbalancehdr::where('DocNo', $docNoApbegin)
             ->where('BranchCode', $branchcode)
-            ->increment('Amount', $totAmt);
-            // ->update([
-            //     'Amount' => $totAmt
-            // ]);
+            // ->increment('Amount', $totAmt);
+            ->update([
+                'Amount' => $totAmt
+            ]);
 
         Apbeginbalancedtl::where('DocNo', $docNoApbegin)
             ->where('BranchCode', $branchcode)
-            ->increment('Amount', $totAmt);
-            // ->update([
-            //     'Amount' => $totAmt
-            // ]);
+            // ->increment('Amount', $totAmt);
+            ->update([
+                'Amount' => $totAmt
+            ]);
 
         Sptrnphpp::where('WRSNo', $wrsno)
             ->where('BranchCode', $branchcode)
