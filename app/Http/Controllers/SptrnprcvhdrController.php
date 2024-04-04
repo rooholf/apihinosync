@@ -23,6 +23,7 @@ class SptrnprcvhdrController extends Controller
 {
     public function show(Request $request, Sptrnprcvhdr $sptrnprcvhdr)
     {
+
         $sptrnprcvhdr = $sptrnprcvhdr->where('ReferenceNo', $request->ReferenceNo)->first();
 
         if ($sptrnprcvhdr) {
@@ -393,6 +394,8 @@ class SptrnprcvhdrController extends Controller
                 ], 200);
 
             } else {
+             $this->updateTotItem($header->WRSNo, $request->GRNo, $branchcode);
+
                 return response()->json([
                     'data' => '391'
                 ], 200);
