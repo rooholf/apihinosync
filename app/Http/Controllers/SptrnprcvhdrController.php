@@ -63,262 +63,262 @@ class SptrnprcvhdrController extends Controller
         return $newnumb;
     }
 
-    public function add(Request $request)
-    {
-        $this->validate($request, [
-            'GRNo' => 'required',
-        ]);
+    // public function add(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'GRNo' => 'required',
+    //     ]);
 
-        // nomor WRSNo
-        if ($request->Dealer == 'Sparepart - JIM Muaro Bungo' || $request->Dealer == 'Service - JIM Muaro Bungo') {
-            $branchcode = '1002';
-            $accountNo = '004.002.000.00000.300000.000.000';
-        } else {
-            $branchcode = '1000';
-            $accountNo = '004.000.000.00000.300000.000.000';
-        }
+    //     // nomor WRSNo
+    //     if ($request->Dealer == 'Sparepart - JIM Muaro Bungo' || $request->Dealer == 'Service - JIM Muaro Bungo') {
+    //         $branchcode = '1002';
+    //         $accountNo = '004.002.000.00000.300000.000.000';
+    //     } else {
+    //         $branchcode = '1000';
+    //         $accountNo = '004.000.000.00000.300000.000.000';
+    //     }
 
-        // grno header
-        $docEx = explode("/", $request->GRNo);
-        if ($docEx[0] == 'SPRS') {
-            $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
-        } elseif ($docEx[0] == 'WSRS') {
-            $docNoApbegin = 'WSR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
-        }
+    //     // grno header
+    //     $docEx = explode("/", $request->GRNo);
+    //     if ($docEx[0] == 'SPRS') {
+    //         $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+    //     } elseif ($docEx[0] == 'WSRS') {
+    //         $docNoApbegin = 'WSR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+    //     }
 
-        $grdateEx = explode(" ", $request->GRDate);
-        $grdateExDate = explode("-", $grdateEx[0]);
-        $grdate = $grdateEx[0].' '.$grdateEx[1];
+    //     $grdateEx = explode(" ", $request->GRDate);
+    //     $grdateExDate = explode("-", $grdateEx[0]);
+    //     $grdate = $grdateEx[0].' '.$grdateEx[1];
 
-        $duedateOdd = date("Y-m-d", strtotime("+1 month", strtotime($grdate)));
-        $duedate = $duedateOdd.' '.$grdateEx[1];
+    //     $duedateOdd = date("Y-m-d", strtotime("+1 month", strtotime($grdate)));
+    //     $duedate = $duedateOdd.' '.$grdateEx[1];
 
-        $monthTax = $grdateExDate[1];
-        $yearTax = $grdateExDate[0];
+    //     $monthTax = $grdateExDate[1];
+    //     $yearTax = $grdateExDate[0];
     
 
-        $header = Sptrnprcvhdr::where('ReferenceNo', $docNoApbegin)->first();
-        // dd($header);
-        if ($header == null) {
-            $wrsno = $this->noUrut('WRL', $branchcode, $request->CompanyCode);
-            $binningno = $this->noUrut('BNL', $branchcode, $request->CompanyCode);
-            $docno = $this->noUrut('POS', $branchcode, $request->CompanyCode);
-            $hppno = $this->noUrut('HPP', $branchcode, $request->CompanyCode);
+    //     $header = Sptrnprcvhdr::where('ReferenceNo', $docNoApbegin)->first();
+    //     // dd($header);
+    //     if ($header == null) {
+    //         $wrsno = $this->noUrut('WRL', $branchcode, $request->CompanyCode);
+    //         $binningno = $this->noUrut('BNL', $branchcode, $request->CompanyCode);
+    //         $docno = $this->noUrut('POS', $branchcode, $request->CompanyCode);
+    //         $hppno = $this->noUrut('HPP', $branchcode, $request->CompanyCode);
 
-            // echo $wrsno;die;
-            $sptrnprcvhdr = Sptrnprcvhdr::firstOrCreate([
-                'CompanyCode'=> $request->CompanyCode,
-                'BranchCode'=> $branchcode,
-                'WRSNo'=> $wrsno,
-                'WRSDate'=> $grdate,
-                'BinningNo'=> $binningno,
-                'BinningDate'=> $grdate,
-                'ReceivingType'=> $request->ReceivingType,
-                'DNSupplierNo'=> $docno,
-                'DNSupplierDate'=> $grdate,
-                'TransType'=> $request->TransType,
-                'SupplierCode'=> $request->SupplierCode,
-                'ReferenceNo'=> $docNoApbegin,
-                'ReferenceDate'=> $grdate,
-                'TotItem'=> 0,
-                'TotWRSAmt'=> 0,
-                'Status'=> $request->Status,
-                'PrintSeq'=> $request->PrintSeq,
-                'TypeOfGoods'=> $request->TypeOfGoods,
-                'CreatedBy'=> $request->CreatedBy,
-                'CreatedDate'=> Carbon::now(),
-                'LastUpdateBy'=> $request->LastUpdateBy,
-                'LastUpdateDate'=> Carbon::now(),
-                'isLocked'=> $request->isLocked,
-                'LockingBy'=> $request->LockingBy,
-                'LockingDate'=> Carbon::now(),
-            ]);
+    //         // echo $wrsno;die;
+    //         $sptrnprcvhdr = Sptrnprcvhdr::firstOrCreate([
+    //             'CompanyCode'=> $request->CompanyCode,
+    //             'BranchCode'=> $branchcode,
+    //             'WRSNo'=> $wrsno,
+    //             'WRSDate'=> $grdate,
+    //             'BinningNo'=> $binningno,
+    //             'BinningDate'=> $grdate,
+    //             'ReceivingType'=> $request->ReceivingType,
+    //             'DNSupplierNo'=> $docno,
+    //             'DNSupplierDate'=> $grdate,
+    //             'TransType'=> $request->TransType,
+    //             'SupplierCode'=> $request->SupplierCode,
+    //             'ReferenceNo'=> $docNoApbegin,
+    //             'ReferenceDate'=> $grdate,
+    //             'TotItem'=> 0,
+    //             'TotWRSAmt'=> 0,
+    //             'Status'=> $request->Status,
+    //             'PrintSeq'=> $request->PrintSeq,
+    //             'TypeOfGoods'=> $request->TypeOfGoods,
+    //             'CreatedBy'=> $request->CreatedBy,
+    //             'CreatedDate'=> Carbon::now(),
+    //             'LastUpdateBy'=> $request->LastUpdateBy,
+    //             'LastUpdateDate'=> Carbon::now(),
+    //             'isLocked'=> $request->isLocked,
+    //             'LockingBy'=> $request->LockingBy,
+    //             'LockingDate'=> Carbon::now(),
+    //         ]);
                 
 
             
-            if ($sptrnprcvhdr) {
-                // detail header
-                $detail = Sptrnprcvhdrdtl::where('CompanyCode', $request->CompanyCode)
-                                        ->where('BranchCode', $branchcode)
-                                        ->where('WRSNo', $wrsno)
-                                        ->where('PartNo', $request->PartNo)
-                                        ->first();
-                if (!$detail) {
-                    Sptrnprcvhdrdtl::firstOrCreate([
-                        'CompanyCode'=> $request->CompanyCode,
-                        'BranchCode'=> $branchcode,
-                        'WRSNo'=> $wrsno,
-                        'PartNo'=> $request->PartNo,
-                        'DocNo'=> $docno,
-                        'DocDate'=> $grdate,
-                        'WarehouseCode'=> $request->WarehouseCode,
-                        'LocationCode'=> $request->LocationCode,
-                        'BoxNo'=> $request->BoxNo,
-                        'ReceivedQty'=> $request->ReceivedQty,
-                        'PurchasePrice'=> $request->PurchasePrice,
-                        'CostPrice'=> $request->CostPrice,
-                        'DiscPct'=> $request->DiscPct,
-                        'ABCClass'=> $request->ABCClass,
-                        'MovingCode'=> $request->MovingCode,
-                        'ProductType'=> $request->ProductType,
-                        'PartCategory'=> $request->PartCategory,
-                        'CreatedBy'=> $request->CreatedBy,
-                        'CreatedDate'=> Carbon::now(),
-                        'LastUpdateBy'=> $request->LastUpdateBy,
-                        'LastUpdateDate'=> Carbon::now(),
-                    ]);
-                }
+    //         if ($sptrnprcvhdr) {
+    //             // detail header
+    //             $detail = Sptrnprcvhdrdtl::where('CompanyCode', $request->CompanyCode)
+    //                                     ->where('BranchCode', $branchcode)
+    //                                     ->where('WRSNo', $wrsno)
+    //                                     ->where('PartNo', $request->PartNo)
+    //                                     ->first();
+    //             if (!$detail) {
+    //                 Sptrnprcvhdrdtl::firstOrCreate([
+    //                     'CompanyCode'=> $request->CompanyCode,
+    //                     'BranchCode'=> $branchcode,
+    //                     'WRSNo'=> $wrsno,
+    //                     'PartNo'=> $request->PartNo,
+    //                     'DocNo'=> $docno,
+    //                     'DocDate'=> $grdate,
+    //                     'WarehouseCode'=> $request->WarehouseCode,
+    //                     'LocationCode'=> $request->LocationCode,
+    //                     'BoxNo'=> $request->BoxNo,
+    //                     'ReceivedQty'=> $request->ReceivedQty,
+    //                     'PurchasePrice'=> $request->PurchasePrice,
+    //                     'CostPrice'=> $request->CostPrice,
+    //                     'DiscPct'=> $request->DiscPct,
+    //                     'ABCClass'=> $request->ABCClass,
+    //                     'MovingCode'=> $request->MovingCode,
+    //                     'ProductType'=> $request->ProductType,
+    //                     'PartCategory'=> $request->PartCategory,
+    //                     'CreatedBy'=> $request->CreatedBy,
+    //                     'CreatedDate'=> Carbon::now(),
+    //                     'LastUpdateBy'=> $request->LastUpdateBy,
+    //                     'LastUpdateDate'=> Carbon::now(),
+    //                 ]);
+    //             }
 
-                $hpp = Sptrnphpp::where('CompanyCode', $request->CompanyCode)
-                                        ->where('BranchCode', $branchcode)
-                                        ->where('WRSNo', $wrsno)
-                                        ->where('ReferenceNo', $docNoApbegin)
-                                        ->first();
+    //             $hpp = Sptrnphpp::where('CompanyCode', $request->CompanyCode)
+    //                                     ->where('BranchCode', $branchcode)
+    //                                     ->where('WRSNo', $wrsno)
+    //                                     ->where('ReferenceNo', $docNoApbegin)
+    //                                     ->first();
                     
-                if (!$hpp) {
-                    Sptrnphpp::firstOrCreate([
-                        'CompanyCode'=> $request->CompanyCode,  
-                        'BranchCode'=> $branchcode, 
-                        'HPPNo'=> $hppno, 
-                        'HPPDate'=> $grdate, 
-                        'WRSNo'=> $wrsno, 
-                        'WRSDate'=> $grdate,
-                        'ReferenceNo'=> $docNoApbegin, 
-                        'ReferenceDate'=> $grdate, 
-                        'TotPurchAmt'=> 0, 
-                        'TotNetPurchAmt'=> 0, 
-                        'TotTaxAmt'=> 0, 
-                        'TaxNo'=> '000.000-00.00000000', 
-                        'TaxDate'=> $grdate, 
-                        'MonthTax'=> $monthTax, 
-                        'YearTax'=> $yearTax, 
-                        'DueDate'=> $duedate,  
-                        'DiffNetPurchAmt'=> 0, 
-                        'DiffTaxAmt'=> 0, 
-                        'TotHPPAmt'=> 0, 
-                        'CostPrice'=> 0,  
-                        'PrintSeq'=> $request->PrintSeq,  
-                        'TypeOfGoods'=> $request->TypeOfGoods, 
-                        'Status'=> 2, 
-                        'CreatedBy'=> $request->CreatedBy, 
-                        'CreatedDate'=> Carbon::now(), 
-                        'LastUpdateBy'=> $request->LastUpdateBy, 
-                        'LastUpdateDate'=> Carbon::now(), 
-                    ]);
-                }
-                    
-
-                $apbeginbalancehdr = Apbeginbalancehdr::where('CompanyCode', $request->CompanyCode)
-                                                    ->where('BranchCode', $branchcode)
-                                                    ->where('DocNo', $docNoApbegin)
-                                                    ->first();
-
-                if (!$apbeginbalancehdr) {
-                    Apbeginbalancehdr::firstOrCreate([
-                        'CompanyCode'=> $request->CompanyCode,
-                        'BranchCode'=> $branchcode,
-                        'DocNo'=> $docNoApbegin,
-                        'ProfitCenterCode'=> '300',
-                        'DocDate'=> $grdate,
-                        'SupplierCode'=> $request->SupplierCode,
-                        'AccountNo'=> $accountNo,
-                        'DueDate'=> $duedate,
-                        'TOPCode'=> 'C30',
-                        'Amount'=> 0,
-                        'Status'=> '0',
-                        'CreatedBy'=> $request->CreatedBy,
-                        'CreatedDate'=> Carbon::now(),
-                        'PrintSeq'=> '1',
-                    ]);
-                }
-
-
-                $apbeginbalancedtl = Apbeginbalancedtl::where('CompanyCode', $request->CompanyCode)
-                                                ->where('BranchCode', $branchcode)
-                                                ->where('DocNo', $docNoApbegin)
-                                                ->first();
-
-                if (!$apbeginbalancedtl) {
-                    Apbeginbalancedtl::firstOrCreate([
-                        'CompanyCode'=> $request->CompanyCode,
-                        'BranchCode'=> $branchcode,
-                        'DocNo'=> $docNoApbegin,
-                        'SeqNo'=> '1',
-                        'AccountNo'=> $accountNo,
-                        'Description'=> $request->ReferenceNo,
-                        'Amount'=> 0,
-                        'Status'=> '0',
-                        'CreatedBy'=> $request->CreatedBy,
-                        'CreatedDate'=> Carbon::now(),
-                    ]);
-                }
-                // apibegin detail
+    //             if (!$hpp) {
+    //                 Sptrnphpp::firstOrCreate([
+    //                     'CompanyCode'=> $request->CompanyCode,  
+    //                     'BranchCode'=> $branchcode, 
+    //                     'HPPNo'=> $hppno, 
+    //                     'HPPDate'=> $grdate, 
+    //                     'WRSNo'=> $wrsno, 
+    //                     'WRSDate'=> $grdate,
+    //                     'ReferenceNo'=> $docNoApbegin, 
+    //                     'ReferenceDate'=> $grdate, 
+    //                     'TotPurchAmt'=> 0, 
+    //                     'TotNetPurchAmt'=> 0, 
+    //                     'TotTaxAmt'=> 0, 
+    //                     'TaxNo'=> '000.000-00.00000000', 
+    //                     'TaxDate'=> $grdate, 
+    //                     'MonthTax'=> $monthTax, 
+    //                     'YearTax'=> $yearTax, 
+    //                     'DueDate'=> $duedate,  
+    //                     'DiffNetPurchAmt'=> 0, 
+    //                     'DiffTaxAmt'=> 0, 
+    //                     'TotHPPAmt'=> 0, 
+    //                     'CostPrice'=> 0,  
+    //                     'PrintSeq'=> $request->PrintSeq,  
+    //                     'TypeOfGoods'=> $request->TypeOfGoods, 
+    //                     'Status'=> 2, 
+    //                     'CreatedBy'=> $request->CreatedBy, 
+    //                     'CreatedDate'=> Carbon::now(), 
+    //                     'LastUpdateBy'=> $request->LastUpdateBy, 
+    //                     'LastUpdateDate'=> Carbon::now(), 
+    //                 ]);
+    //             }
                     
 
-                $this->updateTotItem($wrsno, $request->GRNo, $branchcode);
+    //             $apbeginbalancehdr = Apbeginbalancehdr::where('CompanyCode', $request->CompanyCode)
+    //                                                 ->where('BranchCode', $branchcode)
+    //                                                 ->where('DocNo', $docNoApbegin)
+    //                                                 ->first();
 
-            }
-
-            return response()->json([
-                'data' => '263'
-            ], 200);
-
-            // return fractal()
-            //         ->item($sptrnprcvhdr)
-            //         ->transformWith(new SptrnprcvhdrTransformer)
-            //         ->toArray();
-        } else {
-            $header2 = Sptrnprcvhdrdtl::where('CompanyCode', '=', $request->CompanyCode)
-                        ->where('BranchCode','=', $branchcode)
-                        ->where('WRSNo','=', $header->WRSNo)
-                        ->where('PartNo','=', $request->PartNo)
-                        ->where('DocNo','=', $header->DNSupplierNo)
-                        ->where('BoxNo','=', $request->BoxNo)
-                        ->where('LocationCode','=', $request->LocationCode)
-                        ->first();
-
-            // dd($header2);
-
-            if ($header2 == null) {
-                Sptrnprcvhdrdtl:create([
-                    'CompanyCode'=> $request->CompanyCode,
-                    'BranchCode'=> $branchcode,
-                    'WRSNo'=> $header->WRSNo,
-                    'PartNo'=> $request->PartNo,
-                    'DocNo'=> $header->DNSupplierNo,
-                    'DocDate'=> $grdate,
-                    'WarehouseCode'=> $request->WarehouseCode,
-                    'LocationCode'=> $request->LocationCode,
-                    'BoxNo'=> $request->BoxNo,
-                    'ReceivedQty'=> $request->ReceivedQty,
-                    'PurchasePrice'=> $request->PurchasePrice,
-                    'CostPrice'=> $request->CostPrice,
-                    'DiscPct'=> $request->DiscPct,
-                    'ABCClass'=> $request->ABCClass,
-                    'MovingCode'=> $request->MovingCode,
-                    'ProductType'=> $request->ProductType,
-                    'PartCategory'=> $request->PartCategory,
-                    'CreatedBy'=> $request->CreatedBy,
-                    'CreatedDate'=> Carbon::now(),
-                    'LastUpdateBy'=> $request->LastUpdateBy,
-                    'LastUpdateDate'=> Carbon::now(),
-                ]);
+    //             if (!$apbeginbalancehdr) {
+    //                 Apbeginbalancehdr::firstOrCreate([
+    //                     'CompanyCode'=> $request->CompanyCode,
+    //                     'BranchCode'=> $branchcode,
+    //                     'DocNo'=> $docNoApbegin,
+    //                     'ProfitCenterCode'=> '300',
+    //                     'DocDate'=> $grdate,
+    //                     'SupplierCode'=> $request->SupplierCode,
+    //                     'AccountNo'=> $accountNo,
+    //                     'DueDate'=> $duedate,
+    //                     'TOPCode'=> 'C30',
+    //                     'Amount'=> 0,
+    //                     'Status'=> '0',
+    //                     'CreatedBy'=> $request->CreatedBy,
+    //                     'CreatedDate'=> Carbon::now(),
+    //                     'PrintSeq'=> '1',
+    //                 ]);
+    //             }
 
 
+    //             $apbeginbalancedtl = Apbeginbalancedtl::where('CompanyCode', $request->CompanyCode)
+    //                                             ->where('BranchCode', $branchcode)
+    //                                             ->where('DocNo', $docNoApbegin)
+    //                                             ->first();
 
-                $this->updateTotItem($header->WRSNo, $request->GRNo, $branchcode);
-            }
-            $this->updateTotItem($header->WRSNo, $request->GRNo, $branchcode);
-            return response()->json([
-                'data' => '313'
-            ], 200);
-        }
+    //             if (!$apbeginbalancedtl) {
+    //                 Apbeginbalancedtl::firstOrCreate([
+    //                     'CompanyCode'=> $request->CompanyCode,
+    //                     'BranchCode'=> $branchcode,
+    //                     'DocNo'=> $docNoApbegin,
+    //                     'SeqNo'=> '1',
+    //                     'AccountNo'=> $accountNo,
+    //                     'Description'=> $request->ReferenceNo,
+    //                     'Amount'=> 0,
+    //                     'Status'=> '0',
+    //                     'CreatedBy'=> $request->CreatedBy,
+    //                     'CreatedDate'=> Carbon::now(),
+    //                 ]);
+    //             }
+    //             // apibegin detail
+                    
 
-         $this->updateTotItem($wrsno, $request->GRNo, $branchcode);
-            return response()->json([
-                'data' => '319'
-            ], 200);
-    }
+    //             $this->updateTotItem($wrsno, $request->GRNo, $branchcode);
+
+    //         }
+
+    //         return response()->json([
+    //             'data' => '263'
+    //         ], 200);
+
+    //         // return fractal()
+    //         //         ->item($sptrnprcvhdr)
+    //         //         ->transformWith(new SptrnprcvhdrTransformer)
+    //         //         ->toArray();
+    //     } else {
+    //         $header2 = Sptrnprcvhdrdtl::where('CompanyCode', '=', $request->CompanyCode)
+    //                     ->where('BranchCode','=', $branchcode)
+    //                     ->where('WRSNo','=', $header->WRSNo)
+    //                     ->where('PartNo','=', $request->PartNo)
+    //                     ->where('DocNo','=', $header->DNSupplierNo)
+    //                     ->where('BoxNo','=', $request->BoxNo)
+    //                     ->where('LocationCode','=', $request->LocationCode)
+    //                     ->first();
+
+    //         // dd($header2);
+
+    //         if ($header2 == null) {
+    //             Sptrnprcvhdrdtl:create([
+    //                 'CompanyCode'=> $request->CompanyCode,
+    //                 'BranchCode'=> $branchcode,
+    //                 'WRSNo'=> $header->WRSNo,
+    //                 'PartNo'=> $request->PartNo,
+    //                 'DocNo'=> $header->DNSupplierNo,
+    //                 'DocDate'=> $grdate,
+    //                 'WarehouseCode'=> $request->WarehouseCode,
+    //                 'LocationCode'=> $request->LocationCode,
+    //                 'BoxNo'=> $request->BoxNo,
+    //                 'ReceivedQty'=> $request->ReceivedQty,
+    //                 'PurchasePrice'=> $request->PurchasePrice,
+    //                 'CostPrice'=> $request->CostPrice,
+    //                 'DiscPct'=> $request->DiscPct,
+    //                 'ABCClass'=> $request->ABCClass,
+    //                 'MovingCode'=> $request->MovingCode,
+    //                 'ProductType'=> $request->ProductType,
+    //                 'PartCategory'=> $request->PartCategory,
+    //                 'CreatedBy'=> $request->CreatedBy,
+    //                 'CreatedDate'=> Carbon::now(),
+    //                 'LastUpdateBy'=> $request->LastUpdateBy,
+    //                 'LastUpdateDate'=> Carbon::now(),
+    //             ]);
+
+
+
+    //             $this->updateTotItem($header->WRSNo, $request->GRNo, $branchcode);
+    //         }
+    //         $this->updateTotItem($header->WRSNo, $request->GRNo, $branchcode);
+    //         return response()->json([
+    //             'data' => '313'
+    //         ], 200);
+    //     }
+
+    //      $this->updateTotItem($wrsno, $request->GRNo, $branchcode);
+    //         return response()->json([
+    //             'data' => '319'
+    //         ], 200);
+    // }
 
     public function addDetail(Request $request, Sptrnprcvhdrdtl $sptrnprcvhdrdtl, Gnmstdocument $gnmstdocument)
     {
