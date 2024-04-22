@@ -328,7 +328,7 @@ class SptrnprcvhdrController extends Controller
             ], 200);
     }
 
-    public function add(Request $request, Sptrnprcvhdrdtl $sptrnprcvhdrdtl, Gnmstdocument $gnmstdocument)
+    public function addDetail(Request $request, Sptrnprcvhdrdtl $sptrnprcvhdrdtl, Gnmstdocument $gnmstdocument)
     {
         $this->validate($request, [
             'ReferenceNo' => 'required',
