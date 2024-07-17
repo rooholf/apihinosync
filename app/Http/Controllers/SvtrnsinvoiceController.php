@@ -547,7 +547,6 @@ class SvtrnsinvoiceController extends Controller
                 200
             );
         } else {
-            error_log($request->Remarks);
             if (
                 $request->Remarks == 'Sparepart' or
                 $request->Remarks == 'Oil' or
