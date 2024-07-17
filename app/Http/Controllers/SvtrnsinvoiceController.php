@@ -745,31 +745,35 @@ class SvtrnsinvoiceController extends Controller
        
 
             Arbeginbalancehdr::firstOrCreate(
-                ['CompanyCode' => $request->CompanyCode,
-                'BranchCode' => $branchcode,
-                'DocNo' => $docNoArbegin,]
                 [
-                
-                'ProfitCenterCode' => '200',
-                'DocDate' => $invdate,
-                'CustomerCode' => $request->CustomerCode,
-                'AccountNo' => $accountNo,
-                'DueDate' => $duedate,
-                'TOPCode' => $request->TOPCode,
-                'Amount' => 0,
-                'SalesCode' => '',
-                'LeasingCode' => '',
-                'Status' => 0,
-                'CreatedBy' => $request->CreatedBy,
-                'CreatedDate' => Carbon::now(),
-                'PrintSeq' => '1',
-            ]);
+                    'CompanyCode' => $request->CompanyCode,
+                    'BranchCode' => $branchcode,
+                    'DocNo' => $docNoArbegin
+                ],
+                [
+                    'ProfitCenterCode' => '200',
+                    'DocDate' => $invdate,
+                    'CustomerCode' => $request->CustomerCode,
+                    'AccountNo' => $accountNo,
+                    'DueDate' => $duedate,
+                    'TOPCode' => $request->TOPCode,
+                    'Amount' => 0,
+                    'SalesCode' => '',
+                    'LeasingCode' => '',
+                    'Status' => 0,
+                    'CreatedBy' => $request->CreatedBy,
+                    'CreatedDate' => Carbon::now(),
+                    'PrintSeq' => '1',
+                ]
+            );
 
-            Arbeginbalancedtl::firstOrCreate([
+            Arbeginbalancedtl::firstOrCreate(
+                [
                 'CompanyCode' => $request->CompanyCode,
                 'BranchCode' => $branchcode,
-                'DocNo' => $docNoArbegin,
-            ][
+                'DocNo' => $docNoArbegin
+                ],
+                [
                 'SeqNo' => '1',
                 'AccountNo' => $accountNo,
                 'Description' => '',
