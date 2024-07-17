@@ -541,6 +541,7 @@ class SvtrnsinvoiceController extends Controller
                 200
             );
         } else {
+            error_log($request->Remarks);
             if (
                 $request->Remarks == 'Sparepart' or
                 $request->Remarks == 'Oil' or
@@ -856,125 +857,245 @@ class SvtrnsinvoiceController extends Controller
             ]);
     }
 
+    // public function updateHeader($invno, $serno, $remaks, $amount)
+    // {
+    //     $labordiscpct = 0;
+    //     $partdispct = 0;
+    //     $laborgrossamt = 0;
+    //     $partsgrossamt = 0;
+    //     $labordiscamt = 0;
+    //     $partsdiscamt = 0;
+    //     $materialdiscpct = 0;
+    //     $labordppamt = 0;
+    //     $partsdppamt = 0;
+    //     $totaldppamount = $amount;
+    //     $totalppnamount = 0;
+    //     $totalsrvamount = 0;
+
+    //     if (
+    //         $remaks == 'Sparepart' or
+    //         $remaks == 'Oil' or
+    //         $remaks == 'Material'
+    //     ) {
+    //         $detail = Svtrnsrvitem::where('ServiceNo', $serno)->get();
+    //         foreach ($detail as $row) {
+    //             $partdispct = $row->DiscPct;
+
+    //             $sum = $row->RetailPrice * $row->SupplyQty;
+
+    //             $partsgrossamt = $partsgrossamt + $sum;
+
+    //             $partsdiscamt = $row->AmountDiscount;
+
+    //             $partsdppamt1 = $sum - $row->AmountDiscount;
+    //             $partsdppamt = $partsdppamt + $partsdppamt1;
+    //         }
+
+    //         Svtrnservice::where('InvDocNo', $invno)->update([
+    //             'PartDiscPct' => $partdispct,
+    //             'PartsGrossAmt' => $partsgrossamt,
+    //             'PartsDiscAmt' => $partsdiscamt,
+    //             'PartsDppAmt' => $partsdppamt,
+    //         ]);
+
+    //         Svtrninvoice::where('InvDocNo', $invno)->update([
+    //             'PartsDiscPct' => $partdispct,
+    //             'PartsGrossAmt' => $partsgrossamt,
+    //             'PartsDiscAmt' => $partsdiscamt,
+    //             'PartsDppAmt' => $partsdppamt,
+    //         ]);
+    //     } else {
+    //         $detail = Svtrnsrvtask::where('ServiceNo', $serno)->get();
+    //         foreach ($detail as $row) {
+    //             // $labordiscpct = $labordiscpct + $row->DiscPct;
+    //             $labordiscpct = $row->DiscPct;
+    //             $sum = $row->OperationHour * $row->OperationCost;
+
+    //             $laborgrossamt = $laborgrossamt + $sum;
+
+    //             $labordiscamt = $row->AmountDiscount;
+
+    //             $labordppamt1 = $sum - $row->AmountDiscount;
+    //             $labordppamt = $labordppamt + $labordppamt1;
+    //         }
+
+    //         Svtrnservice::where('InvDocNo', $invno)->update([
+    //             'LaborDiscPct' => $labordiscpct,
+    //             'LaborGrossAmt' => $laborgrossamt,
+    //             'LaborDiscAmt' => $labordiscamt,
+    //             'LaborDppAmt' => $labordppamt,
+    //         ]);
+
+    //         Svtrninvoice::where('InvDocNo', $invno)->update([
+    //             'LaborDiscPct' => $labordiscpct,
+    //             'LaborGrossAmt' => $laborgrossamt,
+    //             'LaborDiscAmt' => $labordiscamt,
+    //             'LaborDppAmt' => $labordppamt,
+    //         ]);
+    //     }
+
+    //     $service = Svtrnservice::where('InvDocNo', $invno)->first();
+    //     if ($service) {
+    //         // docno arbegin
+    //         $invnoEx = explode('/', $invno);
+    //         $docFirst = substr($invnoEx[0], 1, 3);
+    //         $docNoArbegin =
+    //             $docFirst.
+    //             '/'.
+    //             $invnoEx[3].
+    //             '/'.
+    //             $invnoEx[2].
+    //             $invnoEx[1].
+    //             $invnoEx[4];
+
+    //         // $totaldppamount = $labordppamt + $partsdppamt;
+    //         if ($docFirst == 'SIT') {
+    //             $totalppnamount = 0;
+    //             $totalsrvamount = $totaldppamount + $totalppnamount;
+    //         } else {
+    //             $totalppnamount = 0.11 * $totaldppamount;
+    //             $totalsrvamount = $totaldppamount + $totalppnamount;
+    //         }
+
+    //         Svtrnservice::where('InvDocNo', $invno)->update([
+    //             'TotalDPPAmount' => $totaldppamount,
+    //             'TotalPpnAmount' => $totalppnamount,
+    //             'TotalSrvAmount' => $totalsrvamount,
+    //         ]);
+
+    //         Svtrninvoice::where('InvDocNo', $invno)->update([
+    //             'TotalDppAmt' => $totaldppamount,
+    //             'TotalPpnAmt' => $totalppnamount,
+    //             'TotalSrvAmt' => $totalsrvamount,
+    //         ]);
+
+    //         Arbeginbalancehdr::where('DocNo', $docNoArbegin)->update([
+    //             'Amount' => round($totalsrvamount),
+    //         ]);
+
+    //         Arbeginbalancedtl::where('DocNo', $docNoArbegin)->update([
+    //             'Amount' => round($totalsrvamount),
+    //         ]);
+    //     }
+    // }
+
     public function updateHeader($invno, $serno, $remaks, $amount)
-    {
-        $labordiscpct = 0;
-        $partdispct = 0;
-        $laborgrossamt = 0;
-        $partsgrossamt = 0;
-        $labordiscamt = 0;
-        $partsdiscamt = 0;
-        $materialdiscpct = 0;
-        $labordppamt = 0;
-        $partsdppamt = 0;
-        $totaldppamount = $amount;
-        $totalppnamount = 0;
-        $totalsrvamount = 0;
+{
+    $totalsrvamount = 0;
+    $totaldppamount = $amount;
+    $totalppnamount = 0;
 
-        if (
-            $remaks == 'Sparepart' or
-            $remaks == 'Oil' or
-            $remaks == 'Material'
-        ) {
-            $detail = Svtrnsrvitem::where('ServiceNo', $serno)->get();
-            foreach ($detail as $row) {
-                $partdispct = $row->DiscPct;
-
-                $sum = $row->RetailPrice * $row->SupplyQty;
-
-                $partsgrossamt = $partsgrossamt + $sum;
-
-                $partsdiscamt = $row->AmountDiscount;
-
-                $partsdppamt1 = $sum - $row->AmountDiscount;
-                $partsdppamt = $partsdppamt + $partsdppamt1;
-            }
-
-            Svtrnservice::where('InvDocNo', $invno)->update([
-                'PartDiscPct' => $partdispct,
-                'PartsGrossAmt' => $partsgrossamt,
-                'PartsDiscAmt' => $partsdiscamt,
-                'PartsDppAmt' => $partsdppamt,
-            ]);
-
-            Svtrninvoice::where('InvDocNo', $invno)->update([
-                'PartsDiscPct' => $partdispct,
-                'PartsGrossAmt' => $partsgrossamt,
-                'PartsDiscAmt' => $partsdiscamt,
-                'PartsDppAmt' => $partsdppamt,
-            ]);
-        } else {
-            $detail = Svtrnsrvtask::where('ServiceNo', $serno)->get();
-            foreach ($detail as $row) {
-                // $labordiscpct = $labordiscpct + $row->DiscPct;
-                $labordiscpct = $row->DiscPct;
-                $sum = $row->OperationHour * $row->OperationCost;
-
-                $laborgrossamt = $laborgrossamt + $sum;
-
-                $labordiscamt = $row->AmountDiscount;
-
-                $labordppamt1 = $sum - $row->AmountDiscount;
-                $labordppamt = $labordppamt + $labordppamt1;
-            }
-
-            Svtrnservice::where('InvDocNo', $invno)->update([
-                'LaborDiscPct' => $labordiscpct,
-                'LaborGrossAmt' => $laborgrossamt,
-                'LaborDiscAmt' => $labordiscamt,
-                'LaborDppAmt' => $labordppamt,
-            ]);
-
-            Svtrninvoice::where('InvDocNo', $invno)->update([
-                'LaborDiscPct' => $labordiscpct,
-                'LaborGrossAmt' => $laborgrossamt,
-                'LaborDiscAmt' => $labordiscamt,
-                'LaborDppAmt' => $labordppamt,
-            ]);
-        }
-
-        $service = Svtrnservice::where('InvDocNo', $invno)->first();
-        if ($service) {
-            // docno arbegin
-            $invnoEx = explode('/', $invno);
-            $docFirst = substr($invnoEx[0], 1, 3);
-            $docNoArbegin =
-                $docFirst.
-                '/'.
-                $invnoEx[3].
-                '/'.
-                $invnoEx[2].
-                $invnoEx[1].
-                $invnoEx[4];
-
-            // $totaldppamount = $labordppamt + $partsdppamt;
-            if ($docFirst == 'SIT') {
-                $totalppnamount = 0;
-                $totalsrvamount = $totaldppamount + $totalppnamount;
-            } else {
-                $totalppnamount = 0.11 * $totaldppamount;
-                $totalsrvamount = $totaldppamount + $totalppnamount;
-            }
-
-            Svtrnservice::where('InvDocNo', $invno)->update([
-                'TotalDPPAmount' => $totaldppamount,
-                'TotalPpnAmount' => $totalppnamount,
-                'TotalSrvAmount' => $totalsrvamount,
-            ]);
-
-            Svtrninvoice::where('InvDocNo', $invno)->update([
-                'TotalDppAmt' => $totaldppamount,
-                'TotalPpnAmt' => $totalppnamount,
-                'TotalSrvAmt' => $totalsrvamount,
-            ]);
-
-            Arbeginbalancehdr::where('DocNo', $docNoArbegin)->update([
-                'Amount' => round($totalsrvamount),
-            ]);
-
-            Arbeginbalancedtl::where('DocNo', $docNoArbegin)->update([
-                'Amount' => round($totalsrvamount),
-            ]);
-        }
+    if (in_array($remaks, ['Sparepart', 'Oil', 'Material'])) {
+        $partDetails = $this->calculatePartDetails($serno);
+        $this->updateServiceAndInvoice($invno, $partDetails, 'Parts');
+    } else {
+        $laborDetails = $this->calculateLaborDetails($serno);
+        $this->updateServiceAndInvoice($invno, $laborDetails, 'Labor');
     }
+
+    $service = Svtrnservice::where('InvDocNo', $invno)->first();
+    if ($service) {
+        $docNoArbegin = $this->getDocNoArbegin($invno);
+        $totalsrvamount = $this->calculateTotalSrvAmount($docNoArbegin, $totaldppamount);
+        $this->updateServiceInvoiceAndArbegin($invno, $docNoArbegin, $totaldppamount, $totalppnamount, $totalsrvamount);
+    }
+}
+
+private function calculatePartDetails($serno)
+{
+    $partdispct = 0;
+    $partsgrossamt = 0;
+    $partsdiscamt = 0;
+    $partsdppamt = 0;
+
+    $detail = Svtrnsrvitem::where('ServiceNo', $serno)->get();
+    foreach ($detail as $row) {
+        $partdispct = $row->DiscPct;
+        $sum = $row->RetailPrice * $row->SupplyQty;
+        $partsgrossamt += $sum;
+        $partsdiscamt = $row->AmountDiscount;
+        $partsdppamt += $sum - $row->AmountDiscount;
+    }
+
+    return compact('partdispct', 'partsgrossamt', 'partsdiscamt', 'partsdppamt');
+}
+
+private function calculateLaborDetails($serno)
+{
+    $labordiscpct = 0;
+    $laborgrossamt = 0;
+    $labordiscamt = 0;
+    $labordppamt = 0;
+
+    $detail = Svtrnsrvtask::where('ServiceNo', $serno)->get();
+    foreach ($detail as $row) {
+        $labordiscpct = $row->DiscPct;
+        $sum = $row->OperationHour * $row->OperationCost;
+        $laborgrossamt += $sum;
+        $labordiscamt = $row->AmountDiscount;
+        $labordppamt += $sum - $row->AmountDiscount;
+    }
+
+    return compact('labordiscpct', 'laborgrossamt', 'labordiscamt', 'labordppamt');
+}
+
+private function updateServiceAndInvoice($invno, $details, $type)
+{
+    $typeLower = strtolower($type);
+
+    Svtrnservice::where('InvDocNo', $invno)->update([
+        "{$type}DiscPct" => $details["{$typeLower}discpct"],
+        "{$type}GrossAmt" => $details["{$typeLower}grossamt"],
+        "{$type}DiscAmt" => $details["{$typeLower}discamt"],
+        "{$type}DppAmt" => $details["{$typeLower}dppamt"],
+    ]);
+
+    Svtrninvoice::where('InvDocNo', $invno)->update([
+        "{$type}DiscPct" => $details["{$typeLower}discpct"],
+        "{$type}GrossAmt" => $details["{$typeLower}grossamt"],
+        "{$type}DiscAmt" => $details["{$typeLower}discamt"],
+        "{$type}DppAmt" => $details["{$typeLower}dppamt"],
+    ]);
+}
+
+private function getDocNoArbegin($invno)
+{
+    $invnoEx = explode('/', $invno);
+    $docFirst = substr($invnoEx[0], 1, 3);
+    return $docFirst . '/' . $invnoEx[3] . '/' . $invnoEx[2] . $invnoEx[1] . $invnoEx[4];
+}
+
+private function calculateTotalSrvAmount($docFirst, $totaldppamount)
+{
+    if ($docFirst == 'SIT') {
+        $totalppnamount = 0;
+    } else {
+        $totalppnamount = 0.11 * $totaldppamount;
+    }
+
+    return $totaldppamount + $totalppnamount;
+}
+
+private function updateServiceInvoiceAndArbegin($invno, $docNoArbegin, $totaldppamount, $totalppnamount, $totalsrvamount)
+{
+    Svtrnservice::where('InvDocNo', $invno)->update([
+        'TotalDPPAmount' => $totaldppamount,
+        'TotalPpnAmount' => $totalppnamount,
+        'TotalSrvAmount' => $totalsrvamount,
+    ]);
+
+    Svtrninvoice::where('InvDocNo', $invno)->update([
+        'TotalDppAmt' => $totaldppamount,
+        'TotalPpnAmt' => $totalppnamount,
+        'TotalSrvAmt' => $totalsrvamount,
+    ]);
+
+    Arbeginbalancehdr::where('DocNo', $docNoArbegin)->update([
+        'Amount' => round($totalsrvamount),
+    ]);
+
+    Arbeginbalancedtl::where('DocNo', $docNoArbegin)->update([
+        'Amount' => round($totalsrvamount),
+    ]);
+}
 }
