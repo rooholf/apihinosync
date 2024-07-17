@@ -91,7 +91,7 @@ class SvtrnsinvoiceController extends Controller
 
         
         //retail Price sanitizer 
-        $rPrice = $request->$retailPrice;
+        $rPrice = $request->$RetailPrice;
         $amountDisct = $request->$AmountDiscount;
         $supplyQty = $request->$SupplyQty;
 
