@@ -92,8 +92,9 @@ class SvtrnsinvoiceController extends Controller
         //retail Price sanitizer 
         $rPrice = filter_var($request->RetailPrice, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $amountDisct = filter_var($request->AmountDiscount, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $supplyQty = filter_var($request->SupplyQty, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
-        $amt = (float) $request->SupplyQty * (int) $rPrice;
+        $amt = (float) $supplyQty * (int) $rPrice;
 
         // discount
         $disc = ((int) $amountDisct / (int) $amt) * 100;
@@ -164,7 +165,7 @@ class SvtrnsinvoiceController extends Controller
         //     //     $service->SupplySlipNo,
         //     //     $amountDisct,
         //     //     $rPrice,
-        //     //     $request->SupplyQty,
+        //     //     $supplyQty,
         //     //     $request->OperationHour,
         //     //     $request->OperationCost
         //     // );
@@ -703,7 +704,7 @@ class SvtrnsinvoiceController extends Controller
                         'DiscPct' => round(
                             ((int) $amountDisct /
                                 ((int) $rPrice *
-                                    (float) $request->SupplyQty)) *
+                                    (float) $supplyQty)) *
                                 100,
                             2
                         ),
@@ -724,7 +725,7 @@ class SvtrnsinvoiceController extends Controller
                         'DiscPct' => round(
                             ((int) $amountDisct /
                                 ((int) $rPrice *
-                                    (float) $request->SupplyQty)) *
+                                    (float) $supplyQty)) *
                                 100,
                             2
                         ),
@@ -775,7 +776,7 @@ class SvtrnsinvoiceController extends Controller
                 $service->SupplySlipNo,
                 $amountDisct,
                 $rPrice,
-                $request->SupplyQty,
+                $supplyQty,
                 $request->OperationHour,
                 $request->OperationCost
             );
