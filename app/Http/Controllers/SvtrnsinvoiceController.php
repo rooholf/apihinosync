@@ -94,7 +94,7 @@ class SvtrnsinvoiceController extends Controller
         $rPrice = $request->RetailPrice;
         $amountDisctUnformatted =$request->AmountDiscount;
         $amountDisctFormatted = str_replace(',', '', $amountDisctUnformatted);
-        $amountDisct = floatval($amountDisctFormatted);
+        $amountDisct = (int) $amountDisctFormatted;
         $supplyQty = $request->SupplyQty;
 
        
