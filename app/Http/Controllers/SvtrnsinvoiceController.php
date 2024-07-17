@@ -405,7 +405,7 @@ class SvtrnsinvoiceController extends Controller
                             2
                         ),
                         'MechanicID' => $request->MechanicID,
-                        'AmountDiscount' => $amountDisct,
+                       'AmountDiscount' => (float) $amountDisct,
                     ]);
 
                     Svtrninvitem::create([
@@ -470,7 +470,7 @@ class SvtrnsinvoiceController extends Controller
                                 ((int) $request->OperationCost *
                                     (int) $request->OperationHour)) *
                             100,
-                        'AmountDiscount' => $amountDisct,
+                       'AmountDiscount' => (float) $amountDisct,
                     ]);
 
                     Svtrninvtask::create([
@@ -685,7 +685,7 @@ class SvtrnsinvoiceController extends Controller
                             2
                         ),
                         'MechanicID' => $request->MechanicID,
-                        'AmountDiscount' => $amountDisct,
+                       'AmountDiscount' => (float) $amountDisct,
                         
                     ]);
 
