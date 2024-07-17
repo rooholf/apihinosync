@@ -609,7 +609,7 @@ class SvtrnsinvoiceController extends Controller
                         'OperationNo' => $request->OperationNo,
                         'OperationHour' => $request->OperationHour,
                         'ClaimHour' => $request->ClaimHour,
-                        'OperationCost' => $request->OperationCost,
+                        'OperationCost' => $opCost,
                         'SubConPrice' => $request->SubConPrice,
                         'IsSubCon' => $request->IsSubCon,
                         'SharingTask' => $request->SharingTask,
@@ -745,7 +745,7 @@ class SvtrnsinvoiceController extends Controller
                         $rPrice,
                         $supplyQty,
                         $request->OperationHour,
-                        $request->OperationCost
+                        $opCost
                     );
                 }
             }
@@ -802,7 +802,7 @@ class SvtrnsinvoiceController extends Controller
                 $rPrice,
                 $supplyQty,
                 $request->OperationHour,
-                $request->OperationCost
+                $opCost
             );
 
             $this->updateHeader(
