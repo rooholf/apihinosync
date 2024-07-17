@@ -548,6 +548,74 @@ class SvtrnsinvoiceController extends Controller
             );
         } else {
             if (
+                $request->Remarks == ''
+            ) {
+                $svtrntask = Svtrnsrvtask::where(
+                    'CompanyCode',
+                    $service->CompanyCode
+                )
+                    ->where('BranchCode', $service->BranchCode)
+                    ->where('ProductType', $service->ProductType)
+                    ->where('ServiceNo', $service->ServiceNo)
+                    ->where('OperationNo', $request->OperationNo)
+                    ->first();
+
+                if ($svtrntask == null) {
+                    Svtrnsrvtask::create([
+                        'CompanyCode' => $request->CompanyCode,
+                        'BranchCode' => $branchcode,
+                        'ProductType' => $request->ProductType,
+                        'ServiceNo' => $service->ServiceNo,
+                        'OperationNo' => $request->OperationNo,
+                        'OperationHour' => $request->OperationHour,
+                        'OperationCost' => $request->OperationCost,
+                        'IsSubCon' => $request->IsSubCon,
+                        'SubConPrice' => $request->SubConPrice,
+                        'PONo' => '',
+                        'ClaimHour' => $request->ClaimHour,
+                        'TypeOfGoods' => $request->TypeOfGoods,
+                        'BillType' => $request->BillType,
+                        'SharingTask' => $request->SharingTask,
+                        'TaskStatus' => $request->TaskStatus,
+                        'StartService' => $invdate,
+                        'FinishService' => $invdate,
+                        'CreatedBy' => $request->CreatedBy,
+                        'CreatedDate' => Carbon::now(),
+                        'LastupdateBy' => $request->LastUpdateBy,
+                        'LastupdateDate' => Carbon::now(),
+                        'DiscPct' => round(
+                            ((int) $amountDisct /
+                                ((int) $rPrice *
+                                    (float) $supplyQty)) *
+                                100,
+                            2
+                        ),
+                    ]);
+
+                    Svtrninvtask::create([
+                        'CompanyCode' => $request->CompanyCode,
+                        'BranchCode' => $branchcode,
+                        'ProductType' => $request->ProductType,
+                        'InvoiceNo' => $service->InvoiceNo,
+                        'OperationNo' => $request->OperationNo,
+                        'OperationHour' => $request->OperationHour,
+                        'ClaimHour' => $request->ClaimHour,
+                        'OperationCost' => $request->OperationCost,
+                        'SubConPrice' => $request->SubConPrice,
+                        'IsSubCon' => $request->IsSubCon,
+                        'SharingTask' => $request->SharingTask,
+                        'DiscPct' => round(
+                            ((int) $amountDisct /
+                                ((int) $rPrice *
+                                    (float) $supplyQty)) *
+                                100,
+                            2
+                        ),
+                        'CreatedBy' => $request->CreatedBy,
+                    ]);
+                }
+            }
+            if (
                 $request->Remarks == 'Sparepart' or
                 $request->Remarks == 'Oil' or
                 $request->Remarks == 'Material'
@@ -671,72 +739,8 @@ class SvtrnsinvoiceController extends Controller
                         $request->OperationCost
                     );
                 }
-            } else {
-                $svtrntask = Svtrnsrvtask::where(
-                    'CompanyCode',
-                    $service->CompanyCode
-                )
-                    ->where('BranchCode', $service->BranchCode)
-                    ->where('ProductType', $service->ProductType)
-                    ->where('ServiceNo', $service->ServiceNo)
-                    ->where('OperationNo', $request->OperationNo)
-                    ->first();
-
-                if ($svtrntask == null) {
-                    Svtrnsrvtask::create([
-                        'CompanyCode' => $request->CompanyCode,
-                        'BranchCode' => $branchcode,
-                        'ProductType' => $request->ProductType,
-                        'ServiceNo' => $service->ServiceNo,
-                        'OperationNo' => $request->OperationNo,
-                        'OperationHour' => $request->OperationHour,
-                        'OperationCost' => $request->OperationCost,
-                        'IsSubCon' => $request->IsSubCon,
-                        'SubConPrice' => $request->SubConPrice,
-                        'PONo' => '',
-                        'ClaimHour' => $request->ClaimHour,
-                        'TypeOfGoods' => $request->TypeOfGoods,
-                        'BillType' => $request->BillType,
-                        'SharingTask' => $request->SharingTask,
-                        'TaskStatus' => $request->TaskStatus,
-                        'StartService' => $invdate,
-                        'FinishService' => $invdate,
-                        'CreatedBy' => $request->CreatedBy,
-                        'CreatedDate' => Carbon::now(),
-                        'LastupdateBy' => $request->LastUpdateBy,
-                        'LastupdateDate' => Carbon::now(),
-                        'DiscPct' => round(
-                            ((int) $amountDisct /
-                                ((int) $rPrice *
-                                    (float) $supplyQty)) *
-                                100,
-                            2
-                        ),
-                    ]);
-
-                    Svtrninvtask::create([
-                        'CompanyCode' => $request->CompanyCode,
-                        'BranchCode' => $branchcode,
-                        'ProductType' => $request->ProductType,
-                        'InvoiceNo' => $service->InvoiceNo,
-                        'OperationNo' => $request->OperationNo,
-                        'OperationHour' => $request->OperationHour,
-                        'ClaimHour' => $request->ClaimHour,
-                        'OperationCost' => $request->OperationCost,
-                        'SubConPrice' => $request->SubConPrice,
-                        'IsSubCon' => $request->IsSubCon,
-                        'SharingTask' => $request->SharingTask,
-                        'DiscPct' => round(
-                            ((int) $amountDisct /
-                                ((int) $rPrice *
-                                    (float) $supplyQty)) *
-                                100,
-                            2
-                        ),
-                        'CreatedBy' => $request->CreatedBy,
-                    ]);
-                }
             }
+       
 
             Arbeginbalancehdr::firstOrCreate([
                 'CompanyCode' => $request->CompanyCode,
