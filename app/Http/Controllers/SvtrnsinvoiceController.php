@@ -95,12 +95,13 @@ class SvtrnsinvoiceController extends Controller
         $amountDisct = filter_var($request->AmountDiscount, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $supplyQty = filter_var($request->SupplyQty, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
-        error_log("price = ", $rPrice, $request->RetailPrice);
-        error_log("amount = ", $request->AmountDiscount);
-        error_log("qty = ", $request->SupplyQty);
+        Log::info("price = ", $rPrice, $request->RetailPrice);
+        Log::info("amount = ", $request->AmountDiscount);
+        Log::info("qty = ", $request->SupplyQty);
 
 
         $amt = (float) $supplyQty * (int) $rPrice;
+        Log::info("amount =", $amt);
 
         // discount
         $disc = ((int) $amountDisct / (int) $amt) * 100;
