@@ -89,11 +89,17 @@ class SvtrnsinvoiceController extends Controller
 
         $desc = 'Created By RDMS : '. $request->InvDocNo;
 
+        
         //retail Price sanitizer 
         $rPrice = filter_var($request->RetailPrice, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $amountDisct = filter_var($request->AmountDiscount, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $supplyQty = filter_var($request->SupplyQty, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
+        error_log("price = ", $rPrice);
+        error_log("amount = ", $amountDisct);
+        error_log("qty = ", $supplyQty);
+
+        
         $amt = (float) $supplyQty * (int) $rPrice;
 
         // discount
