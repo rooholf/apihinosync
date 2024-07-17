@@ -744,10 +744,12 @@ class SvtrnsinvoiceController extends Controller
             }
        
 
-            Arbeginbalancehdr::firstOrCreate([
-                'CompanyCode' => $request->CompanyCode,
+            Arbeginbalancehdr::firstOrCreate(
+                ['CompanyCode' => $request->CompanyCode,
                 'BranchCode' => $branchcode,
-                'DocNo' => $docNoArbegin,
+                'DocNo' => $docNoArbegin,]
+                [
+                
                 'ProfitCenterCode' => '200',
                 'DocDate' => $invdate,
                 'CustomerCode' => $request->CustomerCode,
@@ -767,6 +769,7 @@ class SvtrnsinvoiceController extends Controller
                 'CompanyCode' => $request->CompanyCode,
                 'BranchCode' => $branchcode,
                 'DocNo' => $docNoArbegin,
+            ][
                 'SeqNo' => '1',
                 'AccountNo' => $accountNo,
                 'Description' => '',
