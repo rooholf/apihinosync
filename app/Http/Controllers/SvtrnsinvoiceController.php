@@ -91,17 +91,15 @@ class SvtrnsinvoiceController extends Controller
 
         
         //retail Price sanitizer 
-        $rPrice = filter_var($request->RetailPrice, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-        $amountDisct = filter_var($request->AmountDiscount, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-        $supplyQty = filter_var($request->SupplyQty, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $rPrice = $request->$retailPrice;
+        $amountDisct = $request->$AmountDiscount;
+        $supplyQty = $request->$SupplyQty;
 
-        dd("price = ", $rPrice, $request->RetailPrice);
-        dd("amount = ", $request->AmountDiscount);
-        dd("qty = ", $request->SupplyQty);
+       
 
 
         $amt = (float) $supplyQty * (int) $rPrice;
-        dd("amount =", $amt);
+        
 
         // discount
         $disc = ((int) $amountDisct / (int) $amt) * 100;
