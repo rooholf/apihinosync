@@ -91,6 +91,9 @@ class SvtrnsinvoiceController extends Controller
 
         
         //retail Price sanitizer 
+        $opCostUnformatted = $request->OperationCost;
+        $opCostFormatted = str_replace(',', '', $opCostUnformatted);
+        $opCost = (int) $opCostFormatted;
         $rPriceUnformatted = $request->RetailPrice;
         $rPriceFormatted = str_replace(',', '', $rPriceUnformatted);
         $rPrice = (int) $rPriceFormatted;
@@ -176,7 +179,7 @@ class SvtrnsinvoiceController extends Controller
         //     //     $rPrice,
         //     //     $supplyQty,
         //     //     $request->OperationHour,
-        //     //     $request->OperationCost
+        //     //     $opCost
         //     // );
 
         //     $this->updateHeader(
@@ -452,7 +455,7 @@ class SvtrnsinvoiceController extends Controller
                         'ServiceNo' => $servno,
                         'OperationNo' => $request->OperationNo,
                         'OperationHour' => $request->OperationHour,
-                        'OperationCost' => $request->OperationCost,
+                        'OperationCost' => $opCost,
                         'IsSubCon' => $request->IsSubCon,
                         'SubConPrice' => $request->SubConPrice,
                         'PONo' => '',
@@ -469,7 +472,7 @@ class SvtrnsinvoiceController extends Controller
                         'LastupdateDate' => Carbon::now(),
                         'DiscPct' =>
                             ((int) $amountDisct /
-                                ((int) $request->OperationCost *
+                                ((int) $opCost *
                                     (int) $request->OperationHour)) *
                             100,
                        'AmountDiscount' => (float) $amountDisct,
@@ -483,13 +486,13 @@ class SvtrnsinvoiceController extends Controller
                         'OperationNo' => $request->OperationNo,
                         'OperationHour' => $request->OperationHour,
                         'ClaimHour' => $request->ClaimHour,
-                        'OperationCost' => $request->OperationCost,
+                        'OperationCost' => $opCost,
                         'SubConPrice' => $request->SubConPrice,
                         'IsSubCon' => $request->IsSubCon,
                         'SharingTask' => $request->SharingTask,
                         'DiscPct' =>
                             ((int) $amountDisct /
-                                ((int) $request->OperationCost *
+                                ((int) $opCost *
                                     (int) $request->OperationHour)) *
                             100,
                         'CreatedBy' => $request->CreatedBy,
@@ -574,7 +577,7 @@ class SvtrnsinvoiceController extends Controller
                         'ServiceNo' => $service->ServiceNo,
                         'OperationNo' => $request->OperationNo,
                         'OperationHour' => $request->OperationHour,
-                        'OperationCost' => $request->OperationCost,
+                        'OperationCost' => $opCost,
                         'IsSubCon' => $request->IsSubCon,
                         'SubConPrice' => $request->SubConPrice,
                         'PONo' => '',
