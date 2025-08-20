@@ -23,13 +23,15 @@ class SptrnprcvhdrController extends Controller
 {
     public function show(Request $request, Sptrnprcvhdr $sptrnprcvhdr)
     {
-        $docEx = explode("/", $request->GRNo);
-            if ($docEx[0] == 'SPRS') {
-                $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
-            } elseif ($docEx[0] == 'WSRS') {
-                $docNoApbegin = 'WSR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
-            }
+        // $docEx = explode("/", $request->GRNo);
+        //     if ($docEx[0] == 'SPRS') {
+        //         $docNoApbegin = 'SPRS/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+        //     } elseif ($docEx[0] == 'WSRS') {
+        //         $docNoApbegin = 'WSR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+        //     }
 
+        $docEx = $request->GRNo;
+        $docNoApbegin = $docEx;
 
         $sptrnprcvhdr = $sptrnprcvhdr->where('ReferenceNo', $docNoApbegin)->first();
 
@@ -87,12 +89,15 @@ class SptrnprcvhdrController extends Controller
         }
 
         // grno header
-        $docEx = explode("/", $request->GRNo);
-        if ($docEx[0] == 'SPRS') {
-            $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
-        } elseif ($docEx[0] == 'WSRS') {
-            $docNoApbegin = 'WSR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
-        }
+        // $docEx = explode("/", $request->GRNo);
+        // if ($docEx[0] == 'SPRS') {
+        //     $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+        // } elseif ($docEx[0] == 'WSRS') {
+        //     $docNoApbegin = 'WSR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+        // }
+
+        $docEx = $request->GRNo;
+        $docNoApbegin = $docEx;
 
         $grdateEx = explode(" ", $request->GRDate);
         $grdateExDate = explode("-", $grdateEx[0]);
@@ -333,12 +338,15 @@ class SptrnprcvhdrController extends Controller
         $this->validate($request, [
             'ReferenceNo' => 'required',
         ]);
-        $docEx = explode("/", $request->GRNo);
-            if ($docEx[0] == 'SPRS') {
-                $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
-            } elseif ($docEx[0] == 'WSRS') {
-                $docNoApbegin = 'WSR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
-            }
+        // $docEx = explode("/", $request->GRNo);
+        //     if ($docEx[0] == 'SPRS') {
+        //         $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+        //     } elseif ($docEx[0] == 'WSRS') {
+        //         $docNoApbegin = 'WSR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+        //     }
+
+        $docEx = $request->GRNo;
+        $docNoApbegin = $docEx;
 
         // dd($header);
         $header = Sptrnprcvhdr::where('ReferenceNo', $docNoApbegin)->first();
@@ -455,12 +463,17 @@ class SptrnprcvhdrController extends Controller
 
 
         // 
-        $docEx = explode("/", $grno);
-        if ($docEx[0] == 'SPRS') {
-            $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
-        } elseif ($docEx[0] == 'WSRS') {
-            $docNoApbegin = 'WSR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
-        }
+        // $docEx = explode("/", $grno);
+        // if ($docEx[0] == 'SPRS') {
+        //     $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+        // } elseif ($docEx[0] == 'WSRS') {
+        //     $docNoApbegin = 'WSR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
+        // }
+
+        $docEx = $grno;
+        $docNoApbegin = $docEx;
+
+
         // $docNoApbegin = 'SPR/'. $docEx[3].'/'.$docEx[2].$docEx[1].$docEx[4];
 
         Apbeginbalancehdr::where('DocNo', $docNoApbegin)

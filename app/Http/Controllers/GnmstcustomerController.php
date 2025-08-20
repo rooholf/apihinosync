@@ -44,7 +44,6 @@
 
 			$customer = $gnmstcustomer->find($request->CustomerCode);
 
-			echo json_encode($request);
 
 			if (!$customer) {
 				$gnmstcustomer = $gnmstcustomer->updateOrInsert([
@@ -89,7 +88,7 @@
 					'Spare02' => $request->Spare02, 
 					'Spare03' => $request->Spare03, 
 					'Spare04' => $request->Spare04, 
-					'Spare05' => $request->Spare05, 
+					'Spare05' => $request->NPWPNo, 
 					'Gender' => $request->Gender, 
 					'OfficePhoneNo' => $request->OfficePhoneNo, 
 					'KelurahanDesa' => $request->KelurahanDesa, 
@@ -97,6 +96,7 @@
 					'KotaKabupaten' => $request->KotaKabupaten, 
 					'IbuKota' => $request->IbuKota, 
 					'CustomerStatus' => $request->CustomerStatus,
+					'NITKU' => $request->NPWPNo,
 				]);
 
 				if ($gnmstcustomer) {
@@ -294,7 +294,7 @@
 				$gnmstcustomer->Spare02 = $request->get('Spare02', $gnmstcustomer->Spare02);
 				$gnmstcustomer->Spare03 = $request->get('Spare03', $gnmstcustomer->Spare03);
 				$gnmstcustomer->Spare04 = $request->get('Spare04', $gnmstcustomer->Spare04);
-				$gnmstcustomer->Spare05 = $request->get('Spare05', $gnmstcustomer->Spare05);
+				$gnmstcustomer->Spare05 = $request->get('Spare05', $gnmstcustomer->NPWPNo);
 				$gnmstcustomer->Gender = $request->get('Gender', $gnmstcustomer->Gender);
 				$gnmstcustomer->OfficePhoneNo = $request->get('OfficePhoneNo', $gnmstcustomer->OfficePhoneNo);
 				$gnmstcustomer->KelurahanDesa = $request->get('KelurahanDesa', $gnmstcustomer->KelurahanDesa);        
@@ -302,6 +302,7 @@
 				$gnmstcustomer->KotaKabupaten = $request->get('KotaKabupaten', $gnmstcustomer->KotaKabupaten);
 				$gnmstcustomer->IbuKota = $request->get('IbuKota', $gnmstcustomer->IbuKota);
 				$gnmstcustomer->CustomerStatus = $request->get('CustomerStatus', $gnmstcustomer->CustomerStatus);
+				$gnmstcustomer->NITKU = $request->get('NITKU', $gnmstcustomer->NPWPNo);
 				$gnmstcustomer->save();
 
 				return response()->json([
@@ -360,7 +361,7 @@
 			$gnmstcustomer->Spare02 = $request->get('Spare02', $gnmstcustomer->Spare02);
 			$gnmstcustomer->Spare03 = $request->get('Spare03', $gnmstcustomer->Spare03);
 			$gnmstcustomer->Spare04 = $request->get('Spare04', $gnmstcustomer->Spare04);
-			$gnmstcustomer->Spare05 = $request->get('Spare05', $gnmstcustomer->Spare05);
+			$gnmstcustomer->Spare05 = $request->get('Spare05', $gnmstcustomer->NPWPNo);
 			$gnmstcustomer->Gender = $request->get('Gender', $gnmstcustomer->Gender);
 			$gnmstcustomer->OfficePhoneNo = $request->get('OfficePhoneNo', $gnmstcustomer->OfficePhoneNo);
 			$gnmstcustomer->KelurahanDesa = $request->get('KelurahanDesa', $gnmstcustomer->KelurahanDesa);        
@@ -368,6 +369,7 @@
 			$gnmstcustomer->KotaKabupaten = $request->get('KotaKabupaten', $gnmstcustomer->KotaKabupaten);
 			$gnmstcustomer->IbuKota = $request->get('IbuKota', $gnmstcustomer->IbuKota);
 			$gnmstcustomer->CustomerStatus = $request->get('CustomerStatus', $gnmstcustomer->CustomerStatus);
+			$gnmstcustomer->NITKU = $request->get('NITKU', $gnmstcustomer->NPWPNo);
 			$gnmstcustomer->save();
 
 			$gnmstcustomerbank->CompanyCode = $request->get('CompanyCode', $gnmstcustomerbank->CompanyCode);

@@ -64,16 +64,18 @@ class SptrnsinvoiceController extends Controller
         $rinctax = $request->RetailPrice * 1.1;
 
         // docno arbegin
-        $invnoEx = explode('/', $request->InvoiceNo);
-        $docFirst = substr($invnoEx[0], 1, 3);
-        $docNoArbegin =
-            $docFirst.
-            '/'.
-            $invnoEx[3].
-            '/'.
-            $invnoEx[2].
-            $invnoEx[1].
-            $invnoEx[4];
+        // $invnoEx = explode('/', $request->InvoiceNo);
+        // $docFirst = substr($invnoEx[0], 1, 3);
+        // $docNoArbegin =
+        //     $docFirst.
+        //     '/'.
+        //     $invnoEx[3].
+        //     '/'.
+        //     $invnoEx[2].
+        //     $invnoEx[1].
+        //     $invnoEx[4];
+
+        $docNoArbegin = $request->InvoiceNo;
 
         $header = Sptrnsinvoicehdr::where('CompanyCode', $request->CompanyCode)
             ->where('BranchCode', $branchcode)
@@ -308,7 +310,7 @@ class SptrnsinvoiceController extends Controller
                     'DocNo' => $docNoArbegin,
                     'ProfitCenterCode' => '300',
                     'DocDate' => $invdate,
-                    'CustomerCode' => $request->CustomerCode,
+                    'CustomerCode' => $request->CustomerCodeBill,
                     'AccountNo' => $accountNo,
                     'DueDate' => $duedate,
                     'TOPCode' => $request->TOPCode,
@@ -599,7 +601,7 @@ class SptrnsinvoiceController extends Controller
                 'DocNo' => $docNoArbegin,
                 'ProfitCenterCode' => '300',
                 'DocDate' => $invdate,
-                'CustomerCode' => $request->CustomerCode,
+                'CustomerCode' => $request->CustomerCodeBill,
                 'AccountNo' => $accountNo,
                 'DueDate' => $duedate,
                 'TOPCode' => $request->TOPCode,
@@ -724,16 +726,18 @@ class SptrnsinvoiceController extends Controller
         ]);
 
         // docno arbegin
-        $invnoEx = explode('/', $invodd);
-        $docFirst = substr($invnoEx[0], 1, 3);
-        $docNoArbegin =
-            $docFirst.
-            '/'.
-            $invnoEx[3].
-            '/'.
-            $invnoEx[2].
-            $invnoEx[1].
-            $invnoEx[4];
+        // $invnoEx = explode('/', $invodd);
+        // $docFirst = substr($invnoEx[0], 1, 3);
+        // $docNoArbegin =
+        //     $docFirst.
+        //     '/'.
+        //     $invnoEx[3].
+        //     '/'.
+        //     $invnoEx[2].
+        //     $invnoEx[1].
+        //     $invnoEx[4];
+
+        $docNoArbegin = $invodd;
 
         Arbeginbalancehdr::where('DocNo', $docNoArbegin)->update([
             'Amount' => $totfinal,

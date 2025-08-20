@@ -7,6 +7,8 @@
 	use Illuminate\Support\Str; //
 	
 	use App\Gnmstsupplier; //model
+	use App\Gnmstsupplierbank;
+	use App\Gnmstsupplierprofitcenter;	
 	use App\Transformers\GnmstsupplierTransformer; //transformer
 	use Auth;
 
@@ -75,6 +77,8 @@
 					'LockingBy' => $request->LockingBy, 
 					// 'LockingDate' => Carbon::create($request->LockingDate, 'Asia/Jakarta'), 
 					'LockingDate' => Carbon::now(), 
+					'KTPNo' => $request->NPWPNo,
+					'NITKU' => $request->NPWPNo,
 					
 				]);
 
@@ -204,6 +208,8 @@
 				$gnmstsupplier->LastUpdateBy = $request->get('LastUpdateBy', $gnmstsupplier->LastUpdateBy);
 				$gnmstsupplier->isLocked = $request->get('isLocked', $gnmstsupplier->isLocked);
 				$gnmstsupplier->LockingBy = $request->get('LockingBy', $gnmstsupplier->LockingBy);
+				$gnmstsupplier->KTPNo = $request->get('KTPNo', $gnmstsupplier->KTPNo);
+				$gnmstsupplier->NITKU = $request->get('NITKU', $gnmstsupplier->NITKU);
 				$gnmstsupplier->save();
 
 				return response()->json([

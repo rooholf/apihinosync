@@ -99,16 +99,18 @@ class SvtrnsinvoiceController extends Controller
         $disc = ((int) $amountDisct / (int) $amt) * 100;
 
         // docno arbegin
-        $invnoEx = explode('/', $request->InvDocNo);
-        $docFirst = substr($invnoEx[0], 1, 3);
-        $docNoArbegin =
-            $docFirst.
-            '/'.
-            $invnoEx[3].
-            '/'.
-            $invnoEx[2].
-            $invnoEx[1].
-            $invnoEx[4];
+        // $invnoEx = explode('/', $request->InvDocNo);
+        // $docFirst = substr($invnoEx[0], 1, 3);
+        // $docNoArbegin =
+        //     $docFirst.
+        //     '/'.
+        //     $invnoEx[3].
+        //     '/'.
+        //     $invnoEx[2].
+        //     $invnoEx[1].
+        //     $invnoEx[4];
+
+        $docNoArbegin = $request->InvDocNo;
 
        // Nembak AR
         // Dari sini
@@ -938,17 +940,19 @@ class SvtrnsinvoiceController extends Controller
             // docno arbegin
             $invnoEx = explode('/', $invno);
             $docFirst = substr($invnoEx[0], 1, 3);
-            $docNoArbegin =
-                $docFirst.
-                '/'.
-                $invnoEx[3].
-                '/'.
-                $invnoEx[2].
-                $invnoEx[1].
-                $invnoEx[4];
+            // $docNoArbegin =
+            //     $docFirst.
+            //     '/'.
+            //     $invnoEx[3].
+            //     '/'.
+            //     $invnoEx[2].
+            //     $invnoEx[1].
+            //     $invnoEx[4];
+
+            $docNoArbegin = $invno;
 
             // $totaldppamount = $labordppamt + $partsdppamt;
-            if ($docFirst == 'SIT') {
+            if ($docFirst == 'WSIT') {
                 $totalppnamount = 0;
                 $totalsrvamount = $totaldppamount + $totalppnamount;
             } else {
